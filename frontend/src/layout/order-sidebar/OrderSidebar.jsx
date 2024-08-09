@@ -5,7 +5,7 @@ import { useOrder } from '../../context/OrderContext';
 import './OrderSidebar.css';
 
 export default function OrderSidebar() {
-  const { order, total, handleChangeQuantity, removeItem, sidebarToggle, closeSidebar, postOrder, saveOrderOnLogout } = useOrder();
+  const { order, total, handleChangeQuantity, removeItem, sidebarToggle, closeSidebar, postOrder } = useOrder();
   const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
@@ -24,6 +24,18 @@ export default function OrderSidebar() {
   // Log para verificar el total y la orden actual cada vez que el componente se renderiza
   console.log("OrderSidebar render - Total:", total);
   console.log("OrderSidebar render - Order:", order);
+
+  const handleFinishPurchase = async () => {
+    try {
+      // Llamada a postOrder para crear la orden
+      await postOrder();
+
+      // Llamada a postPreOrder para crear la preorden
+      // Nota: postOrder debería manejar la creación de la preorden
+    } catch (error) {
+      console.error("Error finalizando la compra:", error);
+    }
+  };
 
   return (
     <div className={`order-wrapper ${sidebarToggle ? 'active' : ''} ${isMobileView ? 'mobile-view' : ''}`}>
@@ -74,7 +86,7 @@ export default function OrderSidebar() {
           </div>
         </div>
         <div className="order-purchase">
-          <button className="btn" onClick={() => postOrder()}>Finalizar compra</button>
+          <button className="btn" onClick={handleFinishPurchase}>Finalizar compra</button>
         </div>
       </div>
     </div>

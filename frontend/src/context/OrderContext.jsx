@@ -8,7 +8,7 @@ const OrderContext = createContext();
 export const useOrder = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }) => {
-  const { user, token, logout } = useUser(); // Agrega logout desde useUser
+  const { user, token, logout } = useUser();
   const api = useApi();
 
   const [order, setOrder] = useState(() => {
@@ -23,6 +23,7 @@ export const OrderProvider = ({ children }) => {
     const fetchCart = async () => {
       if (user) {
         try {
+          console.log("Fetching cart for user:", user._id); // Debugging log
           const response = await api.get(`/order/${user._id}`);
           setOrder(response.data || []);
         } catch (error) {
@@ -59,6 +60,7 @@ export const OrderProvider = ({ children }) => {
       setOrder(updatedOrder);
 
       try {
+        console.log("Adding item to cart:", { product: producto._id, quantity: 1 }); // Debugging log
         await api.post(`/order/${user._id}`, { product: producto._id, quantity: 1 });
       } catch (error) {
         console.log("Error adding item to cart:", error);
@@ -74,6 +76,7 @@ export const OrderProvider = ({ children }) => {
       }
     });
     setTotal(totalCount);
+    console.log("Total calculated:", totalCount); // Debugging log
   }
 
   function CartCount() {
@@ -82,6 +85,7 @@ export const OrderProvider = ({ children }) => {
       count += prod.quantity;
     });
     setCartCount(count);
+    console.log("Cart count calculated:", count); // Debugging log
   }
 
   async function handleChangeQuantity(id, quantity) {
@@ -96,6 +100,7 @@ export const OrderProvider = ({ children }) => {
 
     if (user) {
       try {
+        console.log("Updating item quantity:", { product: id, quantity }); // Debugging log
         await api.put(`/order/${user._id}`, { product: id, quantity });
       } catch (error) {
         console.log("Error updating item quantity:", error);
@@ -119,6 +124,7 @@ export const OrderProvider = ({ children }) => {
 
         if (user) {
           try {
+            console.log("Removing item from cart:", id); // Debugging log
             api.delete(`/order/${user._id}/${id}`);
           } catch (error) {
             console.log("Error removing item from cart:", error);
@@ -155,33 +161,38 @@ export const OrderProvider = ({ children }) => {
 
       const nuevaOrden = {
         total,
-        user: user._id,
+        user: user._id, // Asegúrate de que este campo esté presente
         products
       };
 
+      console.log("Posting order:", nuevaOrden); // Debugging log
+
       await api.post("/orders", nuevaOrden);
-      Swal.fire("Orden creada", "La orden se creó correctamente", "success");
+      await postPreOrder();
+
+      Swal.fire("Orden creada", "La orden y la preorden se crearon correctamente", "success");
       setOrder([]);
 
       if (user) {
         try {
+          console.log("Clearing cart after order for user:", user._id); // Debugging log
           await api.delete(`/order/${user._id}`);
         } catch (error) {
           console.log("Error clearing cart after order:", error);
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error creating order:", error); // Improved for debugging
       Swal.fire("Error", "Error al crear la orden", "error");
     }
   }
 
-  async function saveOrderOnLogout() {
+  async function postPreOrder() {
     try {
       if (!user || !token) {
         Swal.fire({
           title: "Error",
-          text: "Debe estar logueado para guardar la orden",
+          text: "Debe estar logueado para realizar una preorden",
           icon: "warning",
           timer: 4000
         });
@@ -189,31 +200,42 @@ export const OrderProvider = ({ children }) => {
       }
       const products = order.map(item => ({
         quantity: item.quantity,
-        productId: item._id
+        product: item._id,
+        price: item.price
       }));
 
-      const nuevaOrdenGuardada = {
+      const nuevaPreOrden = {
         total,
         user: user._id,
         products
       };
 
-      await api.post("/savedorder", nuevaOrdenGuardada);
+      console.log("Posting pre-order:", nuevaPreOrden); // Debugging log
+
+      await api.post("/preorders", nuevaPreOrden);
+      Swal.fire("Preorden creada", "La preorden se creó correctamente", "success");
     } catch (error) {
-      console.log("Error saving order on logout:", error);
+      console.log("Error creating preorder:", error); // Improved for debugging
+      Swal.fire("Error", "Error al crear la preorden", "error");
     }
   }
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      saveOrderOnLogout();
+      event.preventDefault();
+
+      if (user && token) {
+        postPreOrder(); // Enviar preorden antes de salir
+      }
+
+      event.returnValue = ''; // Para algunos navegadores
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [order]);
+  }, [order, user, token]); // Asegúrate de incluir `user` y `token` como dependencias
 
   return (
     <OrderContext.Provider value={{
@@ -221,13 +243,13 @@ export const OrderProvider = ({ children }) => {
       total,
       cartCount,
       sidebarToggle,
-      toggleSidebarOrder,  // Ensure this function is correctly included
+      toggleSidebarOrder,
       closeSidebar,
       addOrderItem,
       handleChangeQuantity,
       removeItem,
       postOrder,
-      saveOrderOnLogout
+      postPreOrder
     }}>
       {children}
     </OrderContext.Provider>

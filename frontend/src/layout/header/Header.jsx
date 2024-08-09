@@ -9,7 +9,7 @@ import { useOrder } from '../../context/OrderContext';
 import { useUser } from '../../context/UserContext';
 
 const Header = ({ isProductDetailPage }) => {
-  const { toggleSidebarOrder, order, sidebarToggle, cartCount, saveOrderOnLogout } = useOrder();
+  const { toggleSidebarOrder, order, sidebarToggle, cartCount, saveOrderOnLogout, postPreOrder } = useOrder();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
@@ -49,11 +49,23 @@ const Header = ({ isProductDetailPage }) => {
   const { user, logout } = useUser();
 
   const handleLogout = async () => {
-    await saveOrderOnLogout(); // Guardar la orden si es necesario
-    logout(); // Luego cerrar sesión
-    setIsMenuOpen(false);
+    try {
+      // Asegúrate de obtener el array de productos del estado
+      const products = order.map(item => ({
+        quantity: item.quantity,
+        product: item._id,
+        price: item.price
+      }));
+  
+      await postPreOrder(products); // Enviar productos a la base de datos
+  
+      logout(); // Proceder con el logout
+    } catch (error) {
+      console.error("Error during logout:", error);
+    } finally {
+      setIsMenuOpen(false);
+    }
   };
-
   return (
     <header className={`header-nav ${isScrolled || isSpecialPage || isProductDetailPage ? 'scroll-bg-white' : 'transparent-bg'} ${sidebarToggle && isMobileView ? 'hide-header' : ''} ${isProductDetailPage ? 'product-detail-header' : ''}`}>
       <NavLink to="/" className="logo">
