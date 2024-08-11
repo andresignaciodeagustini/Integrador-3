@@ -35,7 +35,7 @@ export const OrderProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('order', JSON.stringify(order));
     calculateTotal();
-    CartCount();
+    CartCount(); // Asegúrate de llamar a CartCount aquí
   }, [order]);
 
   async function addOrderItem(producto) {
@@ -191,16 +191,31 @@ export const OrderProvider = ({ children }) => {
 
   async function postPreOrder() {
     try {
-      await api.post("/preorders", { total, user: user._id });
+        const products = order.orders.map(item => ({
+            quantity: item.quantity,
+            product: item._id,
+            price: item.price
+        }));
+
+        const nuevaPreorden = {
+            total,
+            user: user._id,
+            products
+        };
+
+        console.log("Posting pre-order:", nuevaPreorden); // Debugging log
+
+        await api.post("/preorders", nuevaPreorden);
     } catch (error) {
-      console.error("Error creating pre-order:", error);
+        console.error("Error creating pre-order:", error);
     }
-  }
+}
 
   return (
     <OrderContext.Provider value={{
       order,
       total,
+      cartCount, // Pasar cartCount aquí
       sidebarToggle,
       handleChangeQuantity,
       addOrderItem,
@@ -208,7 +223,7 @@ export const OrderProvider = ({ children }) => {
       toggleSidebarOrder,
       closeSidebar,
       postOrder,
-      postPreOrder // Incluido en el contexto
+      postPreOrder
     }}>
       {children}
     </OrderContext.Provider>
