@@ -29,9 +29,6 @@ export default function OrderSidebar() {
     try {
       // Llamada a postOrder para crear la orden
       await postOrder();
-
-      // Llamada a postPreOrder para crear la preorden
-      // Nota: postOrder debería manejar la creación de la preorden
     } catch (error) {
       console.error("Error finalizando la compra:", error);
     }
@@ -45,7 +42,7 @@ export default function OrderSidebar() {
       <div className="list-container">
         <h2>Orden actual:</h2>
         <ul className="order-list">
-          {order.map((product) => (
+          {order.orders && order.orders.map((product) => (
             <li className="order-item" key={product._id}>
               <img
                 className="order-image"
@@ -80,7 +77,7 @@ export default function OrderSidebar() {
       </div>
       <div className="order-finish">
         <div className="total">
-          <div className="total-count">Items: {order.reduce((acc, item) => acc + item.quantity, 0)}</div>
+          <div className="total-count">Items: {order.orders ? order.orders.reduce((acc, item) => acc + item.quantity, 0) : 0}</div>
           <div className="total-price">
             Total $ <span>{total}</span>
           </div>

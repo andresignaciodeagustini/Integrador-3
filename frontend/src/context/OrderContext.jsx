@@ -1,3 +1,4 @@
+// En OrderContext.jsx
 import { useState, useContext, createContext, useEffect } from "react";
 import Swal from 'sweetalert2';
 import { useUser } from "./UserContext";
@@ -11,10 +12,7 @@ export const OrderProvider = ({ children }) => {
   const { user, token, logout } = useUser();
   const api = useApi();
 
-  const [order, setOrder] = useState(() => {
-    const savedOrder = localStorage.getItem('order');
-    return savedOrder ? JSON.parse(savedOrder) : [];
-  });
+  const [order, setOrder] = useState({ orders: [] });
   const [total, setTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [sidebarToggle, setSidebarToggle] = useState(false);
@@ -25,7 +23,7 @@ export const OrderProvider = ({ children }) => {
         try {
           console.log("Fetching cart for user:", user._id); // Debugging log
           const response = await api.get(`/order/${user._id}`);
-          setOrder(response.data || []);
+          setOrder(response.data || { orders: [] });
         } catch (error) {
           console.log("Error fetching cart:", error);
         }
@@ -51,12 +49,12 @@ export const OrderProvider = ({ children }) => {
       return;
     }
 
-    const existingProduct = order.find(prod => prod._id === producto._id);
+    const existingProduct = order.orders.find(prod => prod._id === producto._id);
 
     if (existingProduct) {
       handleChangeQuantity(existingProduct._id, existingProduct.quantity + 1);
     } else {
-      const updatedOrder = [...order, { ...producto, quantity: 1 }];
+      const updatedOrder = { ...order, orders: [...order.orders, { ...producto, quantity: 1 }] };
       setOrder(updatedOrder);
 
       try {
@@ -70,33 +68,38 @@ export const OrderProvider = ({ children }) => {
 
   function calculateTotal() {
     let totalCount = 0;
-    order.forEach((prod) => {
-      if (prod.quantity && prod.price) {
-        totalCount += prod.price * prod.quantity;
-      }
-    });
+    if (order.orders) {
+      order.orders.forEach((prod) => {
+        if (prod.quantity && prod.price) {
+          totalCount += prod.price * prod.quantity;
+        }
+      });
+    }
     setTotal(totalCount);
     console.log("Total calculated:", totalCount); // Debugging log
   }
 
   function CartCount() {
     let count = 0;
-    order.forEach((prod) => {
-      count += prod.quantity;
-    });
+    if (order.orders) {
+      order.orders.forEach((prod) => {
+        count += prod.quantity;
+      });
+    }
     setCartCount(count);
     console.log("Cart count calculated:", count); // Debugging log
   }
 
   async function handleChangeQuantity(id, quantity) {
-    const updProducts = order.map((item) => {
+    const updProducts = order.orders.map((item) => {
       if (item._id === id) {
         return { ...item, quantity: +quantity };
       }
       return item;
     });
 
-    setOrder(updProducts);
+    const updatedOrder = { ...order, orders: updProducts };
+    setOrder(updatedOrder);
 
     if (user) {
       try {
@@ -119,8 +122,8 @@ export const OrderProvider = ({ children }) => {
       reverseButtons: true,
     }).then(result => {
       if (result.isConfirmed) {
-        const products = order.filter((prod) => prod._id !== id);
-        setOrder(products);
+        const updatedOrder = { ...order, orders: order.orders.filter((prod) => prod._id !== id) };
+        setOrder(updatedOrder);
 
         if (user) {
           try {
@@ -153,7 +156,7 @@ export const OrderProvider = ({ children }) => {
         });
         return;
       }
-      const products = order.map(item => ({
+      const products = order.orders.map(item => ({
         quantity: item.quantity,
         product: item._id,
         price: item.price
@@ -161,7 +164,7 @@ export const OrderProvider = ({ children }) => {
 
       const nuevaOrden = {
         total,
-        user: user._id, // Asegúrate de que este campo esté presente
+        user: user._id,
         products
       };
 
@@ -171,85 +174,41 @@ export const OrderProvider = ({ children }) => {
       await postPreOrder();
 
       Swal.fire("Orden creada", "La orden y la preorden se crearon correctamente", "success");
-      setOrder([]);
+      setOrder({ orders: [] });
 
       if (user) {
         try {
-          console.log("Clearing cart after order for user:", user._id); // Debugging log
           await api.delete(`/order/${user._id}`);
         } catch (error) {
           console.log("Error clearing cart after order:", error);
         }
       }
     } catch (error) {
-      console.log("Error creating order:", error); // Improved for debugging
-      Swal.fire("Error", "Error al crear la orden", "error");
+      console.error("Error creating order:", error);
+      Swal.fire("Error", "Hubo un problema al procesar la orden", "error");
     }
   }
 
   async function postPreOrder() {
     try {
-      if (!user || !token) {
-        Swal.fire({
-          title: "Error",
-          text: "Debe estar logueado para realizar una preorden",
-          icon: "warning",
-          timer: 4000
-        });
-        return;
-      }
-      const products = order.map(item => ({
-        quantity: item.quantity,
-        product: item._id,
-        price: item.price
-      }));
-
-      const nuevaPreOrden = {
-        total,
-        user: user._id,
-        products
-      };
-
-      console.log("Posting pre-order:", nuevaPreOrden); // Debugging log
-
-      await api.post("/preorders", nuevaPreOrden);
-      Swal.fire("Preorden creada", "La preorden se creó correctamente", "success");
+      await api.post("/preorders", { total, user: user._id });
     } catch (error) {
-      console.log("Error creating preorder:", error); // Improved for debugging
-      Swal.fire("Error", "Error al crear la preorden", "error");
+      console.error("Error creating pre-order:", error);
     }
   }
-
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-
-      if (user && token) {
-        postPreOrder(); // Enviar preorden antes de salir
-      }
-
-      event.returnValue = ''; // Para algunos navegadores
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [order, user, token]); // Asegúrate de incluir `user` y `token` como dependencias
 
   return (
     <OrderContext.Provider value={{
       order,
       total,
-      cartCount,
       sidebarToggle,
+      handleChangeQuantity,
+      addOrderItem,
+      removeItem,
       toggleSidebarOrder,
       closeSidebar,
-      addOrderItem,
-      handleChangeQuantity,
-      removeItem,
       postOrder,
-      postPreOrder
+      postPreOrder // Incluido en el contexto
     }}>
       {children}
     </OrderContext.Provider>
