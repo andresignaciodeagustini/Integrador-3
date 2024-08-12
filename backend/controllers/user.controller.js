@@ -72,14 +72,13 @@ async function getUsers(req, res) {
 // Crear un nuevo usuario
 async function postUser(req, res) {
     try {
-        // Imprimir el cuerpo de la solicitud para verificar su contenido
         console.log('req.body:', req.body);
+        console.log('req.file:', req.file);
 
         if (req.user?.role !== "ADMIN_ROLE") {
             req.body.role = "CLIENT_ROLE";
         }
 
-        // Asegúrate de que req.body.password esté definido
         if (!req.body.password) {
             console.log('Error: La contraseña no está presente en req.body');
             return res.status(400).send({
@@ -88,13 +87,9 @@ async function postUser(req, res) {
             });
         }
 
-        // Imprimir la contraseña antes de hashearla
         console.log('Contraseña antes de hashear:', req.body.password);
 
-        // Hashear la contraseña con bcrypt
         req.body.password = await bcrypt.hash(req.body.password, saltRounds);
-
-        // Imprimir la contraseña hasheada para confirmar
         console.log('Contraseña hasheada:', req.body.password);
 
         const user = new User(req.body);
@@ -104,7 +99,7 @@ async function postUser(req, res) {
         }
 
         const newUser = await user.save();
-        newUser.password = undefined; // No enviar la contraseña en la respuesta
+        newUser.password = undefined;
 
         res.status(201).send({
             ok: true,
@@ -120,7 +115,6 @@ async function postUser(req, res) {
         });
     }
 }
-
 // Eliminar usuario por ID
 async function deleteUser(req, res) {
     try {

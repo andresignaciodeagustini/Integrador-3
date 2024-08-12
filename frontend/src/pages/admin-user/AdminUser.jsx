@@ -5,6 +5,8 @@ import './AdminUser.css';
 import Header from '../../layout/header/Header';
 import Pagination from "../../components/pagination/Pagination";
 import useApi from "../../services/interceptor/Interceptor";
+import { useUser } from "../../context/UserContext";
+
 
 export default function AdminUser() {
   const {
@@ -20,6 +22,7 @@ export default function AdminUser() {
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
   const [pageItems, setPageItems] = useState(2);
+  const { token } = useUser();
   const api = useApi();
 
   useEffect(() => {
@@ -39,13 +42,29 @@ export default function AdminUser() {
   }
 
   async function onSubmit(data) {
-    if (isEditing) {
-      await updateUser(data);
-    } else {
-      await createUser(data);
+    try {
+      const formData = new FormData();
+      
+      formData.append("fullname", data.fullname);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      formData.append("bornDate", data.bornDate);
+      formData.append("role", data.role || "CLIENT_ROLE");
+      formData.append("image", data.image.length ? data.image[0] : undefined);
+  
+     
+     
+      if (isEditing) {
+        await updateUser(formData);
+      } else {
+        await createUser(formData);
+      }
+  
+      reset();
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
     }
-    reset();
-    setIsEditing(false);
   }
 
   async function createUser(data) {
@@ -58,13 +77,19 @@ export default function AdminUser() {
       console.error("Error al crear el usuario:", error);
     }
   }
-
-  async function deleteUser(id) {
+  async function createUser(formData) {
     try {
-      await api.delete(`/users/${id}`);
+      const newUser = await api.post(`/users`, formData, {
+        headers: {
+         
+          Authorization: token
+        }
+      });
+      console.log("Nuevo usuario creado:", newUser.data);
+      reset();
       getUsers({});
     } catch (error) {
-      console.error("Error al eliminar el usuario:", error);
+      console.error("Error al crear el usuario:", error);
     }
   }
 
@@ -79,11 +104,25 @@ export default function AdminUser() {
     }
   }
 
+  async function deleteUser(id) {
+    try {
+      await api.delete(`/users/${id}`, {
+        headers: {
+          Authorization: token // Asegúrate de incluir el token correctamente
+        }
+      });
+      console.log("Usuario eliminado:", id);
+      getUsers({ page, pageItems });
+    } catch (error) {
+      console.error("Error al eliminar el usuario:", error);
+    }
+  }
+
   function handleEditUser(usuario) {
     console.log("Editar usuario", usuario);
     setIsEditing(true);
-    setValue("id", usuario.id);
-    setValue("fullName", usuario.fullName || '');
+    setValue("id", usuario._id);
+    setValue("fullname", usuario.fullname || ''); // Updated to 'fullname'
     setValue("email", usuario.email);
     setValue("image", usuario.image || '');
     setValue("bornDate", usuario.bornDate || '');
@@ -120,7 +159,7 @@ export default function AdminUser() {
               <label>Nombre completo:</label>
               <input
                 type="text"
-                {...register("fullName", {
+                {...register("fullname", { // Updated to 'fullname'
                   required: "Este campo es requerido",
                   minLength: {
                     value: 3,
@@ -132,7 +171,7 @@ export default function AdminUser() {
                   }
                 })}
               />
-              {errors.fullName && <span className="input-error">{errors.fullName.message}</span>}
+              {errors.fullname && <span className="input-error">{errors.fullname.message}</span>} {/* Updated to 'fullname' */}
             </div>
 
             <div className="form-group">
@@ -149,7 +188,7 @@ export default function AdminUser() {
             <div className="form-group">
               <label>Imagen:</label>
               <input
-                type="text"
+                type="file"
                 {...register("image")}
               />
               {errors.image && <span className="input-error">{errors.image.message}</span>}
@@ -180,8 +219,8 @@ export default function AdminUser() {
             <div className="form-group">
               <label>Rol:</label>
               <select {...register("role", { required: "Selecciona un rol" })}>
-                <option value="admin">Administrador</option>
-                <option value="user">Usuario</option>
+                <option value="ADMIN_ROLE">Administrador</option>
+                <option value="CLIENT_ROLE">Usuario</option>
               </select>
               {errors.role && <span className="input-error">{errors.role.message}</span>}
             </div>
@@ -204,25 +243,25 @@ export default function AdminUser() {
           </thead>
           <tbody>
             {users.map((user) => (
-           <tr key={user._id}>
-           <td>
-             <img
-               className="user-image"
-               src={`http://localhost:3000/images/users/${user.image}`}
-               alt={user.fullname}
-             />
-           </td>
-           <td>{user.fullname}</td>
-           <td>{user.email}</td>
-           <td>{user.role}</td>
-           <td>{user.isActive ? 'Sí' : 'No'}</td>
-           <td>
-             <div className="buttons-container">
-               <button className="edit-button" onClick={() => handleEditUser(user)}>EDITAR</button>
-               <button className="delete-button" onClick={() => handleDeleteClick(user.id)}>BORRAR</button>
-             </div>
-           </td>
-         </tr>
+              <tr key={user.id}>
+                <td>
+                  <img
+                    className="user-image"
+                    src={`http://localhost:3000/images/users/${user.image}`}
+                    alt={user.fullname} // Updated to 'fullname'
+                  />
+                </td>
+                <td>{user.fullname}</td> {/* Updated to 'fullname' */}
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+                <td>{user.isActive ? 'Sí' : 'No'}</td>
+                <td>
+                  <div className="buttons-container">
+                    <button className="edit-button" onClick={() => handleEditUser(user)}>EDITAR</button>
+                    <button className="delete-button" onClick={() => handleDeleteClick(user._id)}>BORRAR</button>
+                  </div>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
