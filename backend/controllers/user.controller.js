@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const saltRounds = 10; 
 const secret = process.env.SECRET;
+const mongoose = require('mongoose');
 
 // Obtener usuario por ID
 async function getUserById(req, res) {
@@ -142,12 +143,20 @@ async function deleteUser(req, res) {
     }
 }
 
-// Actualizar usuario por ID
+// Actualizar usuario por ID usando parámetro de ruta
 async function updateUser(req, res) {
     try {
-        const id = req.params.idUpdate;
+        const id = req.params.id; // Obteniendo el ID de la URL
 
-        if (req.user.role !== 'ADMIN_ROLE' && req.user._id !== req.params.id) {
+        // Verifica que el ID es un ObjectId válido
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                ok: false,
+                message: "ID de usuario inválido"
+            });
+        }
+        // Verificar permisos
+        if (req.user.role !== 'ADMIN_ROLE' && req.user._id.toString() !== id) {
             return res.status(400).send({
                 ok: false,
                 message: "No se puede editar este usuario"
@@ -166,12 +175,14 @@ async function updateUser(req, res) {
             newData.role = undefined;
         }
 
+        // Manejo de imágenes
         if (req.file?.filename) {
             newData.image = req.file.filename;
         } else {
-            delete newData.image;
+            delete newData.image; // Solo si deseas eliminar el campo si no hay archivo
         }
 
+        // Actualizar el usuario
         const updUser = await User.findByIdAndUpdate(id, newData, { new: true });
 
         if (!updUser) {
@@ -188,10 +199,10 @@ async function updateUser(req, res) {
         });
 
     } catch (error) {
-        console.log(error);
+        console.log('Error en updateUser:', error);
         res.status(500).send({
             ok: false,
-            message: "No se pudo editar usuario"
+            message: "No se pudo editar el usuario"
         });
     }
 }

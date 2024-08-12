@@ -7,7 +7,6 @@ import Pagination from "../../components/pagination/Pagination";
 import useApi from "../../services/interceptor/Interceptor";
 import { useUser } from "../../context/UserContext";
 
-
 export default function AdminUser() {
   const {
     register,
@@ -29,7 +28,7 @@ export default function AdminUser() {
     getUsers({});
   }, [page, pageItems]);
 
-  async function getUsers({page=0}) {
+  async function getUsers({ page = 0 }) {
     try {
       const response = await api.get(`/users?limit=${pageItems}&page=${page}`);
       const { users: fetchedUsers, total } = response.data;
@@ -51,15 +50,17 @@ export default function AdminUser() {
       formData.append("bornDate", data.bornDate);
       formData.append("role", data.role || "CLIENT_ROLE");
       formData.append("image", data.image.length ? data.image[0] : undefined);
-  
-     
-     
+
       if (isEditing) {
-        await updateUser(formData);
+        const userId = data.id;
+        if (!userId) {
+          throw new Error("User ID is missing for update");
+        }
+        await updateUser(userId, formData);
       } else {
         await createUser(formData);
       }
-  
+
       reset();
       setIsEditing(false);
     } catch (error) {
@@ -67,21 +68,10 @@ export default function AdminUser() {
     }
   }
 
-  async function createUser(data) {
-    try {
-      const newUser = await api.post(`/users`, data);
-      console.log("Nuevo usuario creado:", newUser.data);
-      reset();
-      getUsers({});
-    } catch (error) {
-      console.error("Error al crear el usuario:", error);
-    }
-  }
   async function createUser(formData) {
     try {
       const newUser = await api.post(`/users`, formData, {
         headers: {
-         
           Authorization: token
         }
       });
@@ -93,12 +83,16 @@ export default function AdminUser() {
     }
   }
 
-  async function updateUser(user) {
+  async function updateUser(id, formData) {
     try {
-      await api.put(`/users/${user.id}`, user);
-      getUsers();
-      setIsEditing(false);
-      reset();
+      const response = await api.put(`/users/${id}`, formData, {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      console.log("Usuario actualizado:", response.data);
+      getUsers({});
     } catch (error) {
       console.error("Error al actualizar el usuario:", error);
     }
@@ -108,7 +102,7 @@ export default function AdminUser() {
     try {
       await api.delete(`/users/${id}`, {
         headers: {
-          Authorization: token // Asegúrate de incluir el token correctamente
+          Authorization: token
         }
       });
       console.log("Usuario eliminado:", id);
@@ -121,7 +115,7 @@ export default function AdminUser() {
   function handleEditUser(usuario) {
     console.log("Editar usuario", usuario);
     setIsEditing(true);
-    setValue("id", usuario._id);
+    setValue("id", usuario._id); // Asegúrate de que esto use _id
     setValue("fullname", usuario.fullname || ''); // Updated to 'fullname'
     setValue("email", usuario.email);
     setValue("image", usuario.image || '');
@@ -271,9 +265,9 @@ export default function AdminUser() {
           pageItems={pageItems}
         />
         <select defaultValue={pageItems} onChange={(e) => setPageItems(e.target.value)}>
-            <option value="2">2 Items</option>
-            <option value="3">3 Items</option>
-            <option value="5">5 Items</option>
+          <option value="2">2 Items</option>
+          <option value="3">3 Items</option>
+          <option value="5">5 Items</option>
         </select>
       </div>
     </>

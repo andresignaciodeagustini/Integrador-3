@@ -18,7 +18,7 @@ router.post("/users", [auth, isAdmin, upload], userController.postUser);
 router.delete("/users/:id", [auth, isAdmin, upload], userController.deleteUser);
 
 // PUT update user by id
-router.put("/users/:idUpdate",[auth, isAdmin, upload], userController.updateUser);
+router.put("/users/:id",[auth, isAdmin, upload], userController.updateUser);
 
 // POST login
 router.post("/login", userController.login);
