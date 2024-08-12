@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const saltRounds = 10; 
 const secret = process.env.SECRET;
 
+// Obtener usuario por ID
 async function getUserById(req, res) {
     try {
         const id = req.params.id;
@@ -30,14 +31,16 @@ async function getUserById(req, res) {
         });
     }
 }
+
+// Obtener usuarios con paginación
 async function getUsers(req, res) {
     try {
-        const limit = parseInt(req.query.limit, 10) || 3; // Número de usuarios por página
-        const page = parseInt(req.query.page, 10) || 0;   // Número de página, empezando desde 0
+        const limit = parseInt(req.query.limit, 10) || 3;
+        const page = parseInt(req.query.page, 10) || 0;
 
         const filters = {};
         if (req.query.name) {
-            filters.fullName = { $regex: req.query.name, $options: 'i' };
+            filters.fullname = { $regex: req.query.name, $options: 'i' };
         }
 
         const [users, total] = await Promise.all([
@@ -65,22 +68,52 @@ async function getUsers(req, res) {
         });
     }
 }
+
+// Crear un nuevo usuario
 async function postUser(req, res) {
     try {
+        // Imprimir el cuerpo de la solicitud para verificar su contenido
+        console.log('req.body:', req.body);
+
         if (req.user?.role !== "ADMIN_ROLE") {
             req.body.role = "CLIENT_ROLE";
         }
 
+        // Asegúrate de que req.body.password esté definido
+        if (!req.body.password) {
+            console.log('Error: La contraseña no está presente en req.body');
+            return res.status(400).send({
+                ok: false,
+                message: "La contraseña es requerida"
+            });
+        }
+
+        // Imprimir la contraseña antes de hashearla
+        console.log('Contraseña antes de hashear:', req.body.password);
+
+        // Hashear la contraseña con bcrypt
         req.body.password = await bcrypt.hash(req.body.password, saltRounds);
 
-        const user = new User(req.body);
-        const newUser = await user.save();
-        newUser.password = undefined;
+        // Imprimir la contraseña hasheada para confirmar
+        console.log('Contraseña hasheada:', req.body.password);
 
-        res.status(201).send(newUser);
+        const user = new User(req.body);
+
+        if (req.file?.filename) {
+            user.image = req.file.filename;
+        }
+
+        const newUser = await user.save();
+        newUser.password = undefined; // No enviar la contraseña en la respuesta
+
+        res.status(201).send({
+            ok: true,
+            message: "Usuario creado correctamente",
+            user: newUser
+        });
 
     } catch (error) {
-        console.log(error);
+        console.log('Error en postUser:', error);
         res.status(500).send({
             ok: false,
             message: "Error al crear el usuario"
@@ -88,6 +121,7 @@ async function postUser(req, res) {
     }
 }
 
+// Eliminar usuario por ID
 async function deleteUser(req, res) {
     try {
         const id = req.params.id;
@@ -114,34 +148,35 @@ async function deleteUser(req, res) {
     }
 }
 
+// Actualizar usuario por ID
 async function updateUser(req, res) {
     try {
         const id = req.params.idUpdate;
 
-if (req.user.role !== 'ADMIN_ROLE' && req.user._id !== req.params.id){
-        return res.status (400).send ({
-            ok: false,
-            message: "No se puede editar este usuario"
-        })
-}
-
+        if (req.user.role !== 'ADMIN_ROLE' && req.user._id !== req.params.id) {
+            return res.status(400).send({
+                ok: false,
+                message: "No se puede editar este usuario"
+            });
+        }
 
         const newData = req.body;
 
+        // Hashear la contraseña si se proporciona
+        if (newData.password) {
+            newData.password = await bcrypt.hash(newData.password, saltRounds);
+        }
 
-                        
-                    // TODO: Hashear password en el update
-                if (newData.password) {
-                    newData.password = await bcrypt.hash(newData.password, saltRounds);
-                }
+        // Resetear el rol si el usuario no es admin
+        if (req.user.role !== 'ADMIN_ROLE') {
+            newData.role = undefined;
+        }
 
-                // TODO: Resetear Role
-                if (req.user.role !== 'ADMIN_ROLE') {
-                    newData.role = undefined;
-                }
-
-                // Asegúrate de que 'id' es necesario para el logging en esta parte.
-                console.log(id);
+        if (req.file?.filename) {
+            newData.image = req.file.filename;
+        } else {
+            delete newData.image;
+        }
 
         const updUser = await User.findByIdAndUpdate(id, newData, { new: true });
 
@@ -154,7 +189,8 @@ if (req.user.role !== 'ADMIN_ROLE' && req.user._id !== req.params.id){
 
         res.status(200).send({
             ok: true,
-            message: "Usuario actualizado correctamente"
+            message: "Usuario actualizado correctamente",
+            user: updUser
         });
 
     } catch (error) {
@@ -178,10 +214,11 @@ async function login(req, res) {
             });
         }
 
-        console.log(email, password);
+        console.log('Email:', email);
+        console.log('Password:', password);
     
         const user = await User.findOne({ email: { $regex: email, $options: "i" } });
-        console.log(user);
+        console.log('Usuario encontrado:', user);
 
         if (!user) {
             return res.status(404).send({
@@ -211,7 +248,7 @@ async function login(req, res) {
         });
 
     } catch (error) {
-        console.log(error);
+        console.log('Error en login:', error);
         res.status(500).send({
             ok: false,
             message: "Error al hacer el login"
@@ -227,12 +264,3 @@ module.exports = {
     getUserById,
     login
 };
-
-
-
-
-
-
-
-
-

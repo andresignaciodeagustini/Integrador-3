@@ -147,6 +147,15 @@ export default function AdminUser() {
             </div>
 
             <div className="form-group">
+              <label>Imagen:</label>
+              <input
+                type="text"
+                {...register("image")}
+              />
+              {errors.image && <span className="input-error">{errors.image.message}</span>}
+            </div>
+
+            <div className="form-group">
               <label>Fecha de nacimiento:</label>
               <input
                 type="date"
@@ -185,6 +194,7 @@ export default function AdminUser() {
         <table className="user-table">
           <thead>
             <tr>
+              <th>IMAGEN</th>
               <th>NOMBRE COMPLETO</th>
               <th>EMAIL</th>
               <th>ROL</th>
@@ -194,18 +204,25 @@ export default function AdminUser() {
           </thead>
           <tbody>
             {users.map((user) => (
-             <tr key={user._id}>
-               <td>{user.fullName}</td>
-               <td>{user.email}</td>
-               <td>{user.role}</td>
-               <td>{user.isActive ? 'Sí' : 'No'}</td>
-               <td>
-                 <div className="buttons-container">
-                   <button className="edit-button" onClick={() => handleEditUser(user)}>EDITAR</button>
-                   <button className="delete-button" onClick={() => handleDeleteClick(user.id)}>BORRAR</button>
-                 </div>
-               </td>
-             </tr>
+           <tr key={user._id}>
+           <td>
+             <img
+               className="user-image"
+               src={`http://localhost:3000/images/users/${user.image}`}
+               alt={user.fullname}
+             />
+           </td>
+           <td>{user.fullname}</td>
+           <td>{user.email}</td>
+           <td>{user.role}</td>
+           <td>{user.isActive ? 'Sí' : 'No'}</td>
+           <td>
+             <div className="buttons-container">
+               <button className="edit-button" onClick={() => handleEditUser(user)}>EDITAR</button>
+               <button className="delete-button" onClick={() => handleDeleteClick(user.id)}>BORRAR</button>
+             </div>
+           </td>
+         </tr>
             ))}
           </tbody>
         </table>
