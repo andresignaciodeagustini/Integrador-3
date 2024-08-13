@@ -3,21 +3,24 @@
 footer {
   position: relative; /* Asegura que el encabezado posicionado absolutamente esté dentro del pie de página */
 }
-
 .footer-header {
   background-color: black; /* Fondo negro para el encabezado */
   padding: 10px; /* Espacio alrededor del logo */
   text-align: center; /* Centra el logo horizontalmente */
   position: absolute; /* Posiciona el encabezado sobre el footer */
-  top: 0; /* Alinea al borde superior del pie de página */
+  top: -10px; /* Ajusta el valor para mover el logo más arriba */
   width: 100%; /* Asegura que el encabezado ocupe todo el ancho del pie de página */
   z-index: 10; /* Asegura que el encabezado esté encima del contenido del footer */
-  margin-top: 5%;
+  margin-top: 0; /* Asegúrate de que el margen superior no empuje el logo hacia abajo */
 }
 
 .footer-header img {
   max-width: 150px; /* Ajusta el tamaño del logo según sea necesario */
   height: auto; /* Mantiene la proporción del logo */
+  display: block; /* Asegura que el elemento sea tratado como bloque para centrar */
+  margin: 0 auto; /* Centra el logo horizontalmente */
+  margin-top: 4%;
+
 }
 
 .footer {

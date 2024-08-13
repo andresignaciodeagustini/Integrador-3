@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const saltRounds = 10; 
 const secret = process.env.SECRET;
-const mongoose = require('mongoose');
+
 
 // Obtener usuario por ID
 async function getUserById(req, res) {

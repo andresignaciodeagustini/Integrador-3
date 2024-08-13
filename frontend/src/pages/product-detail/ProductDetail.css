@@ -6,53 +6,63 @@
 .product-action {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Alinea los elementos a la izquierda */
   margin-bottom: 20%;
+  margin-right: 0; /* Elimina el margen derecho para ajustar el alineamiento */
+  position: relative; /* Permite ajustar el contenido con márgenes o posición */
+  margin-top: 5%;
 }
 
 .product-action h2 {
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 400;
-  text-align: center;
-  margin-top: 23%;
+  text-align: left; /* Alinea el texto a la izquierda */
+  margin-top: 0; /* Ajusta el margen superior para alinear con otros elementos */
+  margin-bottom: 20px; /* Ajusta el margen inferior si es necesario */
+  border-bottom: 1px solid gray; /* Línea negra debajo del nombre del producto */
+  padding-bottom: 10px; /* Espacio entre el texto y la línea */
 }
 
 .product-action h5 {
   font-size: 16px;
   font-weight: normal;
   margin-bottom: 5px;
-  text-align: center;
+  text-align: left; /* Alinea el texto a la izquierda */
 }
 
 .product-action h6 {
   font-size: 9px;
   font-weight: 100;
   letter-spacing: 1px;
-  text-align: center;
+  text-align: left; /* Alinea el texto a la izquierda */
   margin-bottom: 5px;
 }
 
 .image-detail img {
-  max-width: 100%;
-  height: auto;
+  width: 1500px;
+  height: 650px;
+  padding: 6%;
+  margin-top: -4%;
+  margin-left: 10%;
 }
 
 .color-picker {
   display: flex;
   justify-content: center;
   margin-top: 2%;
-  margin-left: 3%;
+  margin-left: 0; /* Ajusta el margen izquierdo para alinear correctamente */
 }
 
 .color-circle {
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  border: 1px solid #dcdcdc; /* Borde más fino y gris clarito */
   margin-right: 10px;
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
   outline: none;
-  border: none;
+  background-color: white; /* Fondo blanco */
 }
 
 .color-circle[data-color="black"] {
@@ -71,28 +81,35 @@
 .tallas-guide {
   width: 100%;
   margin-top: 20px;
-  margin-right: -12%;
+  margin-right: 0; /* Ajusta el margen derecho para alinear correctamente */
 }
 
 .tallas-guide h6 {
-  margin-right: 10%;
+  margin-right: 0; /* Ajusta el margen derecho si es necesario */
 }
 
 .tallas-guide .tallas-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Alinea los botones a la izquierda */
   margin-top: 10px;
 }
 
 .tallas-guide button {
   width: 30px;
   height: 30px;
-  border: none;
+  border: 1px solid #dcdcdc; /* Borde más fino y gris clarito */
+  background-color: white; /* Fondo blanco */
+  color: #6c757d; /* Gris un poco más oscuro para el número */
   border-radius: 5px;
   margin-right: 10px;
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
   outline: none;
+  font-size: 14px; /* Ajusta el tamaño del texto si es necesario */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* Asegura que el texto esté centrado */
 }
 
 .tallas-guide button:focus,
@@ -100,19 +117,20 @@
   opacity: 0.7;
 }
 
-.bottom-detail {
-  margin-top: 20px;
+.tallas-guide button:hover {
+  background-color: #f8f9fa; /* Color de fondo ligeramente gris para el hover */
 }
 
 .bottom-detail button.add-to-bag-button {
   background-color: black;
   color: white;
-  padding: 26px 103px;
+  padding: 20px 192px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-size: 10px;
-  margin-left: 7%;
+  margin-left: -2%;
+  font-weight: 700; /* Ajuste del grosor del texto */
 }
 
 .bottom-detail button.add-to-bag-button:hover {
@@ -127,11 +145,13 @@
 }
 
 .product-text h4 {
-  font-size: 11px;
-  margin-bottom: 10px;
-  color: #e0e0e0;
-  font-weight: 100;
-  text-align: center;
+  font-size: 10px; /* Ajusta el tamaño según el diseño deseado */
+  
+  color: black; /* Color del título */
+  margin-bottom: 10px; /* Espacio debajo del título */
+  padding-bottom: 10px; /* Espacio entre el título y la línea */
+ 
+  border-top: none; /* Elimina el borde superior */
 }
 
 .product-text p {
@@ -139,6 +159,10 @@
   font-weight: 100;
   letter-spacing: 1px;
   margin-bottom: 10px;
+  white-space: pre-line; /* Permite los saltos de línea en el texto */
+  max-width: 65%; /* Ajusta el ancho máximo de la descripción */
+  margin-left: 0; /* Centra horizontalmente */
+ 
 }
 
 .product-text ul li {
@@ -184,6 +208,12 @@
 .added-to-bag-message.visible {
   display: block;
   opacity: 1;
+}
+.details-info{
+  color: black;
+  font-size: 10px;
+  margin-top: 40px;
+  margin-right: 0px;
 }
 
 @media (max-width: 768px) {

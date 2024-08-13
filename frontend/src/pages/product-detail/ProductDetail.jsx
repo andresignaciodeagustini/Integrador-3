@@ -6,6 +6,7 @@ import { useOrder } from "../../context/OrderContext";
 import useApi from "../../services/interceptor/Interceptor";
 import Header from "../../layout/header/Header";
 import OrderSidebar from "../../layout/order-sidebar/OrderSidebar";
+import Footer from "../../layout/footer/Footer"; // Importa el Footer
 import "./ProductDetail.css";
 
 const ProductDetail = () => {
@@ -82,6 +83,14 @@ const ProductDetail = () => {
             <div className="product-action">
               <h2>{product.name}</h2>
               <h5>{`AR$ ${product.price}`}</h5>
+              <div className="product-text">
+              <h4 className="details-title">Detalles del producto</h4>
+              
+              <p>{product.description}</p>
+              {product.details && <p>{product.details}</p>}
+             
+            </div>
+            <h4 className="details-info">Art. Nr. {product._id}. Aranceles de importación incluidos</h4>
               <h6>COLOR</h6>
               <div className="color-picker">
                 <button className="color-circle" data-color="black"></button>
@@ -112,17 +121,11 @@ const ProductDetail = () => {
               </Link>
             </div>
           </div>
-
-          <div className="product-text">
-            <h4>{`Art. Nr. ${product._id}. Aranceles de importación incluidos`}</h4>
-            <p>{product.description}</p>
-            {/* Asegúrate de que `product.details` esté definido y tenga un valor válido */}
-            {product.details && <p>{product.details}</p>}
-          </div>
         </section>
       </div>
 
       <OrderSidebar />
+      <Footer /> {/* Añade el Footer aquí */}
     </>
   );
 };
