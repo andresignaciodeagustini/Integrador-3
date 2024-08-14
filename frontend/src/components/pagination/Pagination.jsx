@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './Pagination.css';
 
-export default function Pagination({ totalItems, loadPage, pageItems = 5 }) {
-  const [page, setPage] = useState(0);
+export default function Pagination({ totalItems, loadPage, pageItems = 5, currentPage }) {
+  const [page, setPage] = useState(currentPage || 0);
   const totalBtns = Math.ceil(totalItems / pageItems);
+
+  useEffect(() => {
+    setPage(currentPage || 0);
+  }, [currentPage]);
 
   function handlePageChange(value) {
     setPage(value);

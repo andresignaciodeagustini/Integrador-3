@@ -12,7 +12,7 @@ router.get("/users", userController.getUsers);
 router.get("/users/:id", userController.getUserById);
 
 // POST create new user
-router.post("/users", [auth, isAdmin, upload], userController.postUser);
+router.post("/users", [upload], userController.postUser);
 
 // DELETE user by id
 router.delete("/users/:id", [auth, isAdmin, upload], userController.deleteUser);

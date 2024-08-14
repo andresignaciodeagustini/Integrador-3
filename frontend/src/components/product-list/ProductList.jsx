@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Slideshow, Slide } from "../slider";
 import ProductCard from "../product-card/ProductCard";
 import axios from "axios";
 import "./ProductList.css";
@@ -11,37 +12,22 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
-  const [pageItems, setPageItems] = useState(2);
-  const [categories, setCategories] = useState([]);
+  const [pageItems, setPageItems] = useState(3); // Mostrar 3 productos por página
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    getProducts();
-  }, [pageItems]);
+    getProducts({ page });
+  }, [page, pageItems]);
 
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  async function getCategories() {
+  async function getProducts({ page = 0 }) {
     try {
-      const response = await axios.get(`${URL}/categories`);
-      const categoriesDB = response.data.categories;
-      setCategories(categoriesDB);
-    } catch (error) {
-      console.log(error);
-      Swal.fire("Error", "No se pudieron obtener las categorías");
-    }
-  }
-
-  async function getProducts({ page = 0, category } = {}) {
-    try {
-      const categoryQuery = category ? `&category=${category}` : '';
-      const response = await axios.get(`${URL}/products?page=${page}&limit=${pageItems}${categoryQuery}`);
+      const response = await axios.get(
+        `${URL}/products?page=${page}&limit=${pageItems}`
+      );
       const { products, total } = response.data;
       setTotalItems(total);
       setProducts(products);
       setIsLoading(false);
-      console.log("Productos obtenidos:", products);
     } catch (error) {
       console.error("Error al obtener los productos:", error);
       setIsLoading(false);
@@ -50,32 +36,35 @@ export default function ProductList() {
 
   return (
     <div>
-      <h2 className="product-list-title">LISTA DE PRODUCTOS</h2>
+      <h2 className="product-list-title">PRODUCTOS FAVORITOS</h2>
 
       {isLoading ? (
         <p>Cargando productos...</p>
       ) : (
-        <div className="product-card-container">
-          {products.map((prod) => (
-            <ProductCard key={prod._id} product={prod} />
+        <Slideshow controles={true} velocidad="500" intervalo="5000">
+          {products.map((product) => (
+            <Slide key={product.id}>
+              <ProductCard product={product} />
+            </Slide>
           ))}
-        </div>
+        </Slideshow>
       )}
 
-      <Pagination 
+      <Pagination
         totalItems={totalItems}
-        loadPage={getProducts}
+        loadPage={(params) => {
+          setPage(params.page);
+          getProducts(params);
+        }}
         pageItems={pageItems}
+        currentPage={page}
       />
+      <select defaultValue={pageItems} onChange={(e) => setPageItems(e.target.value)}>
+            <option value="2">2 Items</option>
+            <option value="3">3 Items</option>
+            <option value="5">5 Items</option>
 
-      <select 
-        value={pageItems}
-        onChange={(e) => setPageItems(Number(e.target.value))}
-      >
-        <option value="2">2 Items</option>
-        <option value="3">3 Items</option>
-        <option value="5">5 Items</option>
-      </select>
+        </select>
     </div>
   );
 }

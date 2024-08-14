@@ -1,29 +1,51 @@
+/* Estilos generales para la paginación */
 .pagination-list {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: -5%;
+  padding: 10px; /* Añade padding si es necesario */
+}
+
+.pagination-item {
+  background-color: #fff; /* Fondo blanco */
+  border: 1px solid #d0d0d0; /* Borde gris */
+  color: #333;
+  padding: 10px 15px; /* Ajusta el padding para hacer los botones más pequeños */
+  margin: 0 3px; /* Ajusta el margen para reducir el espacio entre los botones */
+  cursor: pointer;
+  border-radius: 4px; /* Redondeo de bordes más pequeño */
+  font-size: 14px; /* Ajusta el tamaño del texto */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pagination-item:hover {
+  background-color: #f0f0f0; /* Fondo más claro en hover */
+  border-color: #b0b0b0; /* Borde gris más oscuro en hover */
+}
+
+.pagination-item.active {
+  background-color: black; /* Fondo negro para el botón activo */
+  color: #fff; /* Texto blanco para el botón activo */
+  border-color: black; /* Borde negro para el botón activo */
+}
+
+.pagination-item.active:hover {
+  background-color: black; /* Fondo negro para el botón activo en hover */
+  border-color: black; /* Borde negro para el botón activo en hover */
+}
+
+/* Media query para tabletas */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .pagination-list {
+    margin-top: 0%; /* Ajustar el margen superior para pantallas de tabletas */
   }
-  
+
   .pagination-item {
-    background-color: #f0f0f0;
-    border: none;
-    color: #333;
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    font-size: 10px; /* Ajustar el tamaño del texto para pantallas de tabletas */
+    padding: 8px 12px; /* Ajustar el padding para hacer los botones un poco más pequeños */
+    margin: 0 2px; /* Ajustar el margen para reducir el espacio entre los botones */
   }
-  
-  .pagination-item:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .pagination-item.active {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .pagination-item.active:hover {
-    background-color: #0056b3;
-  }
+}
+.admin-table-container > div {
+  margin-top: 5%;
+}

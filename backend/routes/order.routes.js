@@ -1,11 +1,21 @@
 const router = require('express').Router();
 const orderController = require('../controllers/order.controller');
 const auth = require('../middlewares/auth');
+const isAdmin = require('../middlewares/isAdmin');
 
-// Crear orden
+// Crear una nueva orden
 router.post("/orders", auth, orderController.postOrder);
 
 // Obtener todas las órdenes, opcionalmente filtrando por idUser
-router.get("/orders/:idUser?", auth, orderController.getOrders);
+router.get("/orders", [auth, isAdmin], orderController.getOrders);
+
+// Obtener una orden por ID
+router.get("/orders/:id", auth, orderController.getOrderById);
+
+// Actualizar una orden por ID
+router.put("/orders/:id", auth, orderController.updateOrder);
+
+// Eliminar una orden por ID
+router.delete("/orders/:id", auth, orderController.deleteOrder);
 
 module.exports = router;

@@ -10,7 +10,7 @@
   margin-bottom: 20%;
   margin-right: 0; /* Elimina el margen derecho para ajustar el alineamiento */
   position: relative; /* Permite ajustar el contenido con márgenes o posición */
-  margin-top: 5%;
+  margin-top: 2%;
 }
 
 .product-action h2 {
@@ -122,21 +122,22 @@
 }
 
 .bottom-detail button.add-to-bag-button {
-  background-color: black;
-  color: white;
+  background-color: white; /* Fondo blanco en estado normal */
+  color: black; /* Texto negro en estado normal */
   padding: 20px 192px;
-  border: none;
+  border: 1px solid black; /* Borde negro en estado normal */
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-size: 10px;
   margin-left: -2%;
-  font-weight: 700; /* Ajuste del grosor del texto */
+  font-weight: 700; /* Grosor del texto */
+  margin-top: 5%;
 }
 
 .bottom-detail button.add-to-bag-button:hover {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
+  background-color: black; /* Fondo negro al pasar el cursor */
+  color: white; /* Texto blanco al pasar el cursor */
+  border: 1px solid black; /* Borde negro al pasar el cursor */
 }
 
 .product-text {

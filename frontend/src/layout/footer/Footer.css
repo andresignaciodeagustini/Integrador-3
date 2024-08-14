@@ -1,8 +1,8 @@
-/* Footer.css */
-
+/* Estilos generales del footer */
 footer {
   position: relative; /* Asegura que el encabezado posicionado absolutamente esté dentro del pie de página */
 }
+
 .footer-header {
   background-color: black; /* Fondo negro para el encabezado */
   padding: 10px; /* Espacio alrededor del logo */
@@ -11,7 +11,7 @@ footer {
   top: -10px; /* Ajusta el valor para mover el logo más arriba */
   width: 100%; /* Asegura que el encabezado ocupe todo el ancho del pie de página */
   z-index: 10; /* Asegura que el encabezado esté encima del contenido del footer */
-  margin-top: 0; /* Asegúrate de que el margen superior no empuje el logo hacia abajo */
+  margin-top: 18px;
 }
 
 .footer-header img {
@@ -20,7 +20,6 @@ footer {
   display: block; /* Asegura que el elemento sea tratado como bloque para centrar */
   margin: 0 auto; /* Centra el logo horizontalmente */
   margin-top: 4%;
-
 }
 
 .footer {
@@ -33,7 +32,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; 
-  margin-top: 5%;/* Asegura que las columnas se alineen correctamente */
+  margin-top: 5%; /* Asegura que las columnas se alineen correctamente */
 }
 
 .footer .col {
@@ -154,4 +153,57 @@ footer {
 
 .clearfix {
   clear: both;
+}
+
+/* Media query para tabletas */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .footer .contain {
+    display: flex;
+    flex-wrap: nowrap; /* Asegura que los elementos estén en una sola línea */
+    
+    margin-top: 2%; /* Reducir el margen superior */
+  }
+
+  .footer .col {
+    flex: 1; /* Permite que las columnas crezcan uniformemente */
+    min-width: 160px; /* Ajusta el ancho mínimo de las columnas */
+    padding: 10px; /* Reducir el padding en tabletas */
+  }
+
+  .footer .col h1 {
+    font-size: 10px; /* Reducir el tamaño de la fuente */
+    line-height: 22px; /* Ajustar la altura de línea */
+    letter-spacing: 0.15em; /* Ajustar el espaciado de letras */
+  }
+
+  .footer .col ul li {
+    font-size: 11px; /* Reducir el tamaño de la fuente */
+    padding: 4px 0; /* Reducir el padding */
+  }
+
+  .footer-left {
+    margin-bottom: 0; /* Eliminar el margen inferior */
+    padding-right: 0; /* Eliminar el padding derecho */
+    height: auto; /* Ajustar la altura automáticamente */
+  }
+
+  .footer-left span {
+    margin-right: 10px; /* Reducir el margen derecho */
+    margin-bottom: 10px; /* Añadir margen inferior */
+  }
+
+  .btn-style4, .btn-style5 {
+    width: 130px; /* Reducir el ancho de los botones */
+    font-size: 10px; /* Reducir el tamaño de la fuente */
+    padding: 12px; /* Reducir el padding */
+  }
+
+  .footer-bottom {
+    padding: 10px; /* Reducir el padding */
+    flex-direction: row; /* Mantener la disposición horizontal */
+  }
+
+  .social-icons {
+    margin: 10px 0; /* Ajustar el margen para centrar los iconos */
+  }
 }

@@ -70,8 +70,8 @@ const Footer = () => {
           </div>
           <div className="footer-left">
             <span>¿QUERES SABER MÁS?</span>
-            <NavLink className="btn-style4" to="#">REGÍSTRATE</NavLink>
-            <NavLink className="btn-style5" to="#">INGRESA</NavLink>
+            <a className="btn-style4" href="/register">REGÍSTRATE</a>
+            <a className="btn-style5" href="/login">INGRESA</a>
           </div>
           <div className="social-icons">
             <a href="#"><FontAwesomeIcon icon={faInstagram} /></a>
