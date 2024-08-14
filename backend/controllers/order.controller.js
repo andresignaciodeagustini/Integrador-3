@@ -1,5 +1,6 @@
 const Order = require('../models/order.model');
 const Product = require('../models/product.model');
+const mongoose = require('mongoose');
 
 // Función para crear una nueva orden
 async function postOrder(req, res) {
@@ -62,9 +63,16 @@ async function getOrders(req, res) {
 async function getOrderById(req, res) {
     try {
         const id = req.params.id;
-        const order = await Order.findById(id)
-            .populate("user", "fullName")
-            .populate("products.product");
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send({
+                ok: false,
+                message: "ID inválido"
+            });
+        }
+
+        // Buscar la orden por ID
+        let order = await Order.findById(id);
+        console.log("Orden antes del populate:", order); // Verificar el estado de la orden antes del populate
 
         if (!order) {
             return res.status(404).send({
@@ -73,18 +81,36 @@ async function getOrderById(req, res) {
             });
         }
 
+        // Realizar el populate de los campos referenciados
+        order = await Order.findById(id)
+            .populate("user", "fullName")
+            .populate({
+                path: "products.product",
+                select: "name price" // Puedes ajustar los campos que quieres seleccionar
+            });
+
+        console.log("Orden después del populate:", order); // Verificar el estado de la orden después del populate
+
+        if (!order) {
+            return res.status(404).send({
+                ok: false,
+                message: "Orden no encontrada después del populate"
+            });
+        }
+
         res.status(200).send({
             ok: true,
             order
         });
     } catch (error) {
-        console.log(error);
+        console.log("Error al obtener la orden:", error); // Detalles del error
         res.status(500).send({
             ok: false,
             message: error.message || "Error al obtener la orden"
         });
     }
 }
+
 
 // Función para actualizar una orden por ID
 async function updateOrder(req, res) {

@@ -3,8 +3,19 @@ const { createOrderOrPreorder } = require('../utils/database');
 
 async function postPreorder(req, res) {
   try {
+    const { user, total } = req.body;
+
+    // Verificar que user y total sean válidos
+    if (!user || typeof total !== 'number') {
+      return res.status(400).send({
+        ok: false,
+        message: "Datos incompletos para crear la preorden"
+      });
+    }
+
     // Crear una preorden en la colección 'preorders'
     const preorder = await createOrderOrPreorder(req.body, Preorder);
+
     res.status(201).send({
       ok: true,
       message: "Preorden creada correctamente",
