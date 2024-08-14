@@ -1,4 +1,3 @@
-// En OrderContext.jsx
 import { useState, useContext, createContext, useEffect } from "react";
 import Swal from 'sweetalert2';
 import { useUser } from "./UserContext";
@@ -16,13 +15,15 @@ export const OrderProvider = ({ children }) => {
   const [total, setTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [sidebarToggle, setSidebarToggle] = useState(false);
+  const [orderId, setOrderId] = useState(null); // Estado para almacenar el id de la orden
+
 
   useEffect(() => {
     const fetchCart = async () => {
-      if (user) {
+      if (orderId) { // Cambiar la condición para usar el id de la orden
         try {
-          console.log("Fetching cart for user:", user._id); // Debugging log
-          const response = await api.get(`/order/${user._id}`);
+          console.log("Fetching cart for order:", orderId); // Debugging log
+          const response = await api.get(`/orders/${orderId}`);
           setOrder(response.data || { orders: [] });
         } catch (error) {
           console.log("Error fetching cart:", error);
@@ -30,7 +31,7 @@ export const OrderProvider = ({ children }) => {
       }
     };
     fetchCart();
-  }, [user]);
+  }, [orderId]); // Cambiar la dependencia a orderId
 
   useEffect(() => {
     localStorage.setItem('order', JSON.stringify(order));
@@ -178,7 +179,7 @@ export const OrderProvider = ({ children }) => {
 
       if (user) {
         try {
-          await api.delete(`/order/${user._id}`);
+          await api.delete(`/orders/${user._id}`);
         } catch (error) {
           console.log("Error clearing cart after order:", error);
         }
@@ -191,25 +192,65 @@ export const OrderProvider = ({ children }) => {
 
   async function postPreOrder() {
     try {
-        const products = order.orders.map(item => ({
-            quantity: item.quantity,
-            product: item._id,
-            price: item.price
-        }));
-
-        const nuevaPreorden = {
-            total,
-            user: user._id,
-            products
-        };
-
-        console.log("Posting pre-order:", nuevaPreorden); // Debugging log
-
-        await api.post("/preorders", nuevaPreorden);
+      if (!user || !token) {
+        Swal.fire({
+          title: "Error",
+          text: "Debe estar logueado para realizar una orden",
+          icon: "warning",
+          timer: 4000
+        });
+        return;
+      }
+  
+      const products = order.orders.map(item => ({
+        quantity: item.quantity,
+        product: item._id,
+        price: item.price
+      }));
+  
+      const nuevaPreorden = {
+        total,
+        user: user._id,
+        products
+      };
+  
+      console.log("Posting pre-order:", nuevaPreorden);
+  
+      // Enviar la preorden al backend
+      const response = await api.post("/preorders", nuevaPreorden);
+  
+      // Obtener la preorden completa desde el backend
+      const preOrderData = response.data.preorder;
+  
+      // Actualizar el estado de la orden con la preorden obtenida
+      setOrder({
+        orders: preOrderData.products.map(product => ({
+          _id: product.product._id,
+          name: product.product.name,
+          price: product.price,
+          quantity: product.quantity,
+          image: product.product.image, // Asumiendo que el producto tiene una imagen
+        }))
+      });
+  
+      console.log("Order state updated with pre-order data:", preOrderData);
+  
+      Swal.fire("Orden creada", "La orden y la preorden se crearon correctamente", "success");
+      setOrder({ orders: [] });
+  
+      if (user) {
+        try {
+          await api.delete(`/orders/${user._id}`);
+        } catch (error) {
+          console.log("Error clearing cart after order:", error);
+        }
+      }
     } catch (error) {
-        console.error("Error creating pre-order:", error);
+      console.error("Error creating pre-order:", error);
+      Swal.fire("Error", "Hubo un problema al procesar la orden", "error");
     }
-}
+  }
+  
 
   return (
     <OrderContext.Provider value={{

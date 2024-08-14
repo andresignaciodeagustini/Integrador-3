@@ -9,11 +9,12 @@ import { useOrder } from '../../context/OrderContext';
 import { useUser } from '../../context/UserContext';
 
 const Header = ({ isProductDetailPage }) => {
-  const { toggleSidebarOrder, order, sidebarToggle, cartCount, saveOrderOnLogout, postPreOrder } = useOrder();
+  const { toggleSidebarOrder, order, sidebarToggle, cartCount, postPreOrder } = useOrder();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const location = useLocation();
+  const { user, logout } = useUser();
 
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 0);
@@ -46,26 +47,26 @@ const Header = ({ isProductDetailPage }) => {
     setIsMenuOpen(false); // Cerrar el menú si se abre desde el carrito
   };
 
-  const { user, logout } = useUser();
-
   const handleLogout = async () => {
     try {
-      // Asegúrate de obtener el array de productos del estado
-      const products = order.map(item => ({
-        quantity: item.quantity,
-        product: item._id,
-        price: item.price
-      }));
+      if (user) {
+        // Asegúrate de obtener el array de productos del estado
+        const products = order.orders.map(item => ({
+          quantity: item.quantity,
+          product: item._id,
+          price: item.price
+        }));
   
-      await postPreOrder(products); // Enviar productos a la base de datos
-  
-      logout(); // Proceder con el logout
+        await postPreOrder(); // Enviar productos a la base de datos
+        logout(); // Proceder con el logout
+      }
     } catch (error) {
       console.error("Error during logout:", error);
     } finally {
       setIsMenuOpen(false);
     }
   };
+
   return (
     <header className={`header-nav ${isScrolled || isSpecialPage || isProductDetailPage ? 'scroll-bg-white' : 'transparent-bg'} ${sidebarToggle && isMobileView ? 'hide-header' : ''} ${isProductDetailPage ? 'product-detail-header' : ''}`}>
       <NavLink to="/" className="logo">
@@ -95,7 +96,7 @@ const Header = ({ isProductDetailPage }) => {
       <div className={`user-info ${isScrolled || isSpecialPage || isProductDetailPage ? 'black-icons' : 'white-icons'}`}>
         <div className='user-cart-container'>
           <FontAwesomeIcon
-              icon={faBagShopping}
+            icon={faBagShopping}
             onClick={handleCartClick}
             className="bag-shopping"
             style={{ cursor: 'pointer' }}
