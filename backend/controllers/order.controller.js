@@ -38,7 +38,7 @@ async function postOrder(req, res) {
 
 async function getOrders(req, res) {
     try {
-        const id = req.params.id;
+        const id = req.params.idUser;
         let filter;
 
         if (req.user.role === "ADMIN_ROLE") {
@@ -61,6 +61,56 @@ async function getOrders(req, res) {
         res.status(500).send({
             ok: false,
             message: "Error al obtener órdenes"
+        });
+    }
+}
+
+async function getOrderById(req, res) {
+    try {
+        const { orderId } = req.params;
+        const order = await Order.findById(orderId)
+            .populate("user", "fullName")
+            .populate("products.product");
+
+        if (!order) {
+            return res.status(404).send({
+                ok: false,
+                message: "Orden no encontrada"
+            });
+        }
+
+        return res.status(200).send({
+            ok: true,
+            message: "Orden obtenida correctamente",
+            order
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            ok: false,
+            message: "Error al obtener la orden"
+        });
+    }
+}
+
+async function deleteOrder(req, res) {
+    try {
+        const { orderId } = req.params;
+        const result = await Order.deleteOne({ _id: orderId });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).send({
+                ok: false,
+                message: "Orden no encontrada"
+            });
+        }
+
+        return res.status(204).send(); // No content response
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            ok: false,
+            message: "Error al eliminar la orden"
         });
     }
 }
@@ -90,5 +140,8 @@ async function orderProductPriceVerification(products, total) {
 module.exports = {
     postOrder,
     getOrders,
+    getOrderById,
+    deleteOrder,
     orderProductPriceVerification
 };
+
