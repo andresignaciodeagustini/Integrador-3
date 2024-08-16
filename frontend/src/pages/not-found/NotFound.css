@@ -1,0 +1,9 @@
+ .not-found-container{
+    display: flex;
+    align-items: center;
+    .not-found {
+            font-size: 10rem;
+                
+        }
+
+ }

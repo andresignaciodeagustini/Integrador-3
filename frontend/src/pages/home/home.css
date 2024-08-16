@@ -1,0 +1,37 @@
+.carousel-container {
+  height: 175vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carousel {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel .slide {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.carousel .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+
+
+@media (max-width: 767px) {
+  .carousel .slide img {
+    height: 80vh; 
+    width: 150%; 
+    margin-left: 0%;
+  }
+}

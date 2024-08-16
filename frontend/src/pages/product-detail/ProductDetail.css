@@ -1,0 +1,297 @@
+.product-details {
+  color: black;
+  margin-top: 8%;
+}
+
+.product-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20%;
+}
+
+.product-action h2 {
+  font-size: 25px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 23%;
+}
+
+.product-action h5 {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.product-action h6 {
+  font-size: 9px;
+  font-weight: 100;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.image-detail img {
+  max-width: 100%;
+  height: auto;
+}
+
+.color-picker {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  margin-left: 3%;
+}
+
+.color-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  outline: none;
+  border: none;
+}
+
+.color-circle[data-color="black"] {
+  background-color: black;
+}
+
+.color-circle[data-color="white"] {
+  background-color: rgba(248, 63, 63, 0.286);
+}
+
+.color-circle:active,
+.color-circle.selected {
+  opacity: 0.7;
+}
+
+.tallas-guide {
+  width: 100%;
+  margin-top: 20px;
+  margin-right: -12%;
+}
+
+.tallas-guide h6 {
+  margin-right: 10%;
+}
+
+.tallas-guide .tallas-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.tallas-guide button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  outline: none;
+}
+
+.tallas-guide button:focus,
+.tallas-guide button.selected {
+  opacity: 0.7;
+}
+
+.bottom-detail {
+  margin-top: 20px;
+}
+
+.bottom-detail button.add-to-bag-button {
+  background-color: black;
+  color: white;
+  padding: 26px 103px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 10px;
+  margin-left: 7%;
+}
+
+.bottom-detail button.add-to-bag-button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.product-text {
+  margin-top: 20px;
+  text-align: justify;
+}
+
+.product-text h4 {
+  font-size: 11px;
+  margin-bottom: 10px;
+  color: #e0e0e0;
+  font-weight: 100;
+  text-align: center;
+}
+
+.product-text p {
+  font-size: 13px;
+  font-weight: 100;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.product-text ul li {
+  font-size: 13px;
+  font-weight: 100;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.product-text ul {
+  padding-left: 20px;
+}
+
+.product-header-icon {
+  margin-top: -5%;
+}
+
+.product-header-icon .custom-icon {
+  cursor: pointer;
+}
+
+.notification {
+  display: none;
+  color: grey;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: opacity 2s ease-in-out;
+}
+
+.notification.visible {
+  display: block;
+  opacity: 1;
+}
+
+.added-to-bag-message {
+  color: grey;
+  font-size: 10px;
+  margin-top: 10px;
+  transition: opacity 5s ease-in-out;
+  margin-left: 30%;
+}
+
+.added-to-bag-message.visible {
+  display: block;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .product-details {
+    margin-top: 15%;
+  }
+
+  .product-action h2 {
+    font-size: 20px;
+    margin-top: 15%;
+  }
+
+  .product-action h5 {
+    font-size: 14px;
+  }
+
+  .product-action h6 {
+    font-size: 8px;
+  }
+
+  .color-circle {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+  }
+
+  .tallas-guide button {
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+  }
+
+  .bottom-detail button.add-to-bag-button {
+    padding: 20px 80px;
+    font-size: 9px;
+  }
+
+  .product-text h4 {
+    font-size: 10px;
+  }
+
+  .product-text p,
+  .product-text ul li {
+    font-size: 12px;
+  }
+
+  .added-to-bag-message {
+    font-size: 8px;
+    margin-left: 20%;
+  }
+
+  .product-header-icon {
+    margin-top: -8%;
+  }
+
+  .image-detail img {
+    margin-left: 4px;
+    height: 264px;
+    margin-top: 13%;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-details {
+    margin-top: 15%;
+  }
+
+  .product-action h2 {
+    font-size: 18px;
+    margin-top: 10%;
+  }
+
+  .product-action h5 {
+    font-size: 12px;
+  }
+
+  .product-action h6 {
+    font-size: 7px;
+  }
+
+  .color-circle {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+
+  .tallas-guide button {
+    width: 26px;
+    height: 26px;
+    margin-right: 6px;
+  }
+
+  .bottom-detail button.add-to-bag-button {
+    padding: 15px 60px;
+    font-size: 8px;
+  }
+
+  .product-text h4 {
+    font-size: 9px;
+  }
+
+  .product-text p,
+  .product-text ul li {
+    font-size: 11px;
+  }
+
+  .added-to-bag-message {
+    font-size: 7px;
+    margin-left: 25%;
+  }
+}

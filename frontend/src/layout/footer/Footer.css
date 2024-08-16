@@ -1,0 +1,154 @@
+/* Footer.css */
+
+footer {
+  position: relative; /* Asegura que el encabezado posicionado absolutamente esté dentro del pie de página */
+}
+
+.footer-header {
+  background-color: black; /* Fondo negro para el encabezado */
+  padding: 10px; /* Espacio alrededor del logo */
+  text-align: center; /* Centra el logo horizontalmente */
+  position: absolute; /* Posiciona el encabezado sobre el footer */
+  top: 0; /* Alinea al borde superior del pie de página */
+  width: 100%; /* Asegura que el encabezado ocupe todo el ancho del pie de página */
+  z-index: 10; /* Asegura que el encabezado esté encima del contenido del footer */
+  margin-top: 5%;
+}
+
+.footer-header img {
+  max-width: 150px; /* Ajusta el tamaño del logo según sea necesario */
+  height: auto; /* Mantiene la proporción del logo */
+}
+
+.footer {
+  padding-top: 60px; /* Espacio adicional para el encabezado sobre el footer */
+  background-color: black; /* Fondo negro para el pie de página */
+  color: white; /* Texto blanco */
+}
+
+.footer .contain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; 
+  margin-top: 5%;/* Asegura que las columnas se alineen correctamente */
+}
+
+.footer .col {
+  width: 200px; /* Reduce el ancho de las columnas para más centrado */
+  box-sizing: border-box;
+  padding: 20px; /* Ajusta el padding */
+  text-align: center; /* Centra el texto dentro de las columnas */
+}
+
+.footer .col h1 {
+  margin: 0;
+  font-size: 11px; /* Aumenta el tamaño de fuente para mejor visibilidad */
+  line-height: 24px; /* Ajusta el alto de línea */
+  color: white; /* Títulos en blanco */
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.2em; /* Ajusta el espaciado de letras */
+}
+
+.footer .col ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer .col ul li {
+  color: white; /* Enlaces en blanco */
+  font-size: 12px;
+  font-family: inherit;
+  padding: 5px 0; /* Reduce el padding entre los elementos */
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center; /* Centra el texto dentro de los elementos de la lista */
+}
+
+.footer .col ul li:hover {
+  color: #ffffff; /* Mantén el color blanco al pasar el ratón */
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Ajusta el espacio entre los iconos y el texto */
+}
+
+.social-icons a {
+  color: white; /* Iconos en blanco */
+  padding: 7px;
+  text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+.footer-left {
+  display: flex;
+  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  align-items: center;
+  height: 110px;
+  color: white; /* Texto en blanco */
+  margin-bottom: -21px;
+  padding-right: 5%; /* Ajusta el espacio desde el borde derecho de la pantalla */
+}
+
+.footer-left span {
+  margin-right: 20px;
+  color: white; /* Texto en blanco */
+}
+
+.btn-style4, .btn-style5 {
+  font-size: 11px;
+  text-align: center;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 14px;
+  height: 47px;
+  transition: all 0.5s;
+  text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+.btn-style4, .btn-style5 {
+  width: 150px; /* Ancho uniforme para ambos botones */
+}
+
+.btn-style4 {
+  background-color: black; /* Fondo negro */
+  border: solid 2px white; /* Borde blanco */
+  color: white; /* Texto blanco */
+}
+
+.btn-style4:hover {
+  background-color: white; /* Fondo blanco al pasar el ratón */
+  color: black; /* Texto negro al pasar el ratón */
+}
+
+.btn-style5 {
+  background-color: white; /* Fondo blanco */
+  border: solid 2px white; /* Borde blanco */
+  color: black; /* Texto negro */
+}
+
+.btn-style5:hover {
+  background-color: black; /* Fondo negro al pasar el ratón */
+  color: white; /* Texto blanco al pasar el ratón */
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%; /* Espacio alrededor del contenido */
+  padding-top: 10px; /* Espacio adicional para la línea horizontal */
+  border-top: 1px solid gray; /* Línea horizontal en la parte superior */
+}
+
+.final {
+  color: white; /* Texto en blanco */
+  font-size: 12px;
+}
+
+.clearfix {
+  clear: both;
+}

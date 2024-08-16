@@ -1,0 +1,128 @@
+/* Overview.css */
+
+.product-details {
+    color: black;
+  }
+  
+  .product-action h6 {
+    font-size: 9px;
+    font-weight: 100;
+    letter-spacing: 1px;
+  }
+  
+  .product-header {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5%;
+  }
+  
+  .product-action {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-action h2 {
+    font-size: 25px;
+    font-weight: 400;
+  }
+  
+  .tallas-guide {
+    width: 100%;
+  }
+  
+  .image-detail img {
+    max-width: 75%;
+  }
+  
+  .color-picker {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    outline: none;
+    border: none;
+  }
+  
+  .color-circle[data-color="black"] {
+    background-color: black;
+  }
+  
+  .color-circle[data-color="white"] {
+    background-color: rgba(248, 63, 63, 0.286);
+  }
+  
+  .color-circle:active,
+  .color-circle.selected {
+    opacity: 0.7;
+  }
+  
+  .tallas-guide select {
+    display: none;
+  }
+  
+  .tallas-guide .tallas-buttons {
+    display: flex;
+  }
+  
+  .tallas-guide button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    outline: none;
+  }
+  
+  .tallas-guide button:focus,
+  .tallas-guide button.selected {
+    opacity: 0.7;
+  }
+  
+  .bottom-detail button {
+    margin-top: 15%;
+    background-color: black;
+    color: white;
+    padding: 15px 35px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .bottom-detail button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+  
+  .bottom-detail .add-to-bag-button {
+    margin-top: 15%;
+    padding: 15px;
+    padding: 35px 85px;
+  }
+  
+  .product-text h4 {
+    font-size: 11px;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+    font-weight: 100;
+  }
+  
+  .product-text p:nth-of-type(1),
+  .product-text p:nth-of-type(2),
+  .product-text ul li,
+  .product-text p:nth-last-of-type(2),
+  .product-text p:last-of-type {
+    font-weight: 100;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  

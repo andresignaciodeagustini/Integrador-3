@@ -1,0 +1,308 @@
+.header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  padding: 10px;
+  z-index: 3000;
+  border-bottom: 1px solid white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.transparent-bg {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+}
+
+.logo {
+  margin-left: 10px;
+}
+
+.logo img {
+  height: 17px;
+}
+
+.nav-links {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.nav-links .nav-link {
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  font-size: 12px;
+  transition: font-size 0.2s ease;
+}
+
+.nav-links .nav-link:hover {
+  font-size: 13px;
+}
+
+.user-info {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.user-cart-container {
+  position: relative;
+  margin-left: 20px;
+}
+
+.user-cart-container .bag-shopping {
+  font-size: 1.5em;
+}
+
+.cart-counter {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 6px;
+  font-size: 0.75rem;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.white-icons {
+  color: white;
+}
+
+.black-icons {
+  color: black;
+}
+
+.scroll-bg-white {
+  background-color: white;
+  color: black;
+}
+
+.scroll-bg-white .nav-links .nav-link {
+  color: black;
+}
+
+.scroll-bg-white .user-info .bag-shopping,
+.scroll-bg-white .user-info .user-icon {
+  color: black;
+}
+
+.season {
+  text-align: center;
+  position: absolute;
+  left: 80%;
+  margin-top: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+}
+
+.season p {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.season button {
+  padding: 20px 105px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-weight: 700;
+}
+
+.season button:hover {
+  background-color: white;
+  color: black;
+  border: none;
+}
+
+.season.hide {
+  display: none;
+}
+
+.material-symbols-outlined.user-icon {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.5em;
+  margin-left: 10px;
+  font-weight: 250;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .logo {
+    margin-left: 10px;
+  }
+
+  .logo img {
+    height: 15px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-cart-container .bag-shopping,
+  .material-symbols-outlined.user-icon {
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+
+  .material-symbols-outlined.user-icon {
+    font-size: 1.4em;
+    margin-left: 6px;
+    font-weight: 250;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-icon.black {
+    color: black;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    color: black;
+    display: none;
+    z-index: 1000;
+    padding-top: 4rem;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    transform: translateY(-100%);
+  }
+
+  .mobile-menu.open {
+    transform: translateY(0%);
+    display: block;
+  }
+
+  .mobile-logo {
+    text-align: left;
+    margin-left: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-logo img {
+    height: 15px;
+    vertical-align: middle;
+    margin-top: -5rem;
+  }
+
+  .mobile-menu .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-right: -9%;
+    margin-top: -17%;
+  }
+
+  .mobile-menu .nav-links .nav-link {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+  }
+
+  .mobile-menu .nav-links .nav-link:hover {
+    color: white;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    cursor: pointer;
+    color: black;
+  }
+
+  .season button {
+    padding: 15px 36px;
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .season {
+    left: 72%;
+    margin-top: 230%;
+  }
+
+  .season p {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .nav-links .nav-link {
+    margin-right: 15px;
+    font-size: 9px;
+  }
+
+  .season p {
+    font-size: 30px;
+  }
+
+  .season button {
+    padding: 15px 59px;
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .user-cart-container {
+    font-size: 11px;
+  }
+
+  .logo img {
+    height: 16px;
+  }
+}

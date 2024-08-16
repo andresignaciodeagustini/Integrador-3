@@ -1,0 +1,11 @@
+.product-card-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.product-list-title {
+    text-align: center;
+    margin-top: 4%;
+    margin-bottom: 4%;
+  }

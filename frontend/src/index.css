@@ -1,0 +1,58 @@
+:root {
+  line-height: 1.5;
+  color-scheme: light dark;
+  color: black;
+  background-color: white;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+   box-sizing: border-box;
+}
+
+
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-container{
+
+  flex: 1;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, a {
+  font-family: 'EB Garamond', serif;
+  font-weight: 400;
+  font-size: 1rem; /* Ajusta el tamaño de fuente según sea necesario */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.select-input {
+  option {
+    text-transform: capitalize;
+  }
+}
+
+
+.admin-table-container{
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow-x: auto;
+}

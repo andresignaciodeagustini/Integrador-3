@@ -1,0 +1,125 @@
+.registro {
+    text-align: center;
+    margin: 15% 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: black;
+  }
+  
+  .registro .container {
+    width: 60%;
+  }
+  
+  .registro form {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  .registro label {
+    margin-top: 10px;
+  }
+  
+  .registro input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  .registro button {
+    margin-top: 20px;
+  }
+  
+  .registro .imagen-container {
+    width: 50%;
+  }
+  
+  .registro .imagen-container img {
+    width: 86%;
+    margin-bottom: 11%;
+    height: auto;
+  }
+  
+  .registro h2 {
+    font-size: 25px;
+    font-weight: 400;
+  }
+  
+  .registro label {
+    font-size: 9px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
+  
+  .registro button {
+    margin-top: 15%;
+    background-color: black;
+    color: white;
+    padding: 20px 166px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s;
+  }
+  
+  .registro button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+  
+/* Media queries para dispositivos móviles */
+@media screen and (max-width: 767px) {
+  .registro {
+    flex-direction: column;
+    margin-top: 10%;
+  }
+
+  .registro .container {
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 15%;
+  }
+
+  .registro .imagen-container {
+    width: 100%;
+    margin-bottom: 2%;
+    margin-top: 20%;
+  }
+
+  .registro .imagen-container img {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .registro button {
+    padding: 15px 30px; 
+    margin-top: 10%;
+  }
+
+  .registro label {
+    font-size: 8px; 
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .registro .imagen-container img {
+    width: 95%;
+   
+    height: 620px;
+    margin-top: -40%;
+   height: 630px;
+  }
+  .registro button {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+   
+    padding: 20px 166px;
+    margin-left: -2%;
+ 
+}
+}
+
+
