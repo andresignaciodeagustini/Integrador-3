@@ -50,8 +50,8 @@ const Header = ({ isProductDetailPage }) => {
   const handleLogout = async () => {
     try {
       if (user) {
-        // Asegúrate de obtener el array de productos del estado
-        const products = order.orders.map(item => ({
+        // Verifica que order.orders esté definido y sea un array
+        const products = (order.orders || []).map(item => ({
           quantity: item.quantity,
           product: item._id,
           price: item.price
@@ -160,4 +160,3 @@ const Header = ({ isProductDetailPage }) => {
 }
 
 export default Header;
-

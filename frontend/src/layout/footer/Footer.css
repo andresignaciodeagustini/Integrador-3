@@ -1,5 +1,4 @@
-/* Footer.css */
-
+/* Estilos generales del footer */
 footer {
   position: relative; /* Asegura que el encabezado posicionado absolutamente esté dentro del pie de página */
 }
@@ -29,8 +28,8 @@ footer {
 .footer .contain {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; 
-  margin-top: 5%;/* Asegura que las columnas se alineen correctamente */
+  justify-content: space-between;
+  margin-top: 5%; /* Asegura que las columnas se alineen correctamente */
 }
 
 .footer .col {
@@ -93,7 +92,7 @@ footer {
 }
 
 .footer-left span {
-  margin-right: 20px;
+  margin-right: 5px;
   color: white; /* Texto en blanco */
 }
 
@@ -149,6 +148,51 @@ footer {
   font-size: 12px;
 }
 
-.clearfix {
-  clear: both;
+/* Estilos específicos para dispositivos móviles */
+@media (max-width: 768px) {
+  .footer .contain {
+    flex-direction: column; /* Cambia la disposición de las columnas a columna */
+    align-items: center; /* Centra las columnas horizontalmente */
+  }
+
+  .footer .col {
+    width: 100%; /* Hace que cada columna ocupe el 100% del ancho disponible */
+    padding: 10px 0; /* Ajusta el padding para más espacio vertical */
+  }
+
+  .footer .col h1 {
+    font-size: 14px; /* Aumenta el tamaño de fuente para mejor visibilidad en pantallas pequeñas */
+    line-height: 22px; /* Ajusta el alto de línea */
+  }
+
+  .footer .col ul li {
+    font-size: 14px; /* Aumenta el tamaño de fuente para mejor visibilidad en pantallas pequeñas */
+  }
+
+  .footer-left {
+    flex-direction: column; /* Cambia la dirección del contenido a columna */
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-bottom: 20px; /* Ajusta el margen inferior */
+  }
+
+  .footer-bottom {
+    flex-direction: column; /* Cambia la dirección del contenido a columna */
+    align-items: center; /* Centra el contenido horizontalmente */
+    padding: 20px 10%; /* Ajusta el padding para más espacio vertical */
+    border-top: none; /* Elimina la línea horizontal en pantallas pequeñas */
+  }
+
+  .social-icons {
+    margin-top: 10px; /* Añade margen superior para separación en pantallas pequeñas */
+    margin-right: 0; /* Elimina el margen derecho */
+  }
+
+  .footer-bottom .final {
+    order: 2; /* Asegura que el elemento final se muestre al final en pantallas pequeñas */
+    margin-top: 20px; /* Ajusta el margen superior si es necesario */
+  }
+}
+.footer-left span {
+  margin-right: 5px;
+  color: white;
 }

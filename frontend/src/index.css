@@ -21,7 +21,7 @@
 #root{
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  
 }
 
 .main-container{
@@ -55,4 +55,11 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, a {
   max-width: 1000px;
   margin: 0 auto;
   overflow-x: auto;
+}
+/* Estilos específicos para dispositivos móviles */
+@media (max-width: 768px) {
+  #root {
+    width: 100%; /* Ancho del 200% en pantallas pequeñas */
+    overflow-x: scroll; /* Asegúrate de que el contenido no se corte */
+  }
 }

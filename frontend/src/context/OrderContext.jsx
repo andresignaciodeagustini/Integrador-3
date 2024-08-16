@@ -11,33 +11,90 @@ export const OrderProvider = ({ children }) => {
   const { user, token, logout } = useUser();
   const api = useApi();
 
-  const [order, setOrder] = useState(() => {
-    const savedOrder = localStorage.getItem('order');
-    return savedOrder ? JSON.parse(savedOrder) : [];
-  });
+  const [order, setOrder] = useState({ orders: [] });
   const [total, setTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [sidebarToggle, setSidebarToggle] = useState(false);
+  const [orderId, setOrderId] = useState(null);
 
   useEffect(() => {
     const fetchCart = async () => {
-      if (user) {
+      if (orderId) {
         try {
-          console.log("Fetching cart for user:", user._id); // Debugging log
-          const response = await api.get(`/order/${user._id}`);
-          setOrder(response.data || []);
+          console.log("Fetching cart for order:", orderId);
+          const response = await api.get(`/orders/${orderId}`);
+          setOrder(response.data || { orders: [] });
         } catch (error) {
           console.log("Error fetching cart:", error);
         }
       }
     };
     fetchCart();
-  }, [user]);
+  }, [orderId]);
+
+  // Función para obtener detalles del producto
+  async function fetchProductDetails(productId) {
+    try {
+      const response = await api.get(`/products/${productId}`);
+      return response.data; // Asumiendo que la respuesta contiene los detalles del producto
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchPreOrder = async () => {
+      if (user && token) {
+        console.log("User and token available:", user, token);
+        try {
+          const response = await api.get(`/preorders/${user._id}`);
+          console.log("Preorder response:", response.data);
+
+          const preOrders = response.data;
+          if (Array.isArray(preOrders) && preOrders.length > 0) {
+            const preOrderData = preOrders[0];
+            
+            if (preOrderData && Array.isArray(preOrderData.products)) {
+              console.log("Productos en el pre-pedido:", preOrderData.products);
+              
+              // Obtener detalles completos de los productos
+              const productsWithDetails = await Promise.all(preOrderData.products.map(async (prod) => {
+                const productDetails = await fetchProductDetails(prod.product);
+                return {
+                  
+                  _id: prod.product._id,
+                  name: productDetails ? productDetails.name : "Desconocido",
+                  price: prod.price,
+                  quantity: prod.quantity,
+                  image: productDetails ? productDetails.image : "default_image_url",
+                };
+              }));
+
+              setOrder({ orders: productsWithDetails });
+              console.log("Order state updated with pre-order data:", preOrderData);
+            } else {
+              console.log("No pre-order products found.");
+            }
+          } else {
+            console.log("No pre-orders found for the user.");
+          }
+        } catch (error) {
+          console.error("Error fetching pre-order on login:", error);
+        }
+      } else {
+        console.log("User or token not available.");
+      }
+    };
+
+    fetchPreOrder();
+  }, [user, token]);
 
   useEffect(() => {
     localStorage.setItem('order', JSON.stringify(order));
     calculateTotal();
     CartCount();
+    console.log("Order state after updates:", order);
   }, [order]);
 
   async function addOrderItem(producto) {
@@ -51,17 +108,17 @@ export const OrderProvider = ({ children }) => {
       return;
     }
 
-    const existingProduct = order.find(prod => prod._id === producto._id);
+    const existingProduct = order.orders.find(prod => prod._id === producto._id);
 
     if (existingProduct) {
       handleChangeQuantity(existingProduct._id, existingProduct.quantity + 1);
     } else {
-      const updatedOrder = [...order, { ...producto, quantity: 1 }];
+      const updatedOrder = { ...order, orders: [...order.orders, { ...producto, quantity: 1 }] };
       setOrder(updatedOrder);
 
       try {
-        console.log("Adding item to cart:", { product: producto._id, quantity: 1 }); // Debugging log
-        await api.post(`/order/${user._id}`, { product: producto._id, quantity: 1 });
+        console.log("Adding item to cart:", { product: producto._id, quantity: 1 });
+        await api.post(`/orders/${user._id}`, { product: producto._id, quantity: 1 });
       } catch (error) {
         console.log("Error adding item to cart:", error);
       }
@@ -70,37 +127,42 @@ export const OrderProvider = ({ children }) => {
 
   function calculateTotal() {
     let totalCount = 0;
-    order.forEach((prod) => {
-      if (prod.quantity && prod.price) {
-        totalCount += prod.price * prod.quantity;
-      }
-    });
+    if (order.orders) {
+      order.orders.forEach((prod) => {
+        if (prod.quantity && prod.price) {
+          totalCount += prod.price * prod.quantity;
+        }
+      });
+    }
     setTotal(totalCount);
-    console.log("Total calculated:", totalCount); // Debugging log
+    console.log("Total calculated:", totalCount);
   }
 
   function CartCount() {
     let count = 0;
-    order.forEach((prod) => {
-      count += prod.quantity;
-    });
+    if (order.orders) {
+      order.orders.forEach((prod) => {
+        count += prod.quantity;
+      });
+    }
     setCartCount(count);
-    console.log("Cart count calculated:", count); // Debugging log
+    console.log("Cart count calculated:", count);
   }
 
   async function handleChangeQuantity(id, quantity) {
-    const updProducts = order.map((item) => {
+    const updProducts = order.orders.map((item) => {
       if (item._id === id) {
         return { ...item, quantity: +quantity };
       }
       return item;
     });
 
-    setOrder(updProducts);
+    const updatedOrder = { ...order, orders: updProducts };
+    setOrder(updatedOrder);
 
     if (user) {
       try {
-        console.log("Updating item quantity:", { product: id, quantity }); // Debugging log
+        console.log("Updating item quantity:", { product: id, quantity });
         await api.put(`/order/${user._id}`, { product: id, quantity });
       } catch (error) {
         console.log("Error updating item quantity:", error);
@@ -119,12 +181,12 @@ export const OrderProvider = ({ children }) => {
       reverseButtons: true,
     }).then(result => {
       if (result.isConfirmed) {
-        const products = order.filter((prod) => prod._id !== id);
-        setOrder(products);
+        const updatedOrder = { ...order, orders: order.orders.filter((prod) => prod._id !== id) };
+        setOrder(updatedOrder);
 
         if (user) {
           try {
-            console.log("Removing item from cart:", id); // Debugging log
+            console.log("Removing item from cart:", id);
             api.delete(`/order/${user._id}/${id}`);
           } catch (error) {
             console.log("Error removing item from cart:", error);
@@ -153,7 +215,8 @@ export const OrderProvider = ({ children }) => {
         });
         return;
       }
-      const products = order.map(item => ({
+
+      const products = order.orders.map(item => ({
         quantity: item.quantity,
         product: item._id,
         price: item.price
@@ -161,29 +224,22 @@ export const OrderProvider = ({ children }) => {
 
       const nuevaOrden = {
         total,
-        user: user._id, // Asegúrate de que este campo esté presente
+        user: user._id,
         products
       };
 
-      console.log("Posting order:", nuevaOrden); // Debugging log
+      console.log("Posting order:", nuevaOrden);
 
       await api.post("/orders", nuevaOrden);
-      await postPreOrder();
 
-      Swal.fire("Orden creada", "La orden y la preorden se crearon correctamente", "success");
-      setOrder([]);
+      Swal.fire("Orden creada", "La orden se creó correctamente", "success");
 
-      if (user) {
-        try {
-          console.log("Clearing cart after order for user:", user._id); // Debugging log
-          await api.delete(`/order/${user._id}`);
-        } catch (error) {
-          console.log("Error clearing cart after order:", error);
-        }
-      }
+      // Limpiar el carrito de compras después de crear la orden
+      setOrder({ orders: [] });
+
     } catch (error) {
-      console.log("Error creating order:", error); // Improved for debugging
-      Swal.fire("Error", "Error al crear la orden", "error");
+      console.error("Error creating order:", error);
+      Swal.fire("Error", "Hubo un problema al procesar la orden", "error");
     }
   }
 
@@ -192,65 +248,78 @@ export const OrderProvider = ({ children }) => {
       if (!user || !token) {
         Swal.fire({
           title: "Error",
-          text: "Debe estar logueado para realizar una preorden",
+          text: "Debe estar logueado para realizar una orden",
           icon: "warning",
           timer: 4000
         });
         return;
       }
-      const products = order.map(item => ({
+
+      const products = order.orders.map(item => ({
         quantity: item.quantity,
         product: item._id,
         price: item.price
       }));
 
-      const nuevaPreOrden = {
+      const nuevaPreorden = {
         total,
         user: user._id,
         products
       };
 
-      console.log("Posting pre-order:", nuevaPreOrden); // Debugging log
+      console.log("Posting pre-order:", nuevaPreorden);
 
-      await api.post("/preorders", nuevaPreOrden);
+      // Enviar la preorden al backend
+      const response = await api.post("/preorders", nuevaPreorden);
+
+      // Obtener la preorden completa desde el backend
+      const preOrderData = response.data.preorder;
+
+      // Verifica si preOrderData y preOrderData.products existen
+      if (preOrderData && Array.isArray(preOrderData.products)) {
+        setOrder({
+          orders: preOrderData.products.map(product => ({
+            _id: product.product._id,
+            name: product.product.name,
+            price: product.price,
+            quantity: product.quantity,
+            image: product.product.image,
+          }))
+        });
+
+        console.log("Preorder state updated:", preOrderData);
+      } else {
+        console.log("No pre-order data found.");
+      }
+
       Swal.fire("Preorden creada", "La preorden se creó correctamente", "success");
+
+      // Limpiar el carrito de compras después de crear la preorden
+      setOrder({ orders: [] });
+
     } catch (error) {
-      console.log("Error creating preorder:", error); // Improved for debugging
-      Swal.fire("Error", "Error al crear la preorden", "error");
+      console.error("Error creating pre-order:", error);
+      Swal.fire("Error", "Hubo un problema al procesar la preorden", "error");
     }
   }
 
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-
-      if (user && token) {
-        postPreOrder(); // Enviar preorden antes de salir
-      }
-
-      event.returnValue = ''; // Para algunos navegadores
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [order, user, token]); // Asegúrate de incluir `user` y `token` como dependencias
+  const values = {
+    order,
+    total,
+    cartCount,
+    sidebarToggle,
+    toggleSidebarOrder,
+    closeSidebar,
+    setOrderId,
+    addOrderItem,
+    handleChangeQuantity,
+    removeItem,
+    postOrder,
+    postPreOrder
+  };
 
   return (
-    <OrderContext.Provider value={{
-      order,
-      total,
-      cartCount,
-      sidebarToggle,
-      toggleSidebarOrder,
-      closeSidebar,
-      addOrderItem,
-      handleChangeQuantity,
-      removeItem,
-      postOrder,
-      postPreOrder
-    }}>
+    <OrderContext.Provider value={values}>
       {children}
     </OrderContext.Provider>
   );

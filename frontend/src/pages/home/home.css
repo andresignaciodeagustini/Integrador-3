@@ -29,23 +29,11 @@
 
 
 /* Estilos específicos para teléfonos móviles */
-@media (max-width: 767px) {
-  .carousel-container {
-    height: 100vh; /* Ajusta la altura del contenedor en dispositivos móviles */
-  }
-  
-  .carousel .slide img {
-    height: 80vh; /* Ajusta la altura de la imagen en dispositivos móviles */
-    width: auto; /* Mantiene la relación de aspecto de la imagen */
-    margin-left: 0;
-  }
 
-  .carousel .slide {
-    background-size: contain; /* Ajusta el tamaño del fondo para que se ajuste a la pantalla del móvil */
-    background-position: center;
-  }
-  
-  .carousel .thumbs-wrapper {
-    display: none; /* Oculta las miniaturas en dispositivos móviles */
+@media (max-width: 767px) {
+  .carousel .slide img {
+    height: 80vh; 
+    width: 150%; 
+    margin-left: 0%;
   }
 }
