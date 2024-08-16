@@ -1,18 +1,18 @@
 const router = require('express').Router();
-const orderController = require('../controllers/order.controller');
+const preorderController = require('../controllers/preorder.controller');
 const auth = require('../middlewares/auth');
 
-// Crear orden
-router.post("/orders", auth, orderController.postOrder);
+// Crear preorden
+router.post("/preorders", auth, preorderController.postPreorder);
 
-// Obtener todas las órdenes, opcionalmente filtrando por idUser
-router.get("/orders/:idUser?", auth, orderController.getOrders);
+// Obtener todas las preordenes, opcionalmente filtrando por idUser
+router.get("/preorders/:idUser?", auth, preorderController.getPreorders);
 
-// Obtener una orden específica por ID
-router.get("/orders/:orderId", auth, orderController.getOrderById);
+// Obtener una preorden específica por ID
+router.get("/preorders/:id", auth, preorderController.getPreorderById);
 
-// Eliminar una orden específica por ID
-router.delete("/orders/:orderId", auth, orderController.deleteOrder);
-
+// Eliminar una preorden específica por ID
+router.delete("/preorders/:id", auth, preorderController.deletePreorder);
 
 module.exports = router;
+
