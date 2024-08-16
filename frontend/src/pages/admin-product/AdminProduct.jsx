@@ -78,7 +78,7 @@ export default function AdminProduct() {
         createProduct(formData);
       }
   
-      reset(); // Reinicia el formulario después de enviar los datos
+      reset(); 
       setIsEditing(false); 
     } catch (error) {
       console.error("Error al enviar el formulario:", error);

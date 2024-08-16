@@ -44,21 +44,21 @@ const Header = ({ isProductDetailPage }) => {
 
   const handleCartClick = () => {
     toggleSidebarOrder();
-    setIsMenuOpen(false); // Cerrar el menú si se abre desde el carrito
+    setIsMenuOpen(false); 
   };
 
   const handleLogout = async () => {
     try {
       if (user) {
-        // Verifica que order.orders esté definido y sea un array
+        
         const products = (order.orders || []).map(item => ({
           quantity: item.quantity,
           product: item._id,
           price: item.price
         }));
   
-        await postPreOrder(); // Enviar productos a la base de datos
-        logout(); // Proceder con el logout
+        await postPreOrder(); 
+        logout(); 
       }
     } catch (error) {
       console.error("Error during logout:", error);

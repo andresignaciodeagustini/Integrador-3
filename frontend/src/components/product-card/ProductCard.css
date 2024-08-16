@@ -106,11 +106,11 @@
     margin-top: 55%;
     text-align: center;
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* Limita a una línea */
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis; /* Añade puntos suspensivos cuando el texto se desborda */
-    line-clamp: 1; /* Propiedad estándar (en fase de adopción) */
+    text-overflow: ellipsis; 
+    line-clamp: 1; 
 }
 
 .product-name a {

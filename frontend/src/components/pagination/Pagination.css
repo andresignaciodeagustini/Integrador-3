@@ -1,51 +1,50 @@
-/* Estilos generales para la paginación */
 .pagination-list {
   display: flex;
   justify-content: center;
   margin-top: -5%;
-  padding: 10px; /* Añade padding si es necesario */
+  padding: 10px;
 }
 
 .pagination-item {
-  background-color: #fff; /* Fondo blanco */
-  border: 1px solid #d0d0d0; /* Borde gris */
+  background-color: #fff;
+  border: 1px solid #d0d0d0;
   color: #333;
-  padding: 10px 15px; /* Ajusta el padding para hacer los botones más pequeños */
-  margin: 0 3px; /* Ajusta el margen para reducir el espacio entre los botones */
+  padding: 10px 15px;
+  margin: 0 3px;
   cursor: pointer;
-  border-radius: 4px; /* Redondeo de bordes más pequeño */
-  font-size: 14px; /* Ajusta el tamaño del texto */
+  border-radius: 4px;
+  font-size: 14px;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .pagination-item:hover {
-  background-color: #f0f0f0; /* Fondo más claro en hover */
-  border-color: #b0b0b0; /* Borde gris más oscuro en hover */
+  background-color: #f0f0f0;
+  border-color: #b0b0b0;
 }
 
 .pagination-item.active {
-  background-color: black; /* Fondo negro para el botón activo */
-  color: #fff; /* Texto blanco para el botón activo */
-  border-color: black; /* Borde negro para el botón activo */
+  background-color: black;
+  color: #fff;
+  border-color: black;
 }
 
 .pagination-item.active:hover {
-  background-color: black; /* Fondo negro para el botón activo en hover */
-  border-color: black; /* Borde negro para el botón activo en hover */
+  background-color: black;
+  border-color: black;
 }
 
-/* Media query para tabletas */
 @media (min-width: 768px) and (max-width: 1024px) {
   .pagination-list {
-    margin-top: 0%; /* Ajustar el margen superior para pantallas de tabletas */
+    margin-top: 0%;
   }
 
   .pagination-item {
-    font-size: 10px; /* Ajustar el tamaño del texto para pantallas de tabletas */
-    padding: 8px 12px; /* Ajustar el padding para hacer los botones un poco más pequeños */
-    margin: 0 2px; /* Ajustar el margen para reducir el espacio entre los botones */
+    font-size: 10px;
+    padding: 8px 12px;
+    margin: 0 2px;
   }
 }
+
 .admin-table-container > div {
   margin-top: 5%;
 }

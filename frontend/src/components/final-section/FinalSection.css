@@ -1,5 +1,3 @@
-/* FinalSection.css */
-
 .final-section {
     margin-bottom: 3%;
     display: flex;
@@ -16,7 +14,7 @@
 }
 
 .final-section-image {
-    flex: 2; /* Ajusta el espacio ocupado por la imagen */
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,12 +28,12 @@
     height: auto;
     object-fit: cover;
     margin-left: -15%;
-    width: 650px; /* Ajusta el ancho de la imagen */
+    width: 650px;
     margin-bottom: -5%;
 }
 
 .final-section-text {
-    flex: 1; /* Ajusta el espacio ocupado por el texto */
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,47 +42,47 @@
     height: 100%;
     box-sizing: border-box;
     padding: 20px;
-    max-width: 400px; /* Ajusta el ancho máximo del contenedor de texto */
-    margin-left: 20px; /* Espacio entre el contenedor de texto y la imagen */
+    max-width: 400px;
+    margin-left: 20px;
 }
 
 .final-section-text h2 {
     font-size: 20px;
     margin-bottom: 10px;
-    text-align: center; /* Centra el título */
+    text-align: center;
 }
 
 .final-section-text p {
     font-size: 13px;
     line-height: 1.5;
-    margin-bottom: 20px; /* Espacio adicional para el enlace */
+    margin-bottom: 20px;
 }
 
 .buy-now-link {
     font-size: 10px;
-    color: #333; /* Color del enlace */
-    text-decoration: none; /* Quita el subrayado del enlace */
-    font-weight: bold; /* Opcional: hace el texto más destacado */
-    display: inline-block; /* Permite añadir márgenes */
-    margin-top: 10px; /* Espacio superior para separar del párrafo */
-    position: relative; /* Permite posicionar el subrayado */
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    position: relative;
     text-align: center;
 }
 
 .buy-now-link::after {
-    content: ''; /* Necesario para el subrayado */
+    content: '';
     position: absolute;
     left: 0;
-    bottom: -2px; /* Posiciona el subrayado justo debajo del texto */
+    bottom: -2px;
     width: 100%;
-    height: 1px; /* Grosor del subrayado reducido */
-    background-color: #333; /* Color del subrayado */
-    transform: scaleX(0); /* Inicialmente oculto */
-    transform-origin: bottom left; /* Origen de la animación */
-    transition: transform 0.3s ease, background-color 0.3s ease; /* Transición suave para el efecto */
+    height: 1px;
+    background-color: #333;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .buy-now-link:hover::after {
-    transform: scaleX(1); /* Muestra el subrayado en el hover */
-    background-color: #555; /* Color del subrayado al hacer hover (más claro que #333) */
+    transform: scaleX(1);
+    background-color: #555;
 }

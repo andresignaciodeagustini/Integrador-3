@@ -74,7 +74,7 @@ export default function OrderSidebar() {
           </div>
         </div>
         <div className="order-purchase">
-          {/* Aquí puedes agregar opciones para finalizar la compra */}
+        
         </div>
       </div>
     </div>

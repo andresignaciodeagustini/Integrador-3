@@ -1,52 +1,51 @@
-/* Estilos generales del footer */
 footer {
-  position: relative; /* Asegura que el encabezado posicionado absolutamente esté dentro del pie de página */
+  position: relative;
 }
 
 .footer-header {
-  background-color: black; /* Fondo negro para el encabezado */
-  padding: 10px; /* Espacio alrededor del logo */
-  text-align: center; /* Centra el logo horizontalmente */
-  position: absolute; /* Posiciona el encabezado sobre el footer */
-  top: 0; /* Alinea al borde superior del pie de página */
-  width: 100%; /* Asegura que el encabezado ocupe todo el ancho del pie de página */
-  z-index: 10; /* Asegura que el encabezado esté encima del contenido del footer */
+  background-color: black;
+  padding: 10px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 10;
   margin-top: 5%;
 }
 
 .footer-header img {
-  max-width: 150px; /* Ajusta el tamaño del logo según sea necesario */
-  height: auto; /* Mantiene la proporción del logo */
+  max-width: 150px;
+  height: auto;
 }
 
 .footer {
-  padding-top: 60px; /* Espacio adicional para el encabezado sobre el footer */
-  background-color: black; /* Fondo negro para el pie de página */
-  color: white; /* Texto blanco */
+  padding-top: 60px;
+  background-color: black;
+  color: white;
 }
 
 .footer .contain {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 5%; /* Asegura que las columnas se alineen correctamente */
+  margin-top: 5%;
 }
 
 .footer .col {
-  width: 200px; /* Reduce el ancho de las columnas para más centrado */
+  width: 200px;
   box-sizing: border-box;
-  padding: 20px; /* Ajusta el padding */
-  text-align: center; /* Centra el texto dentro de las columnas */
+  padding: 20px;
+  text-align: center;
 }
 
 .footer .col h1 {
   margin: 0;
-  font-size: 11px; /* Aumenta el tamaño de fuente para mejor visibilidad */
-  line-height: 24px; /* Ajusta el alto de línea */
-  color: white; /* Títulos en blanco */
+  font-size: 11px;
+  line-height: 24px;
+  color: white;
   font-weight: normal;
   text-transform: uppercase;
-  letter-spacing: 0.2em; /* Ajusta el espaciado de letras */
+  letter-spacing: 0.2em;
 }
 
 .footer .col ul {
@@ -56,44 +55,44 @@ footer {
 }
 
 .footer .col ul li {
-  color: white; /* Enlaces en blanco */
+  color: white;
   font-size: 12px;
   font-family: inherit;
-  padding: 5px 0; /* Reduce el padding entre los elementos */
+  padding: 5px 0;
   cursor: pointer;
   transition: 0.2s;
-  text-align: center; /* Centra el texto dentro de los elementos de la lista */
+  text-align: center;
 }
 
 .footer .col ul li:hover {
-  color: #ffffff; /* Mantén el color blanco al pasar el ratón */
+  color: #ffffff;
 }
 
 .social-icons {
   display: flex;
   align-items: center;
-  margin-right: 20px; /* Ajusta el espacio entre los iconos y el texto */
+  margin-right: 20px;
 }
 
 .social-icons a {
-  color: white; /* Iconos en blanco */
+  color: white;
   padding: 7px;
-  text-decoration: none; /* Elimina el subrayado de los enlaces */
+  text-decoration: none;
 }
 
 .footer-left {
   display: flex;
-  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  justify-content: flex-end;
   align-items: center;
   height: 110px;
-  color: white; /* Texto en blanco */
+  color: white;
   margin-bottom: -21px;
-  padding-right: 5%; /* Ajusta el espacio desde el borde derecho de la pantalla */
+  padding-right: 5%;
 }
 
 .footer-left span {
   margin-right: 5px;
-  color: white; /* Texto en blanco */
+  color: white;
 }
 
 .btn-style4, .btn-style5 {
@@ -105,94 +104,89 @@ footer {
   padding: 14px;
   height: 47px;
   transition: all 0.5s;
-  text-decoration: none; /* Elimina el subrayado de los enlaces */
+  text-decoration: none;
 }
 
 .btn-style4, .btn-style5 {
-  width: 150px; /* Ancho uniforme para ambos botones */
+  width: 150px;
 }
 
 .btn-style4 {
-  background-color: black; /* Fondo negro */
-  border: solid 2px white; /* Borde blanco */
-  color: white; /* Texto blanco */
+  background-color: black;
+  border: solid 2px white;
+  color: white;
 }
 
 .btn-style4:hover {
-  background-color: white; /* Fondo blanco al pasar el ratón */
-  color: black; /* Texto negro al pasar el ratón */
+  background-color: white;
+  color: black;
 }
 
 .btn-style5 {
-  background-color: white; /* Fondo blanco */
-  border: solid 2px white; /* Borde blanco */
-  color: black; /* Texto negro */
+  background-color: white;
+  border: solid 2px white;
+  color: black;
 }
 
 .btn-style5:hover {
-  background-color: black; /* Fondo negro al pasar el ratón */
-  color: white; /* Texto blanco al pasar el ratón */
+  background-color: black;
+  color: white;
 }
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 5%; /* Espacio alrededor del contenido */
-  padding-top: 10px; /* Espacio adicional para la línea horizontal */
-  border-top: 1px solid gray; /* Línea horizontal en la parte superior */
+  padding: 10px 5%;
+  padding-top: 10px;
+  border-top: 1px solid gray;
 }
 
 .final {
-  color: white; /* Texto en blanco */
+  color: white;
   font-size: 12px;
 }
 
-/* Estilos específicos para dispositivos móviles */
 @media (max-width: 768px) {
   .footer .contain {
-    flex-direction: column; /* Cambia la disposición de las columnas a columna */
-    align-items: center; /* Centra las columnas horizontalmente */
+    flex-direction: column;
+    align-items: center;
   }
 
   .footer .col {
-    width: 100%; /* Hace que cada columna ocupe el 100% del ancho disponible */
-    padding: 10px 0; /* Ajusta el padding para más espacio vertical */
+    width: 100%;
+    padding: 10px 0;
   }
 
   .footer .col h1 {
-    font-size: 14px; /* Aumenta el tamaño de fuente para mejor visibilidad en pantallas pequeñas */
-    line-height: 22px; /* Ajusta el alto de línea */
+    font-size: 14px;
+    line-height: 22px;
   }
 
   .footer .col ul li {
-    font-size: 14px; /* Aumenta el tamaño de fuente para mejor visibilidad en pantallas pequeñas */
+    font-size: 14px;
   }
 
   .footer-left {
-    flex-direction: column; /* Cambia la dirección del contenido a columna */
-    text-align: center; /* Centra el texto horizontalmente */
-    margin-bottom: 20px; /* Ajusta el margen inferior */
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
   .footer-bottom {
-    flex-direction: column; /* Cambia la dirección del contenido a columna */
-    align-items: center; /* Centra el contenido horizontalmente */
-    padding: 20px 10%; /* Ajusta el padding para más espacio vertical */
-    border-top: none; /* Elimina la línea horizontal en pantallas pequeñas */
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10%;
+    border-top: none;
   }
 
   .social-icons {
-    margin-top: 10px; /* Añade margen superior para separación en pantallas pequeñas */
-    margin-right: 0; /* Elimina el margen derecho */
+    margin-top: 10px;
+    margin-right: 0;
   }
 
   .footer-bottom .final {
-    order: 2; /* Asegura que el elemento final se muestre al final en pantallas pequeñas */
-    margin-top: 20px; /* Ajusta el margen superior si es necesario */
+    order: 2;
+    margin-top: 20px;
   }
-}
-.footer-left span {
-  margin-right: 5px;
-  color: white;
 }

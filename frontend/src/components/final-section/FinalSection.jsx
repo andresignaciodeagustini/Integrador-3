@@ -1,7 +1,7 @@
 // FinalSection.jsx
 import React from 'react';
 import './FinalSection.css';
-import prueba3 from '../../assets/images/carpeta_pruebas/imagen-final.jpg'; // Ajusta la ruta según la estructura de tu proyecto
+import prueba3 from '../../assets/images/carpeta_pruebas/imagen-final.jpg'; 
 
 function FinalSection() {
   return (
@@ -15,7 +15,7 @@ function FinalSection() {
           <p>
             Compra ahora los nuevos productos de Valentino Ricci. Descubre nuestra colección exclusiva de bolsos y prendas para mujer y hombre.
           </p>
-          <a href="product-list://" className="buy-now-link">COMPRAR AHORA</a> {/* Enlace agregado */}
+          <a href="product-list://" className="buy-now-link">COMPRAR AHORA</a> 
         </div>
       </div>
     </section>

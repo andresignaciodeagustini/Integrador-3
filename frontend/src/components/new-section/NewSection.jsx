@@ -1,8 +1,7 @@
-// ../../components/new-section/NewSection.js
+
 import React from 'react';
 import './NewSection.css';
 
-// Importa las imágenes
 import coleccionHombre from '../../assets/images/carpeta_pruebas/prueba8.jpg';
 import coleccionMujer from '../../assets/images/carpeta_pruebas/coleccion_para_mujer.jpg';
 
