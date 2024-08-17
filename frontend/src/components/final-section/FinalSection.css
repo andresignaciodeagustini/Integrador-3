@@ -1,3 +1,4 @@
+/* Estilos generales para la sección final */
 .final-section {
     margin-bottom: 3%;
     display: flex;
@@ -23,13 +24,10 @@
 }
 
 .final-section-image img {
-    max-width: 110%;
-    max-height: 110%;
-    height: auto;
+    max-width: 100%; /* Ajustar el tamaño máximo para que se adapte al contenedor */
+    height: auto; /* Mantener la relación de aspecto */
     object-fit: cover;
-    margin-left: -15%;
-    width: 650px;
-    margin-bottom: -5%;
+    width: auto; /* Ajustar el ancho automáticamente */
 }
 
 .final-section-text {
@@ -85,4 +83,91 @@
 .buy-now-link:hover::after {
     transform: scaleX(1);
     background-color: #555;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 767px) {
+    .final-section {
+        height: auto; /* Ajustar la altura para dispositivos móviles */
+        flex-direction: column;
+        margin-top: 3%;
+    }
+
+    .final-section-content {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .final-section-image {
+        flex: none;
+        width: 100%;
+        padding: 0;
+    }
+
+    .final-section-image img {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .final-section-text {
+        flex: none;
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .final-section-text h2 {
+        font-size: 18px;
+    }
+
+    .final-section-text p {
+        font-size: 14px;
+    }
+
+    .buy-now-link {
+        font-size: 12px;
+    }
+}
+
+/* Media query para tabletas */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .final-section {
+        height: auto; /* Ajustar la altura para tabletas */
+    }
+
+    .final-section-content {
+        flex-direction: column;
+    }
+
+    .final-section-image {
+        flex: none;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .final-section-image img {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .final-section-text {
+        flex: none;
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .final-section-text h2 {
+        font-size: 22px;
+    }
+
+    .final-section-text p {
+        font-size: 15px;
+    }
+
+    .buy-now-link {
+        font-size: 11px;
+    }
 }

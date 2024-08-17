@@ -1,6 +1,7 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import './Carousel.css';
 import modelo1 from '../../assets/images/main/modelo1.jpg';
 import modelo2 from '../../assets/images/main/modelo2.jpg';
 import modelo3 from '../../assets/images/main/modelo3.jpg';
