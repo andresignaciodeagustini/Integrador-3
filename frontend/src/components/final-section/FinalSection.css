@@ -150,6 +150,7 @@
     .final-section-image img {
         max-width: 100%;
         margin: 0;
+        margin-left: 14%;
     }
 
     .final-section-text {
@@ -157,6 +158,7 @@
         width: 100%;
         margin-left: 0;
         text-align: center;
+        margin-left: 30%;
     }
 
     .final-section-text h2 {

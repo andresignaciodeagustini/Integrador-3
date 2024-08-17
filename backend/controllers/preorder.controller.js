@@ -9,7 +9,7 @@ async function postPreorder(req, res) {
     console.log("Datos recibidos en postPreorder:", req.body); // Log de los datos recibidos
 
     // Validación básica de datos
-    if (!user || typeof total !== 'number' || !products || products.length === 0) {
+    if (!user || typeof total !== 'number') {
       return res.status(400).send({
         ok: false,
         message: "Datos incompletos para crear la preorden"
@@ -21,8 +21,10 @@ async function postPreorder(req, res) {
 
     // Validación adicional (opcional):
     // - Verificar si el usuario puede crear preórdenes
-    // - Verificar si los productos están disponibles para preorden
-    await orderProductPriceVerification(products, total);
+    // - Verificar si los productos están disponibles para preorden (solo si hay productos)
+    if (products && products.length > 0) {
+      await orderProductPriceVerification(products, total);
+    }
 
     // Crear una preorden
     const preorder = new Preorder(req.body);
@@ -133,6 +135,7 @@ async function deletePreorder(req, res) {
     });
   }
 }
+
 
 module.exports = {
   postPreorder,

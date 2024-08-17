@@ -71,6 +71,7 @@ export const OrderProvider = ({ children }) => {
                 console.log("Product details found:", product);
   
                 return {
+                  _id: product._id,
                   quantity: prod.quantity,
                   name: product.name, // Nombre del producto
                   image: product.image, // Imagen del producto
@@ -224,33 +225,37 @@ export const OrderProvider = ({ children }) => {
         });
         return;
       }
-
+  
       const products = order.orders.map(item => ({
         quantity: item.quantity,
         product: item._id,
         price: item.price
       }));
-
+  
       const nuevaOrden = {
         total,
         user: user._id,
         products
       };
-
+  
       console.log("Posting order:", nuevaOrden);
-
+  
+      // Crear la orden
       await api.post("/orders", nuevaOrden);
-
-      Swal.fire("Orden creada", "La orden se creó correctamente", "success");
-
+  
       // Limpiar el carrito de compras después de crear la orden
       setOrder({ orders: [] });
-
+  
+      
+  
+      Swal.fire("Orden creada", "La orden se creó correctamente", "success");
+  
     } catch (error) {
       console.error("Error creating order:", error);
       Swal.fire("Error", "Hubo un problema al procesar la orden", "error");
     }
   }
+  
 
   async function postPreOrder() {
     try {
@@ -287,20 +292,24 @@ export const OrderProvider = ({ children }) => {
       // Verifica si preOrderData y preOrderData.products existen
       if (preOrderData && Array.isArray(preOrderData.products)) {
         setOrder({
-          orders: preOrderData.products.map(product => ({
-            _id: product.product._id,
-            
-            price: product.price,
-            quantity: product.quantity,
-           
-          }))
+          orders: preOrderData.products.map(product => {
+            if (product.product && product.product._id) {
+              return {
+                _id: product.product._id,
+                price: product.price,
+                quantity: product.quantity,
+              };
+            } else {
+              console.error("Product or product ID missing:", product);
+              return null; // O manejar el caso en el que falte el ID
+            }
+          }).filter(product => product !== null) // Filtrar productos nulos
         });
-
+      
         console.log("Preorder state updated:", preOrderData);
       } else {
         console.log("No pre-order data found.");
       }
-
       
       
 
