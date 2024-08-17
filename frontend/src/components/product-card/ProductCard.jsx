@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductCard.css";
-import { faHeart, faEye } from "@fortawesome/free-regular-svg-icons";
+import { faBagShopping, faEye } from "@fortawesome/free-solid-svg-icons"; // Actualizado
 import { useOrder } from "../../context/OrderContext.jsx";
 
 export default function ProductCard({ product }) {
@@ -11,6 +11,7 @@ export default function ProductCard({ product }) {
 
   const handleHeartClick = () => {
     setHeartActive(!heartActive);
+    addOrderItem(product); // Añadir el producto a la orden cuando se hace clic en el corazón
   };
 
   return (
@@ -26,10 +27,10 @@ export default function ProductCard({ product }) {
               />
             </Link>
             <button
-              className={`btn-icon btn-icon-heart ${heartActive ? 'active' : ''}`}
+              className={`btn-icon btn-icon-bag ${heartActive ? 'active' : ''}`}
               onClick={handleHeartClick}
             >
-              <FontAwesomeIcon icon={faHeart} />
+              <FontAwesomeIcon icon={faBagShopping} /> {/* Actualizado */}
             </button>
           </div>
         </div>
@@ -42,9 +43,7 @@ export default function ProductCard({ product }) {
           $ {product.price}
         </div>
       </div>
-      <div className="card-footer">
-        <button onClick={() => addOrderItem(product)}>Añadir</button>
-      </div>
+      {/* Elimina la sección de código para el botón de "Añadir" */}
     </article>
   );
 }

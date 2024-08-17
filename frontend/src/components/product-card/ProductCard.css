@@ -1,7 +1,7 @@
+/* Estilos generales */
 .product-card {
     background-color: white;
     width: 300px;
-    border: 1px solid black;
     transition: margin 0.3s, border 0.3s, box-shadow 0.3s;
     margin-bottom: 68px;
     position: relative;
@@ -21,33 +21,34 @@
     object-fit: cover;
 }
 
-.btn-icon-heart, .btn-icon-eye {
+.btn-icon-bag, .btn-icon-eye {
     position: absolute;
     top: 10px;
-    color: #242424;
+    color: black;
     background: none;
     border: none;
     padding: 8px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    font-size: 13px; /* Reducir el tamaño del ícono */
 }
 
-.btn-icon-heart {
+.btn-icon-bag {
     right: 7px;
 }
 
 .btn-icon-eye {
     right: 30px;
-    top: 7px;
+    top: 8px;
 }
 
-.btn-icon-heart:hover,
+.btn-icon-bag:hover,
 .btn-icon-eye:hover {
     transform: scale(1.2);
     border: none;
     background-color: transparent;
 }
-.btn-icon-heart.active {
+.btn-icon-bag.active {
     color: white;
 }
 
@@ -94,23 +95,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 12px;
+    font-size: 8px;
     padding: 10px 0;
     border-bottom: 1px solid #ebebeb;
 }
 
 .product-name {
-    font-size: 1rem;
+    font-size: px; /* Reducir el tamaño de la fuente para el nombre del producto */
+    text-transform: uppercase; /* Convertir el texto a mayúsculas */
     padding: 10px 0;
-    text-transform: capitalize;
     margin-top: 55%;
-    text-align: center;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 1; /* Limita a una línea */
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis; 
-    line-clamp: 1; 
+    text-overflow: ellipsis; /* Añade puntos suspensivos cuando el texto se desborda */
+    line-clamp: 1; /* Propiedad estándar (en fase de adopción) */
 }
 
 .product-name a {
@@ -124,19 +124,12 @@
 }
 
 .product-price {
+    font-size: 10px; /* Reducir el tamaño de la fuente para el precio */
     display: flex;
     gap: 1rem;
     align-items: baseline;
-    line-height: 24px;
-    text-align: center;
-    justify-content: center;
-}
-
-.product-discount-price {
-    color: black;
-    font-weight: 400;
-    font-size: 13px;
-    margin-left: 40%;
+    line-height: 18px; /* Ajustar la altura de línea */
+    text-align: left; /* Alinear a la izquierda */
 }
 
 .entry-date {
@@ -145,6 +138,7 @@
     margin-top: 8px;
 }
 
+/* Media query para dispositivos móviles */
 @media (max-width: 767px) {
     .product-card {
         width: 75%;
@@ -173,13 +167,13 @@
     }
 
     .product-name {
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* Ajustar tamaño de fuente para pantallas pequeñas */
     }
 
     .product-price {
+        font-size: 8px; /* Ajustar tamaño de fuente para pantallas pequeñas */
         margin-left: 17%;
         margin-top: -10px;
-        font-size: 10px;
     }
 
     .product-discount-price span {
@@ -201,5 +195,22 @@
     .product-list-title {
         margin-top: 10%;
         margin-bottom: 10%;
+    }
+}
+
+/* Media query para tabletas */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .btn-icon-bag, .btn-icon-eye {
+        font-size: 11px; /* Ajustar tamaño de los íconos para pantallas de tabletas */
+    }
+
+    .product-card {
+        width: 80%;
+        max-width: 350px; /* Ajustar el ancho máximo para pantallas de tabletas */
+        height: 450px; /* Ajustar la altura para pantallas de tabletas */
+    }
+
+    .product-image {
+        height: 180px; /* Ajustar la altura de la imagen para pantallas de tabletas */
     }
 }

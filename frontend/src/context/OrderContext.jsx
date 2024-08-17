@@ -50,29 +50,39 @@ export const OrderProvider = ({ children }) => {
         try {
           const response = await api.get(`/preorders/${user._id}`);
           console.log("Preorder response:", response.data);
-
+  
           const preOrders = response.data;
           if (Array.isArray(preOrders) && preOrders.length > 0) {
-            const preOrderData = preOrders[0];
+            const preOrderData = preOrders[preOrders.length - 1];
             
             if (preOrderData && Array.isArray(preOrderData.products)) {
               console.log("Productos en el pre-pedido:", preOrderData.products);
-              
-              // Obtener detalles completos de los productos
+  
               const productsWithDetails = await Promise.all(preOrderData.products.map(async (prod) => {
+                console.log("Fetching details for product ID:", prod.product);
+  
                 const productDetails = await fetchProductDetails(prod.product);
+                if (!productDetails || !productDetails.product) {
+                  console.error(`No details found for product ID: ${prod.product}`);
+                  return null; // No incluir el producto si no se encuentran detalles
+                }
+  
+                const { product } = productDetails;
+                console.log("Product details found:", product);
+  
                 return {
-                  
-                  _id: prod.product._id,
-                  name: productDetails ? productDetails.name : "Desconocido",
-                  price: prod.price,
                   quantity: prod.quantity,
-                  image: productDetails ? productDetails.image : "default_image_url",
+                  name: product.name, // Nombre del producto
+                  image: product.image, // Imagen del producto
+                  price: prod.price, // Precio del producto
                 };
               }));
-
-              setOrder({ orders: productsWithDetails });
-              console.log("Order state updated with pre-order data:", preOrderData);
+  
+              // Filtrar productos nulos (en caso de que algunos detalles no se encuentren)
+              const filteredProductsWithDetails = productsWithDetails.filter(product => product !== null);
+  
+              setOrder({ orders: filteredProductsWithDetails });
+              console.log("Order state updated with pre-order data:", filteredProductsWithDetails);
             } else {
               console.log("No pre-order products found.");
             }
@@ -86,10 +96,9 @@ export const OrderProvider = ({ children }) => {
         console.log("User or token not available.");
       }
     };
-
+  
     fetchPreOrder();
   }, [user, token]);
-
   useEffect(() => {
     localStorage.setItem('order', JSON.stringify(order));
     calculateTotal();
@@ -280,10 +289,10 @@ export const OrderProvider = ({ children }) => {
         setOrder({
           orders: preOrderData.products.map(product => ({
             _id: product.product._id,
-            name: product.product.name,
+            
             price: product.price,
             quantity: product.quantity,
-            image: product.product.image,
+           
           }))
         });
 
@@ -292,14 +301,12 @@ export const OrderProvider = ({ children }) => {
         console.log("No pre-order data found.");
       }
 
-      Swal.fire("Preorden creada", "La preorden se creó correctamente", "success");
-
-      // Limpiar el carrito de compras después de crear la preorden
-      setOrder({ orders: [] });
+      
+      
 
     } catch (error) {
       console.error("Error creating pre-order:", error);
-      Swal.fire("Error", "Hubo un problema al procesar la preorden", "error");
+      
     }
   }
 
