@@ -31,6 +31,7 @@
     cursor: pointer;
     transition: transform 0.3s ease;
     font-size: 13px; /* Reducir el tamaño del ícono */
+    margin-right: 8%; /* Ajustar la posición horizontal */
 }
 
 .btn-icon-bag {
@@ -39,7 +40,7 @@
 
 .btn-icon-eye {
     right: 30px;
-    top: 8px;
+    margin-bottom: 18%;
 }
 
 .btn-icon-bag:hover,
