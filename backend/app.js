@@ -1,33 +1,29 @@
-const express = require("express")
+const express = require("express");
 const app = express();
-const cors = require ('cors');
+const cors = require('cors');
 
+const Mercado_Pago = require('./routes/Mercado_Pago.routes'); // Ruta correcta con capitalización correcta
 
+const api_routes = require("./routes/index");
 
-const api_routes = require("./routes/index")
+// Usar la ruta de Mercado_Pago
+app.use("/api", Mercado_Pago);
 
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static('public'));
 
-//share public folder
-app.use(express.static('public'))
-
-// Middlewares
-
-//CORS
-
+// Configuración de CORS
 app.use(cors({
     origin: 'http://localhost:5173', // La URL de tu frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
-}))
+// Middleware para interpretar datos JSON y URL-encoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-
-// poder interpretar los datos que vienen en el body de una petición
-app.use(express.json())
-
-app.use(express.urlencoded({ extended:true}))
-
-app.use("/api", 
-api_routes)
+// Usar las rutas definidas en index.js
+app.use("/api", api_routes);
 
 module.exports = app;
