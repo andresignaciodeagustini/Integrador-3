@@ -144,7 +144,7 @@ const Header = ({ isProductDetailPage }) => {
       </div>
 
       {!isSpecialPage && !isProductDetailPage && (
-        <div className={`season ${sidebarToggle ? 'hide' : ''}`}>
+        <div className={`season ${isScrolled || sidebarToggle ? 'hide' : ''}`}>
           <p className="eb-garamond-season">
             COLECCIÓN 2024
           </p>

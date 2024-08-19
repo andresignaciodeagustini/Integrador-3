@@ -7,7 +7,12 @@ import './OrderSidebar.css';
 
 export default function OrderSidebar() {
   const { order, total, handleChangeQuantity, removeItem, sidebarToggle, closeSidebar, postOrder } = useOrder();
+  console.log("OrderSidebar render - Total:", total);
+  console.log("OrderSidebar render - Order:", order);
+
   const [isMobileView, setIsMobileView] = useState(false);
+  const [preferenceId, setPreferenceId] = useState('');
+  console.log("Preference ID updated:", preferenceId);
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,8 +33,9 @@ export default function OrderSidebar() {
 
   const handleFinishPurchase = async () => {
     try {
-      // Llamada a postOrder para crear la orden
-      await postOrder();
+      // Llamada a postOrder para crear la orden y obtener el preferenceId
+      const response = await postOrder(order.orders, total); // Enviar la orden y el total al backend
+      setPreferenceId(response.preferenceId); // Guardar el preferenceId en el estado
     } catch (error) {
       console.error("Error finalizando la compra:", error);
     }
@@ -87,9 +93,7 @@ export default function OrderSidebar() {
         <div className="order-purchase">
           <button className="btn" onClick={handleFinishPurchase}>Finalizar compra</button>
           {/* Aquí agregamos el componente Wallet */}
-         
-          <Wallet initialization={{ preferenceId: '<PREFERENCE_ID>' }} customization={{ texts:{ valueProp: 'smart_option'}}} />
-
+          <Wallet initialization={{ preferenceId }} customization={{ texts:{ valueProp: 'smart_option'}}} />
         </div>
       </div>
     </div>
