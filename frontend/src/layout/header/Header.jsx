@@ -50,13 +50,11 @@ const Header = ({ isProductDetailPage }) => {
   const handleLogout = async () => {
     try {
       if (user) {
-        
         const products = (order.orders || []).map(item => ({
           quantity: item.quantity,
           product: item._id,
           price: item.price
         }));
-  
         await postPreOrder(); 
         logout(); 
       }
@@ -146,7 +144,7 @@ const Header = ({ isProductDetailPage }) => {
       </div>
 
       {!isSpecialPage && !isProductDetailPage && (
-        <div className={`season ${isScrolled ? 'hide' : ''}`}>
+        <div className={`season ${sidebarToggle ? 'hide' : ''}`}>
           <p className="eb-garamond-season">
             COLECCIÓN 2024
           </p>
@@ -157,6 +155,6 @@ const Header = ({ isProductDetailPage }) => {
       )}
     </header>
   );
-}
+};
 
 export default Header;
