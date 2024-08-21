@@ -1,22 +1,33 @@
 const multer = require('multer');
-const path = require ('path');
-const crypto = require ('crypto');
+const path = require('path');
+const crypto = require('crypto');
 
-const storage = multer.diskStorage({
+// Configuración de almacenamiento para productos
+const storageProducts = multer.diskStorage({
     destination: 'public/images/products',
-    filename: (req,file, cb) =>{
-        crypto.randomBytes(16,(error, buffer) => {
-            if(error) return cb(error)
-            const filename = buffer.toString('hex') + path.extname(file.originalname)
-
-
-            cb(null,filename)    
-
-                })
+    filename: (req, file, cb) => {
+        crypto.randomBytes(16, (error, buffer) => {
+            if (error) return cb(error);
+            const filename = buffer.toString('hex') + path.extname(file.originalname);
+            cb(null, filename);
+        });
     }
+});
 
-})
+// Configuración de almacenamiento para usuarios
+const storageUsers = multer.diskStorage({
+    destination: 'public/images/users',
+    filename: (req, file, cb) => {
+        crypto.randomBytes(16, (error, buffer) => {
+            if (error) return cb(error);
+            const filename = buffer.toString('hex') + path.extname(file.originalname);
+            cb(null, filename);
+        });
+    }
+});
 
-const upload = multer ({ storage }).single("image");
+// Instancias de multer
+const uploadProductImage = multer({ storage: storageProducts }).single("image");
+const uploadUserImage = multer({ storage: storageUsers }).single("image");
 
-module.exports = upload;
+module.exports = { uploadProductImage, uploadUserImage };

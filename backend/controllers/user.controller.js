@@ -36,7 +36,7 @@ async function getUserById(req, res) {
 // Obtener usuarios con paginación
 async function getUsers(req, res) {
     try {
-        const limit = parseInt(req.query.limit, 10) || 10;
+        const limit = parseInt(req.query.limit, 10) || 3;
         const page = parseInt(req.query.page, 10) || 0;
 
         const filters = {};
@@ -76,12 +76,10 @@ async function postUser(req, res) {
         console.log('req.body:', req.body);
         console.log('req.file:', req.file);
 
-        // Asignar rol basado en el rol del usuario que está creando el nuevo usuario
         if (req.user?.role !== "ADMIN_ROLE") {
             req.body.role = "CLIENT_ROLE";
         }
 
-        // Verificar si la contraseña está presente
         if (!req.body.password) {
             console.log('Error: La contraseña no está presente en req.body');
             return res.status(400).send({
@@ -92,30 +90,22 @@ async function postUser(req, res) {
 
         console.log('Contraseña antes de hashear:', req.body.password);
 
-        // Hashear la contraseña antes de guardar el usuario
         req.body.password = await bcrypt.hash(req.body.password, saltRounds);
         console.log('Contraseña hasheada:', req.body.password);
 
-        // Crear el nuevo usuario
         const user = new User(req.body);
 
-        // Asignar imagen si está presente en la solicitud
         if (req.file?.filename) {
             user.image = req.file.filename;
         }
 
         const newUser = await user.save();
-        newUser.password = undefined; // No enviar la contraseña en la respuesta
+        newUser.password = undefined;
 
-        // Generar un token JWT para el nuevo usuario
-        const token = jwt.sign({ _id: newUser._id, role: newUser.role }, secret, { expiresIn: '1h' });
-
-        // Enviar la respuesta con el usuario y el token
         res.status(201).send({
             ok: true,
             message: "Usuario creado correctamente",
-            user: newUser,
-            token // Enviar el token en la respuesta
+            user: newUser
         });
 
     } catch (error) {

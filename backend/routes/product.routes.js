@@ -1,20 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/product.controller');
-//Middlewares para controlar administradores
+
+// Middlewares para controlar autenticación y roles de administrador
 const auth = require('../middlewares/auth');
-const isAdmin = require('../middlewares/isAdmin')
-const upload =  require('../middlewares/upload')
+const isAdmin = require('../middlewares/isAdmin');
+const { uploadProductImage } = require('../middlewares/upload');
 
+// Rutas para manejar productos
 
+// Obtener todos los productos
 router.get("/products", productController.getProducts);
+
+// Obtener un producto por su ID
 router.get("/products/:id", productController.getProductById);
 
+// Crear un nuevo producto
+router.post("/products", [auth, isAdmin, uploadProductImage], productController.postProduct);
 
-// Rutas 
+// Eliminar un producto por su ID
+router.delete("/products/:id", [auth, isAdmin], productController.deleteProduct);
 
-router.post("/products",[auth, isAdmin, upload],  productController.postProduct);
-router.delete("/products/:id",[auth, isAdmin], productController.deleteProduct);
-router.put("/products/:id", [auth, isAdmin, upload], productController.updateProduct);
+// Actualizar un producto por su ID
+router.put("/products/:id", [auth, isAdmin, uploadProductImage], productController.updateProduct);
 
 module.exports = router;

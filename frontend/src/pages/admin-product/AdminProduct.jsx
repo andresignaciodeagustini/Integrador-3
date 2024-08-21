@@ -60,98 +60,93 @@ export default function AdminProduct() {
 
   async function onSubmit(data) {
     try {
-      console.log("data", data);
+      console.log("Datos del formulario:", data);
       const formData = new FormData();
+      const selectedCategory = data.category || categories[0];
+      formData.append("category", selectedCategory);
+  
       if (data.id) {
         formData.append("id", data.id);
       }
       formData.append("name", data.name);
-      formData.append("price", +data.price); 
-      formData.append("image", data.image.length ?  data.image[0] : undefined);
-      formData.append("createdAt", new Date(data.createdAt).toISOString()); 
-      formData.append("category", data.category);
+      formData.append("price", +data.price);
+      formData.append("image", data.image.length ? data.image[0] : undefined);
+  
+      // Validar y asignar la fecha
+      const createdAtDate = new Date(data.createdAt);
+      formData.append("createdAt", isNaN(createdAtDate.getTime()) ? new Date().toISOString() : createdAtDate.toISOString());
+  
       formData.append("description", data.description);
-      console.log(data);
+  
       if (data.id) {
+        console.log("Actualizando producto con ID:", data.id);
         updateProduct(formData);
       } else {
+        console.log("Creando nuevo producto");
         createProduct(formData);
       }
   
-      reset(); 
+      reset();
       setIsEditing(false); 
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
     }
   }
+  
+ async function createProduct(product) {
+  try {
+    await api.post(`/products/`, product, {
+      headers: { Authorization: token }
+    });
+    // Actualiza la lista de productos después de crear
+    getProducts({ page: 0 });
+    reset();
+    setIsEditing(false);
+  } catch (error) {
+    console.error("Error al crear el producto:", error);
+  }
+}
 
-  async function createProduct(product) {
-    try {
-      const newProduct = await api.post(`/products/`, 
-        product, 
-        {
-          headers: {
-            Authorization: token
-          }
-        }
-      );
-      console.log("Nuevo producto creado:", newProduct.data);
-      reset();
-      setProducts([...products, newProduct.data]);
-    } catch (error) {
-      console.error("Error al crear el producto:", error);
+async function deleteProduct(id) {
+  try {
+    await api.delete(`products/${id}`);
+    // Actualiza la lista de productos después de eliminar
+    getProducts({ page: 0 });
+  } catch (error) {
+    console.error("Error al eliminar el producto:", error);
+  }
+}
+
+async function updateProduct(productFormData) {
+  try {
+    const id = productFormData.get("id");
+    if (!id) {
+      throw new Error("ID del producto no válido");
+    }
+
+    await api.put(`/products/${id}`, productFormData);
+    // Actualiza la lista de productos después de actualizar
+    getProducts({ page: 0 });
+    setIsEditing(false);
+    reset();
+  } catch (error) {
+    console.error("Error al actualizar el producto:", error);
+
+    if (error.response) {
+      // Error de respuesta del servidor
+      console.error("Error del servidor:", error.response.data);
+      console.error("Estado del servidor:", error.response.status);
+      console.error("Encabezados del servidor:", error.response.headers);
+    } else if (error.request) {
+      // Error de solicitud (no se recibió respuesta)
+      console.error("Error en la solicitud:", error.request);
+    } else {
+      // Otros errores
+      console.error("Error:", error.message);
     }
   }
+}
 
-  async function deleteProduct(id) {
-    try {
-      
-      await api.delete(`products/${id}`);
-      setProducts(products.filter(product => product.id !== id));
-      getProducts({ page: 0 });
-    } catch (error) {
-      console.error("Error al eliminar el producto:", error);
-    }
-  }
-
-  async function updateProduct(productFormData) {
-    try {
-      const id = productFormData.get("id");
-      console.log(id);
-      
-      
-      console.log("Product Data being sent:", Object.fromEntries(productFormData.entries()));
-
-      if (!id) {
-        throw new Error("ID del producto no válido");
-      }
-
-      // Guarda la respuesta en una variable
-      const response = await api.put(`/products/${id}`, productFormData);
-        
-      // Accede a response.data
-      console.log("Response from server:", response.data);
-
-      getProducts({ page: 0 });
-      setIsEditing(false);
-      reset();
-    } catch (error) {
-      console.error("Error al actualizar el producto:", error);
-
-      if (error.response) {
-        // Error de respuesta del servidor
-        console.error("Error del servidor:", error.response.data);
-        console.error("Estado del servidor:", error.response.status);
-        console.error("Encabezados del servidor:", error.response.headers);
-      } else if (error.request) {
-        // Error de solicitud (no se recibió respuesta)
-        console.error("Error en la solicitud:", error.request);
-      } else {
-        // Otros errores
-        console.error("Error:", error.message);
-      }
-    }
-  }
 
   function handleEditProduct(producto) {
     if (!producto || !producto._id) {
@@ -284,23 +279,24 @@ export default function AdminProduct() {
               <th>ACCIONES</th>
             </tr>
           </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td><img src={`http://localhost:3000/images/products/${product.image}`} alt={product.name} /></td>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>{new Date(product.createdAt).toLocaleDateString()}</td>
-                <td>${product.price}</td>
-                <td>
-                  <div className="buttons-container">
-                    <button className="edit-button" onClick={() => handleEditProduct(product)}>EDITAR</button>
-                    <button className="delete-button" onClick={() => handleDeleteClick(product._id)}>ELIMINAR</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+                  <tbody>
+          {products.map((product) => (
+            <tr key={product._id}> {/* Asegúrate de que cada "product" tenga una clave única */}
+              <td><img src={`http://localhost:3000/images/products/${product.image}`} alt={product.name} /></td>
+              <td>{product.name}</td>
+              <td>{product.description}</td>
+              <td>{new Date(product.createdAt).toLocaleDateString()}</td>
+              <td>${product.price}</td>
+              <td>
+                <div className="buttons-container">
+                  <button className="edit-button" onClick={() => handleEditProduct(product)}>EDITAR</button>
+                  <button className="delete-button" onClick={() => handleDeleteClick(product._id)}>ELIMINAR</button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+
         </table>
           <Pagination 
             totalItems={totalItems}

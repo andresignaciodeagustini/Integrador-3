@@ -3,23 +3,24 @@ const router = express.Router();
 const userController = require("../controllers/user.controller");
 const auth = require('../middlewares/auth');
 const isAdmin = require('../middlewares/isAdmin');
+const { uploadUserImage } = require('../middlewares/upload');
 
-// GET users with pagination
+// Obtener todos los usuarios con paginación
 router.get("/users", userController.getUsers);
 
-// GET user by id
+// Obtener un usuario por su ID
 router.get("/users/:id", userController.getUserById);
 
-// POST create new user
-router.post("/users", userController.postUser);
+// Crear un nuevo usuario
+router.post("/users", [auth, isAdmin, uploadUserImage], userController.postUser);
 
-// DELETE user by id
+// Eliminar un usuario por su ID
 router.delete("/users/:id", [auth, isAdmin], userController.deleteUser);
 
-// PUT update user by id
-router.put("/users/:idUpdate", userController.updateUser);
+// Actualizar un usuario por su ID
+router.put("/users/:id", [auth, isAdmin, uploadUserImage], userController.updateUser);
 
-// POST login
+// Iniciar sesión
 router.post("/login", userController.login);
 
 module.exports = router;

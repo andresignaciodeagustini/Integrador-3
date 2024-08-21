@@ -1,9 +1,3 @@
-
-
-
-
-
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -22,14 +16,6 @@ const userSchema = new Schema({
         maxlength: 100,
         trim: true,
         lowercase: true
-        // Elimina la validación personalizada del formato del email
-        // validate: {
-        //     validator: (value) => {
-        //         const regex = /^[A-Za-z0-9._+\-']+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-        //         return regex.test(value);
-        //     },
-        //     message: 'Correo electrónico inválido'
-        // }
     },
     password: {
         type: String,
@@ -42,16 +28,17 @@ const userSchema = new Schema({
         type: Date,
         required: true
     },
-    location: {
-        type: String
-    },
     role: {
         type: String,
         default: "CLIENT_ROLE",
         enum: ["ADMIN_ROLE", "CLIENT_ROLE", "USER_ROLE"]
+    },
+    image: {
+        type: String,
+        trim: true, // URL de la imagen o ruta al archivo
     }
 }, {
-    collection: 'users' // Especifica la colección explícitamente
+    collection: 'users'
 });
 
 module.exports = mongoose.model("User", userSchema);
