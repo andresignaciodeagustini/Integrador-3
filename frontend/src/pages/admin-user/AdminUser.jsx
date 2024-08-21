@@ -116,7 +116,8 @@ export default function AdminUser() {
     setValue("fullname", usuario.fullname || ''); // Updated to 'fullname'
     setValue("email", usuario.email);
     setValue("image", usuario.image || '');
-    setValue("bornDate", usuario.bornDate || '');
+    setValue("bornDate", usuario.bornDate ? new Date(usuario.bornDate).toISOString().split('T')[0] : '');
+
     setValue("location", usuario.location || '');
   }
 
