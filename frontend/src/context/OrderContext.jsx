@@ -269,6 +269,68 @@ export const OrderProvider = ({ children }) => {
       Swal.fire("Error", "Hubo un problema al procesar la orden", "error");
     }
   }
+  
+  async function postPreOrder() {
+    try {
+      if (!user || !token) {
+        Swal.fire({
+          title: "Error",
+          text: "Debe estar logueado para realizar una orden",
+          icon: "warning",
+          timer: 4000
+        });
+        return;
+      }
+
+      const products = order.orders.map(item => ({
+        quantity: item.quantity,
+        product: item._id,
+        price: item.price
+      }));
+
+      const nuevaPreorden = {
+        total,
+        user: user._id,
+        products
+      };
+
+      console.log("Posting pre-order:", nuevaPreorden);
+
+      // Enviar la preorden al backend
+      const response = await api.post("/preorders", nuevaPreorden);
+
+      // Obtener la preorden completa desde el backend
+      const preOrderData = response.data.preorder;
+
+      // Verifica si preOrderData y preOrderData.products existen
+      if (preOrderData && Array.isArray(preOrderData.products)) {
+        setOrder({
+          orders: preOrderData.products.map(product => {
+            if (product.product && product.product._id) {
+              return {
+                _id: product.product._id,
+                price: product.price,
+                quantity: product.quantity,
+              };
+            } else {
+              console.error("Product or product ID missing:", product);
+              return null; // O manejar el caso en el que falte el ID
+            }
+          }).filter(product => product !== null) // Filtrar productos nulos
+        });
+      
+        console.log("Preorder state updated:", preOrderData);
+      } else {
+        console.log("No pre-order data found.");
+      }
+      
+      
+
+    } catch (error) {
+      console.error("Error creating pre-order:", error);
+      
+    }
+  }
 
   const values = {
     order,
@@ -282,6 +344,7 @@ export const OrderProvider = ({ children }) => {
     handleChangeQuantity,
     removeItem,
     postOrder,
+    postPreOrder
   };
 
   return (
