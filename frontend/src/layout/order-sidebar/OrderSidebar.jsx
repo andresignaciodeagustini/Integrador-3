@@ -34,12 +34,13 @@ export default function OrderSidebar() {
   const handleFinishPurchase = async () => {
     try {
       // Llamada a postOrder para crear la orden y obtener el preferenceId
-      const response = await postOrder(order.orders, total); // Enviar la orden y el total al backend
+      const response = await postOrder(); // No necesitas pasar order.orders y total si ya se manejan dentro de postOrder
       setPreferenceId(response.preferenceId); // Guardar el preferenceId en el estado
     } catch (error) {
       console.error("Error finalizando la compra:", error);
     }
-  };
+};
+
 
   return (
     <div className={`order-wrapper ${sidebarToggle ? 'active' : ''} ${isMobileView ? 'mobile-view' : ''}`}>
@@ -91,10 +92,12 @@ export default function OrderSidebar() {
           </div>
         </div>
         <div className="order-purchase">
-          <button className="btn" onClick={handleFinishPurchase}>Finalizar compra</button>
-          {/* Aquí agregamos el componente Wallet */}
-          <Wallet initialization={{ preferenceId }} customization={{ texts:{ valueProp: 'smart_option'}}} />
-        </div>
+            <button className="btn" onClick={handleFinishPurchase}>Finalizar compra</button>
+            {/* Renderiza Wallet solo si preferenceId está definido */}
+            {preferenceId && (
+              <Wallet initialization={{ preferenceId }} customization={{ texts:{ valueProp: 'smart_option'}}} />
+            )}
+          </div>
       </div>
     </div>
   );

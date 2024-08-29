@@ -32,11 +32,10 @@ export const OrderProvider = ({ children }) => {
     fetchCart();
   }, [orderId]);
 
-  // Función para obtener detalles del producto
   async function fetchProductDetails(productId) {
     try {
       const response = await api.get(`/products/${productId}`);
-      return response.data; // Asumiendo que la respuesta contiene los detalles del producto
+      return response.data;
     } catch (error) {
       console.error("Error fetching product details:", error);
       return null;
@@ -50,38 +49,36 @@ export const OrderProvider = ({ children }) => {
         try {
           const response = await api.get(`/preorders/${user._id}`);
           console.log("Preorder response:", response.data);
-  
+
           const preOrders = response.data;
           if (Array.isArray(preOrders) && preOrders.length > 0) {
             const preOrderData = preOrders[preOrders.length - 1];
-            
             if (preOrderData && Array.isArray(preOrderData.products)) {
               console.log("Productos en el pre-pedido:", preOrderData.products);
-  
+
               const productsWithDetails = await Promise.all(preOrderData.products.map(async (prod) => {
                 console.log("Fetching details for product ID:", prod.product);
-  
+
                 const productDetails = await fetchProductDetails(prod.product);
                 if (!productDetails || !productDetails.product) {
                   console.error(`No details found for product ID: ${prod.product}`);
-                  return null; // No incluir el producto si no se encuentran detalles
+                  return null;
                 }
-  
+
                 const { product } = productDetails;
                 console.log("Product details found:", product);
-  
+
                 return {
                   _id: product._id,
                   quantity: prod.quantity,
-                  name: product.name, // Nombre del producto
-                  image: product.image, // Imagen del producto
-                  price: prod.price, // Precio del producto
+                  name: product.name,
+                  image: product.image,
+                  price: prod.price,
                 };
               }));
-  
-              // Filtrar productos nulos (en caso de que algunos detalles no se encuentren)
+
               const filteredProductsWithDetails = productsWithDetails.filter(product => product !== null);
-  
+
               setOrder({ orders: filteredProductsWithDetails });
               console.log("Order state updated with pre-order data:", filteredProductsWithDetails);
             } else {
@@ -97,9 +94,10 @@ export const OrderProvider = ({ children }) => {
         console.log("User or token not available.");
       }
     };
-  
+
     fetchPreOrder();
   }, [user, token]);
+
   useEffect(() => {
     localStorage.setItem('order', JSON.stringify(order));
     calculateTotal();
@@ -214,6 +212,20 @@ export const OrderProvider = ({ children }) => {
     setSidebarToggle(false);
   }
 
+  // Integrar la función sendOrderToMercadoPago
+  const sendOrderToMercadoPago = async (orderData) => {
+    try {
+      console.log("Sending order to Mercado Pago:", orderData);
+      const response = await api.post("/create-preference", orderData);
+      const { init_point } = response.data;
+      console.log("Mercado Pago init_point:", init_point);
+      return init_point;
+    } catch (error) {
+      console.error("Error sending order to Mercado Pago:", error);
+      Swal.fire("Error", "No se pudo procesar el pago con Mercado Pago", "error");
+    }
+  };
+
   async function postOrder() {
     try {
       if (!user || !token) {
@@ -225,97 +237,36 @@ export const OrderProvider = ({ children }) => {
         });
         return;
       }
-  
+
       const products = order.orders.map(item => ({
         quantity: item.quantity,
         product: item._id,
         price: item.price
       }));
-  
+
       const nuevaOrden = {
         total,
         user: user._id,
         products
       };
-  
+
       console.log("Posting order:", nuevaOrden);
-  
-      // Crear la orden
-      await api.post("/orders", nuevaOrden);
-  
-      // Limpiar el carrito de compras después de crear la orden
+
+      const response = await api.post("/orders", nuevaOrden);
+
       setOrder({ orders: [] });
-  
-      
-  
+
       Swal.fire("Orden creada", "La orden se creó correctamente", "success");
-  
+
+      // Enviar la orden a Mercado Pago y obtener el enlace de pago
+      const initPoint = await sendOrderToMercadoPago(nuevaOrden);
+
+      if (initPoint) {
+        window.location.href = initPoint; // Redirigir al enlace de pago de Mercado Pago
+      }
     } catch (error) {
       console.error("Error creating order:", error);
       Swal.fire("Error", "Hubo un problema al procesar la orden", "error");
-    }
-  }
-  
-
-  async function postPreOrder() {
-    try {
-      if (!user || !token) {
-        Swal.fire({
-          title: "Error",
-          text: "Debe estar logueado para realizar una orden",
-          icon: "warning",
-          timer: 4000
-        });
-        return;
-      }
-
-      const products = order.orders.map(item => ({
-        quantity: item.quantity,
-        product: item._id,
-        price: item.price
-      }));
-
-      const nuevaPreorden = {
-        total,
-        user: user._id,
-        products
-      };
-
-      console.log("Posting pre-order:", nuevaPreorden);
-
-      // Enviar la preorden al backend
-      const response = await api.post("/preorders", nuevaPreorden);
-
-      // Obtener la preorden completa desde el backend
-      const preOrderData = response.data.preorder;
-
-      // Verifica si preOrderData y preOrderData.products existen
-      if (preOrderData && Array.isArray(preOrderData.products)) {
-        setOrder({
-          orders: preOrderData.products.map(product => {
-            if (product.product && product.product._id) {
-              return {
-                _id: product.product._id,
-                price: product.price,
-                quantity: product.quantity,
-              };
-            } else {
-              console.error("Product or product ID missing:", product);
-              return null; // O manejar el caso en el que falte el ID
-            }
-          }).filter(product => product !== null) // Filtrar productos nulos
-        });
-      
-        console.log("Preorder state updated:", preOrderData);
-      } else {
-        console.log("No pre-order data found.");
-      }
-      
-      
-
-    } catch (error) {
-      console.error("Error creating pre-order:", error);
-      
     }
   }
 
@@ -331,7 +282,6 @@ export const OrderProvider = ({ children }) => {
     handleChangeQuantity,
     removeItem,
     postOrder,
-    postPreOrder
   };
 
   return (

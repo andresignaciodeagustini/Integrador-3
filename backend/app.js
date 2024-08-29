@@ -1,16 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require('cors');
-
 const Mercado_Pago = require('./routes/Mercado_Pago.routes'); // Ruta correcta con capitalización correcta
-
 const api_routes = require("./routes/index");
-
-// Usar la ruta de Mercado_Pago
-app.use("/api", Mercado_Pago);
-
-// Servir archivos estáticos desde la carpeta 'public'
-app.use(express.static('public'));
 
 // Configuración de CORS
 app.use(cors({
@@ -22,6 +14,12 @@ app.use(cors({
 // Middleware para interpretar datos JSON y URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Usar la ruta de Mercado_Pago
+app.use("/api", Mercado_Pago);
+
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static('public'));
 
 // Usar las rutas definidas en index.js
 app.use("/api", api_routes);
