@@ -34,13 +34,17 @@ export default function OrderSidebar() {
   const handleFinishPurchase = async () => {
     try {
       // Llamada a postOrder para crear la orden y obtener el preferenceId
-      const response = await postOrder(); // No necesitas pasar order.orders y total si ya se manejan dentro de postOrder
-      setPreferenceId(response.preferenceId); // Guardar el preferenceId en el estado
+      const response = await postOrder();
+      if (response && response.preferenceId) {
+        setPreferenceId(response.preferenceId); // Guardar el preferenceId en el estado
+      } else {
+        console.error("No se recibió preferenceId");
+        // Manejar el caso en que no se recibe preferenceId
+      }
     } catch (error) {
       console.error("Error finalizando la compra:", error);
     }
-};
-
+  };
 
   return (
     <div className={`order-wrapper ${sidebarToggle ? 'active' : ''} ${isMobileView ? 'mobile-view' : ''}`}>

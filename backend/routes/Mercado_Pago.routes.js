@@ -10,7 +10,6 @@ const Mercado_Pago = Router();
 
 const client = new MercadoPagoConfig({ accessToken: 'TEST-7216497546452179-081811-6d799c149db2505cdecaadc4adbe5c0e-98244982' });
 
-const preference = new Preference(client);
 
 // Endpoint para crear una preferencia de Mercado Pago
 Mercado_Pago.post('/create-preference', async (req, res) => {
@@ -43,19 +42,23 @@ Mercado_Pago.post('/create-preference', async (req, res) => {
             body: {
                 items: detailedItems,
                 back_urls: {
-                    success: "https://www.tuweb.com/success",
-                    failure: "https://www.tuweb.com/failure",
-                    pending: "https://www.tuweb.com/pending"
+                    success: "https://www.yotube.com",
+                    failure: "https://www.yotube.com",
+                    pending: "https://www.yotube.com"
                 },
                 auto_return: "approved",
             }
         };
 
         console.log('Datos de la preferencia:', preferenceData);
+        const preference = new Preference(client);
 
         // Crear la preferencia con Mercado Pago
         const response = await preference.create(preferenceData);
         
+        res.json({
+            id: response.id,
+        })
         console.log('Respuesta de Mercado Pago:', response);
         res.status(200).json(response.body); // Enviar solo el body de la respuesta al frontend
     } catch (error) {
