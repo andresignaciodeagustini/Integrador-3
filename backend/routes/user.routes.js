@@ -11,8 +11,8 @@ router.get("/users", userController.getUsers);
 // Obtener un usuario por su ID
 router.get("/users/:id", userController.getUserById);
 
-// Crear un nuevo usuario
-router.post("/users", [auth, isAdmin, uploadUserImage], userController.postUser);
+// Crear un nuevo usuarion
+router.post("/users", [uploadUserImage], userController.postUser);
 
 // Eliminar un usuario por su ID
 router.delete("/users/:id", [auth, isAdmin], userController.deleteUser);

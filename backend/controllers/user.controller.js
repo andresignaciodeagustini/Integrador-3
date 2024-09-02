@@ -36,7 +36,7 @@ async function getUserById(req, res) {
 // Obtener usuarios con paginación
 async function getUsers(req, res) {
     try {
-        const limit = parseInt(req.query.limit, 10) || 3;secre
+        const limit = parseInt(req.query.limit, 10) || 3
         const page = parseInt(req.query.page, 10) || 0;
 
         const filters = {};
