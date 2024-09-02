@@ -7,8 +7,10 @@ const Product = require('../models/product.model');
 dotenv.config();
 
 const Mercado_Pago = Router();
+const key = process.env.ACCESS_MERCADOPAGO;
 
-const client = new MercadoPagoConfig({ accessToken: 'TEST-7216497546452179-081811-6d799c149db2505cdecaadc4adbe5c0e-98244982' });
+
+const client = new MercadoPagoConfig({ accessToken: key });
 
 
 // Endpoint para crear una preferencia de Mercado Pago

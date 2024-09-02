@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './Pagination.css';
 
-export default function Pagination({ totalItems, loadPage, pageItems = 5 }) {
+export default function Pagination({ totalItems, loadPage, pageItems = 10 }) {
   const [page, setPage] = useState(0);
   const totalBtns = Math.ceil(totalItems / pageItems);
 

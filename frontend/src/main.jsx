@@ -8,7 +8,7 @@ import { UserProvider } from "./context/UserContext.jsx";
 import { initMercadoPago } from '@mercadopago/sdk-react'; // Importa la función para inicializar Mercado Pago
 
 // Inicializa Mercado Pago con tu clave pública
-initMercadoPago('TEST-0c0e389d-a3b1-4df4-ad32-b81b6475b2c1');
+initMercadoPago('APP_USR-24216c85-3170-45ba-9463-158b4a04cd7c');
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

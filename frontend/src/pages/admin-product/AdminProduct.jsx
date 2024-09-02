@@ -96,7 +96,7 @@ export default function AdminProduct() {
  async function createProduct(product) {
   try {
     await api.post(`/products/`, product, {
-      headers: { Authorization: token }
+      headers: { token }
     });
     // Actualiza la lista de productos después de crear
     getProducts({ page: 0 });
