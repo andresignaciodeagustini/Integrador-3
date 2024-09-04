@@ -10,6 +10,7 @@
 .about-us-container {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 3%;
 }
 
 .about-us-text {
@@ -54,7 +55,8 @@
     color: white;
     padding: 20px;
     width: 104%;
-    margin-bottom: -2%;
+    
+margin-bottom: -6%;
 }
 
 .about-me h2 {

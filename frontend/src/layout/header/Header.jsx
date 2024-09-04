@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Header.css';
-import logoBlanco from '../../assets/images/header/logo_fondo_blanco.jpg';
-import logoTransparente from '../../assets/images/header/logo_fondotransparente.png';
+import logoBlanco from '../../assets/images/header/logo_fondo_blanco1.png';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useOrder } from '../../context/OrderContext';
@@ -67,10 +67,7 @@ const Header = ({ isProductDetailPage }) => {
 
   return (
     <header className={`header-nav ${isScrolled || isSpecialPage || isProductDetailPage ? 'scroll-bg-white' : 'transparent-bg'} ${sidebarToggle && isMobileView ? 'hide-header' : ''} ${isProductDetailPage ? 'product-detail-header' : ''}`}>
-      <NavLink to="/" className="logo">
-        <img src={isScrolled || isSpecialPage || isProductDetailPage ? logoBlanco : logoTransparente} alt='Logo' />
-      </NavLink>
-
+     
       <nav className={`nav-links ${isMenuOpen ? 'open' : ''} ${isMobileView ? 'mobile-view' : ''}`}>
         <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
         {user ? (
@@ -90,6 +87,10 @@ const Header = ({ isProductDetailPage }) => {
           </>
         )}
       </nav>
+
+      <NavLink to="/" className="logo">
+        <img src={isSpecialPage ? logoBlanco : logoBlanco} alt='Logo' />
+      </NavLink>
 
       <div className={`user-info ${isScrolled || isSpecialPage || isProductDetailPage ? 'black-icons' : 'white-icons'}`}>
         <div className='user-cart-container'>
@@ -123,30 +124,12 @@ const Header = ({ isProductDetailPage }) => {
         <div className="close-button" onClick={() => setIsMenuOpen(false)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
-        <div className="mobile-logo">
-          <NavLink to="/" className="logo" onClick={() => setIsMenuOpen(false)}>
-            <img src={logoBlanco} alt='Logo' className="mobile-logo-img" />
-          </NavLink>
-        </div>
-        <nav className="nav-links">
-          <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
-          <NavLink to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>LOGIN</NavLink>
-          <NavLink to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</NavLink>
-          <NavLink to="/about-us" className="nav-link" onClick={() => setIsMenuOpen(false)}>ABOUT US</NavLink>
-          <NavLink to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>REGISTER</NavLink>
-          {user?.role === "ADMIN_ROLE" && (
-            <>
-              <NavLink to="/admin-product" className="nav-link" onClick={() => setIsMenuOpen(false)}>ADMIN PRODUCT</NavLink>
-              <NavLink to="/admin-user" className="nav-link" onClick={() => setIsMenuOpen(false)}>ADMIN USER</NavLink>
-            </>
-          )}
-        </nav>
       </div>
 
       {!isSpecialPage && !isProductDetailPage && (
         <div className={`season ${isScrolled || sidebarToggle ? 'hide' : ''}`}>
           <p className="eb-garamond-season">
-            COLECCIÓN 2024
+            RICCI          
           </p>
           <button className="season-button">
             DESCUBRIR

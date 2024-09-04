@@ -26,22 +26,26 @@
 }
 
 .new-section .button-overlay button {
-    padding: 16px 84px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    background-color: rgba(255, 255, 255, 0);
-    color: white;
-    border: 1px solid white;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    font-weight: 700;
+    padding: 19px 80px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  background-color: #F9F6F2;
+  border: 1.3px solid #F9F6F2;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-weight:600;
+  color: black;
 }
 
 .new-section .button-overlay button:hover {
-    background-color: white;
-    color: black;
-    border: 1px solid white;
+    transition: transform 1s cubic-bezier(.26,.58,.65,1), border-color 0.3s ease;
+    transform: scale(1.1); /* Aumenta el tamaño del botón */
+    border-color: #F9F6F2;
 }
+      
+
+
 
 @media screen and (max-width: 767px) {
     .new-section {

@@ -1,39 +1,34 @@
-.carousel-container {
-  height: 175vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+/* Contenedor del video */
+.video-container  {
   position: relative;
-}
-
-.carousel {
   width: 100%;
-  height: 100%;
+  height: 100vh; /* Ajusta la altura del contenedor para cubrir toda la pantalla */
+  overflow: hidden; /* Evita el desplazamiento del contenedor */
+  width: -webkit-fill-available;
+
 }
 
-.carousel .slide {
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* Estilo del video */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+   /* Utiliza el ancho disponible en navegadores WebKit */
+  height: 100%; /* Asegura que el video cubra toda la altura del contenedor */
+  object-fit: cover; /* Ajusta el video para cubrir el contenedor sin deformarse */
+  /* Evita el desbordamiento del video */
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden; 
+  /* Evita el desplazamiento del video */
+  width: -webkit-fill-available;
 }
-
-.carousel .slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; 
-}
-
-
 
 /* Estilos específicos para teléfonos móviles */
-
 @media (max-width: 767px) {
-  .carousel .slide img {
-    height: 80vh; 
-    width: 150%; 
-    margin-left: 0%;
+  .background-video {
+    /* Asegúrate de que el video se ajuste también en dispositivos móviles */
+    object-fit: cover;
+    width: -webkit-fill-available; /* Mantiene la propiedad para WebKit en móviles */
   }
 }

@@ -2,7 +2,7 @@ import './Footer.css';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faWhatsapp, faFacebookF, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import logoTransparente from '../../assets/images/header/logo_fondotransparente.png';
+import logoTransparente from '../../assets/images/header/logo_fondotransparente1.png';
 
 const Footer = () => {
   return (
