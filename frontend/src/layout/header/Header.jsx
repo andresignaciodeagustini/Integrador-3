@@ -41,7 +41,8 @@ const Header = ({ isProductDetailPage }) => {
   }, []);
 
   const isSpecialPage = ['/about-us', '/login', '/contact', '/register', '/admin-product', '/admin-user', '/product-detail'].includes(location.pathname);
-
+  const isHomePage = location.pathname === '/';
+  
   const handleCartClick = () => {
     toggleSidebarOrder();
     setIsMenuOpen(false); 
@@ -88,9 +89,11 @@ const Header = ({ isProductDetailPage }) => {
         )}
       </nav>
 
-      <NavLink to="/" className="logo">
-        <img src={isSpecialPage ? logoBlanco : logoBlanco} alt='Logo' />
-      </NavLink>
+      {!isHomePage || isScrolled ? (
+        <NavLink to="/" className="logo">
+          <img src={logoBlanco} alt='Logo' />
+        </NavLink>
+      ) : null}
 
       <div className={`user-info ${isScrolled || isSpecialPage || isProductDetailPage ? 'black-icons' : 'white-icons'}`}>
         <div className='user-cart-container'>
