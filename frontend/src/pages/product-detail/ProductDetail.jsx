@@ -6,6 +6,7 @@ import { useOrder } from "../../context/OrderContext";
 import useApi from "../../services/interceptor/Interceptor";
 import Header from "../../layout/header/Header";
 import OrderSidebar from "../../layout/order-sidebar/OrderSidebar";
+import Footer from "../../layout/footer/Footer"; // Importa el componente Footer
 import "./ProductDetail.css";
 
 const ProductDetail = () => {
@@ -18,21 +19,15 @@ const ProductDetail = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log("ID del producto desde useParams:", id);
-
     if (!id) {
-      console.error("ID del producto no encontrado");
       setLoading(false);
       return;
     }
 
     const fetchProduct = async () => {
       try {
-        console.log("Iniciando solicitud para obtener el producto con ID:", id);
         const response = await api.get(`/products/${id}`);
-        console.log("Respuesta de la API para el producto:", response);
-        console.log("Datos del producto recibidos:", response.data);
-        setProduct(response.data.product);  // Asegúrate de acceder a la propiedad correcta
+        setProduct(response.data.product);
       } catch (error) {
         console.error("Error al obtener el producto:", error);
       } finally {
@@ -72,7 +67,6 @@ const ProductDetail = () => {
   return (
     <>
       <Header isProductDetailPage={true} />
-
       <div>
         <section className="product-details">
           <div className="product-header">
@@ -103,6 +97,13 @@ const ProductDetail = () => {
                 {addedToBagMessage && (
                   <p className="added-to-bag-message">SE HA AÑADIDO EL PRODUCTO</p>
                 )}
+                
+                {/* Descripción del producto después del botón */}
+                <div className="product-description">
+                  <h4>DETALLES DEL PRODUCTO</h4>
+                  <p>{product.description}</p>
+                  {product.details && <p>{product.details}</p>}
+                </div>
               </div>
             </div>
 
@@ -112,17 +113,11 @@ const ProductDetail = () => {
               </Link>
             </div>
           </div>
-
-          <div className="product-text">
-            <h4>{`Art. Nr. ${product._id}. Aranceles de importación incluidos`}</h4>
-            <p>{product.description}</p>
-            {/* Asegúrate de que `product.details` esté definido y tenga un valor válido */}
-            {product.details && <p>{product.details}</p>}
-          </div>
         </section>
       </div>
 
       <OrderSidebar />
+      <Footer /> {/* Agrega el Footer aquí */}
     </>
   );
 };

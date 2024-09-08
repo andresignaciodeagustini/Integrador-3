@@ -5,10 +5,13 @@
     flex-direction: row;
     align-items: center;
     color: black;
+    margin-bottom: 3%;
   }
   
   .registro .container {
     width: 60%;
+    
+    margin-bottom: auto;
   }
   
   .registro form {
@@ -58,10 +61,13 @@
     margin-top: 15%;
     background-color: black;
     color: white;
-    padding: 20px 166px;
+    padding: 20px 150px;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
   }
   
   .registro button:hover {

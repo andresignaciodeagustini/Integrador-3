@@ -6,15 +6,29 @@
 .product-action {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 50%;
   margin-bottom: 20%;
+  align-items: inherit;
 }
 
 .product-action h2 {
   font-size: 25px;
   font-weight: 400;
   text-align: center;
-  margin-top: 23%;
+  margin-top: 10%;
+  margin-bottom: 8%;
+  position: relative; /* Añadido para posicionar la línea */
+}
+
+.product-action h2::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 1px;
+  background-color: black;
+  position: absolute;
+  bottom: -5px; /* Ajusta la distancia de la línea desde el texto */
+ margin-left: 20%;
 }
 
 .product-action h5 {
@@ -33,15 +47,41 @@
 }
 
 .image-detail img {
-  max-width: 100%;
-  height: auto;
+  max-width: 169%;
+  height: 700px;
+  margin-left: 7%;
 }
+
+/* Descripción */
+.product-description {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  max-width: 320px; 
+  text-align: justify; /* Alinea el texto justificado */
+}
+
+.product-description h4 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: left; /* O puedes usar center o justify si prefieres */
+  color: #333; /* Cambia este color si es necesario */
+  margin-top: 8%;
+}
+
+.product-description p {
+  margin-top: 7%;
+}
+
+/* Fin Descripción */
 
 .color-picker {
   display: flex;
   justify-content: center;
   margin-top: 2%;
-  margin-left: 3%;
+  margin-right: -2%;
 }
 
 .color-circle {
@@ -71,11 +111,7 @@
 .tallas-guide {
   width: 100%;
   margin-top: 20px;
-  margin-right: -12%;
-}
-
-.tallas-guide h6 {
-  margin-right: 10%;
+  margin-right: -5%;
 }
 
 .tallas-guide .tallas-buttons {
@@ -101,18 +137,18 @@
 }
 
 .bottom-detail {
-  margin-top: 20px;
+  margin-top: -15px;
+  margin-left: 24%;
 }
 
 .bottom-detail button.add-to-bag-button {
   background-color: black;
   color: white;
-  padding: 26px 103px;
+  padding: 26px 160px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   font-size: 10px;
-  margin-left: 7%;
 }
 
 .bottom-detail button.add-to-bag-button:hover {
