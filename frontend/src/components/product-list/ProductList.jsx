@@ -50,7 +50,7 @@ export default function ProductList() {
 
   return (
     <div>
-      <h2 className="product-list-title">LISTA DE PRODUCTOS</h2>
+      <h2 className="product-list-title">PRODUCTOS DESTACADOS</h2>
 
       {isLoading ? (
         <p>Cargando productos...</p>
