@@ -24,6 +24,59 @@
   width: -webkit-fill-available;
 }
 
+.season {
+  text-align: center;
+  position: absolute;
+  left: 53%;
+  margin-top: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: #F9F6F2;
+}
+
+.season p {
+  font-size: 250px;
+  margin-bottom: 100px;
+  letter-spacing: 70px;
+}
+.season button {
+  padding: 19px 80px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  background-color: #F9F6F2;
+  border: 1.3px solid #F9F6F2;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-weight:600;
+  color: black;
+  margin-top: 5%;
+}
+
+.season button:hover {
+  transition: transform 1s cubic-bezier(.26,.58,.65,1), border-color 0.3s ease;
+  transform: scale(1.1); /* Aumenta el tamaño del botón */
+  border-color: #F9F6F2; /* Cambia el color del borde al negro */
+}
+
+.season.hide {
+  display: none;
+}
+
+.material-symbols-outlined.user-icon {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.5em;
+  margin-left: 10px;
+  font-weight: 250;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
 /* Estilos específicos para teléfonos móviles */
 @media (max-width: 767px) {
   .background-video {

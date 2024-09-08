@@ -129,16 +129,8 @@ const Header = ({ isProductDetailPage }) => {
         </div>
       </div>
 
-      {!isSpecialPage && !isProductDetailPage && (
-        <div className={`season ${isScrolled || sidebarToggle ? 'hide' : ''}`}>
-          <p className="eb-garamond-season">
-            RICCI          
-          </p>
-          <button className="season-button">
-            DESCUBRIR
-          </button>
-        </div>
-      )}
+      {/* Elimina el condicional aquí */}
+      
     </header>
   );
 };
