@@ -1,3 +1,4 @@
+/* Estilos generales */
 footer {
   position: relative;
   margin-top: 4dvh;
@@ -13,14 +14,13 @@ footer {
   z-index: 10;
   margin-top: 5%;
   border-top: 1px solid gray;
-  
 }
 
 .footer-header img {
   max-width: 150px;
   height: 43px;
   text-align: center;
-   margin-top: 1%;
+  margin-top: 1%;
 }
 
 .footer {
@@ -28,7 +28,6 @@ footer {
   background-color: black;
   color: white;
   margin-top: 4dvh;
-  
 }
 
 .footer .contain {
@@ -147,7 +146,6 @@ footer {
   padding: 10px 5%;
   padding-top: 10px;
   border-top: 1px solid gray;
-
 }
 
 .final {
@@ -155,10 +153,12 @@ footer {
   font-size: 12px;
 }
 
+/* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
   .footer .contain {
     flex-direction: column;
     align-items: center;
+    margin-top: -5%;
   }
 
   .footer .col {
@@ -198,8 +198,44 @@ footer {
     order: 2;
     margin-top: 20px;
   }
+
   .footer-left span {
     margin-bottom: 4%;
-   
+  }
 }
+
+/* Media query para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .footer .contain {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra las columnas */
+    margin-top: 16dvh;
+  }
+
+  .footer .col {
+    width: calc(100% / 3 - 20px); /* Ajusta el ancho de las columnas para tres por fila */
+    margin: 10px; /* Espacio entre las columnas */
+  }
+
+  /* Centrar las columnas específicas para "Our Services" y "Support" */
+  .footer .col:nth-child(4),
+  .footer .col:nth-child(5) {
+    text-align: center; /* Centra el texto en estas columnas */
+  }
+  
+  .footer .col h1 {
+    font-size: 12px; /* Ajusta el tamaño de fuente si es necesario */
+    line-height: 20px; /* Ajusta la altura de línea si es necesario */
+  }
+
+  .footer .col ul li {
+    font-size: 13px; /* Ajusta el tamaño de fuente si es necesario */
+  }
+  .footer-left {
+    margin-top:4%
+  }
+  .footer-left span {
+    margin-left: 22%;
+  }
 }

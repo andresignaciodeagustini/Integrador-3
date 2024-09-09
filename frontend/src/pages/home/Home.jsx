@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import videoBackground from '../../assets/images/main/video1.mp4'; // Ruta actualizada para el video
+import videoBackground from '../../assets/images/main/video1.mp4'; 
 import ProductList from '../../components/product-list/ProductList';
 import OrderSidebar from '../../layout/order-sidebar/OrderSidebar';
 import NewSection from '../../components/new-section/NewSection';  
-import FinalSection from '../../components/final-section/FinalSection'; // Importa el nuevo componente
+import FinalSection from '../../components/final-section/FinalSection'; 
 import './home.css';
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
       
       <NewSection />
 
-      {/* Nueva sección agregada aquí */}
+     
       <div className={`season`}>
         <p className="eb-garamond-season">
           RICCI          
@@ -40,7 +40,7 @@ export default function Home() {
 
       <ProductList />
       
-      {/* Agrega la nueva sección aquí */}
+    
       <FinalSection />
     
       {showOrderSidebar && <OrderSidebar />}

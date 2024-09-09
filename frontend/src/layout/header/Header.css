@@ -1,3 +1,4 @@
+/* Estilos generales */
 .header-nav {
   position: fixed;
   top: 0;
@@ -27,8 +28,8 @@
 .logo img {
   height: 50px;
   margin-top: 14px;
-  margin-left: -129%;
-  padding-left: 25%;
+  margin-left: 0; /* Ajustado */
+  padding-left: 0; /* Ajustado */
   text-align: center;
 }
 
@@ -107,26 +108,23 @@
   color: black;
 }
 
-
-
 @media (max-width: 767px) {
   .header-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-  }
-
-  .logo {
-    margin-left: 10px;
+    height: auto; /* Ajustado para móviles */
+    padding: 10px;
+    border-bottom: none; /* Quitar borde inferior en móviles */
   }
 
   .logo img {
-    height: 15px;
+    height: 15px; /* Ajustado para móviles */
   }
 
   .nav-links {
-    display: none;
+    display: none; /* Ocultar en móviles */
   }
 
   .user-info {
@@ -136,7 +134,7 @@
 
   .user-cart-container .bag-shopping,
   .material-symbols-outlined.user-icon {
-    font-size: 20px;
+    font-size: 20px; /* Ajustado para móviles */
     cursor: pointer;
     margin-left: 15px;
   }
@@ -159,7 +157,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 75%;
     height: 100%;
     background-color: #F9F6F2;
     color: black;
@@ -169,11 +167,14 @@
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     transform: translateY(-100%);
+    
   }
 
   .mobile-menu.open {
     transform: translateY(0%);
-    display: block;
+    display: flex;
+
+
   }
 
   .mobile-logo {
@@ -189,30 +190,6 @@
     margin-top: -5rem;
   }
 
-  .mobile-menu .nav-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    margin-right: -9%;
-    margin-top: -17%;
-  }
-
-  .mobile-menu .nav-links .nav-link {
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-    margin-bottom: 20px;
-    transition: color 0.3s ease;
-  }
-
-  .mobile-menu .nav-links .nav-link:hover {
-    color: #F9F6F2;
-  }
 
   .close-button {
     position: absolute;
@@ -236,29 +213,50 @@
   .season p {
     font-size: 25px;
   }
+  #root > header > div.mobile-menu.open > nav{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30%;
+    
+  }
+  .mobile-menu .mobile-nav-links .nav-link {
+    text-decoration: none; 
+    color: black; 
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+    
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .nav-links .nav-link {
-    margin-right: 15px;
-    font-size: 9px;
+  .nav-links {
+    font-size: 12px; /* Tamaño de fuente más pequeño en tablets */
+    margin-left: 0;
   }
 
+  .nav-links .nav-link {
+    margin-right: 10px; /* Reducir el margen entre enlaces en tablets */
+  }
+
+  .nav-links .nav-link:hover {
+    font-size: 14px; /* Tamaño de fuente en hover para tablets */
+  }
+  
   .season p {
-    font-size: 30px;
+    font-size: 100px;
+    margin-top: 40%;
+    letter-spacing: 35px;
   }
 
   .season button {
     padding: 15px 59px;
     font-size: 7px;
     letter-spacing: 2px;
+    margin-top: 15%;
   }
-
-  .user-cart-container {
-    font-size: 11px;
-  }
-
+  
   .logo img {
-    height: 16px;
+    margin-left: -80%;
   }
 }

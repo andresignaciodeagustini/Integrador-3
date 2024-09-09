@@ -2,8 +2,8 @@
 .video-container  {
   position: relative;
   width: 100%;
-  height: 100vh; /* Ajusta la altura del contenedor para cubrir toda la pantalla */
-  overflow: hidden; /* Evita el desplazamiento del contenedor */
+  height: 100vh; 
+  overflow: hidden; 
   width: -webkit-fill-available;
 
 }
@@ -13,14 +13,14 @@
   position: absolute;
   top: 0;
   left: 0;
-   /* Utiliza el ancho disponible en navegadores WebKit */
-  height: 100%; /* Asegura que el video cubra toda la altura del contenedor */
-  object-fit: cover; /* Ajusta el video para cubrir el contenedor sin deformarse */
-  /* Evita el desbordamiento del video */
+   
+  height: 100%; 
+  object-fit: cover;
+ 
   max-width: 100%;
   max-height: 100%;
   overflow: hidden; 
-  /* Evita el desplazamiento del video */
+ 
   width: -webkit-fill-available;
 }
 
@@ -55,8 +55,8 @@
 
 .season button:hover {
   transition: transform 1s cubic-bezier(.26,.58,.65,1), border-color 0.3s ease;
-  transform: scale(1.1); /* Aumenta el tamaño del botón */
-  border-color: #F9F6F2; /* Cambia el color del borde al negro */
+  transform: scale(1.1); 
+  border-color: #F9F6F2; 
 }
 
 .season.hide {
@@ -80,8 +80,21 @@
 /* Estilos específicos para teléfonos móviles */
 @media (max-width: 767px) {
   .background-video {
-    /* Asegúrate de que el video se ajuste también en dispositivos móviles */
+  
     object-fit: cover;
-    width: -webkit-fill-available; /* Mantiene la propiedad para WebKit en móviles */
+    width: -webkit-fill-available; 
   }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .season p {
+      font-size: 90px;
+      
+  }
+  .season button {
+    padding: 15px 59px;
+    font-size: 7px;
+    letter-spacing: 2px;
+    margin-top:32%;
+}
 }

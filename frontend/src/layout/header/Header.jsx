@@ -127,10 +127,26 @@ const Header = ({ isProductDetailPage }) => {
         <div className="close-button" onClick={() => setIsMenuOpen(false)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
-      </div>
+        <nav className="mobile-nav-links">
+          <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
+          {user ? (
+            <NavLink to="/" className="nav-link" onClick={handleLogout}>LOGOUT</NavLink>
+          ) : (
+            <NavLink to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>LOGIN</NavLink>
+          )}
 
-      {/* Elimina el condicional aquí */}
-      
+          <NavLink to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</NavLink>
+          <NavLink to="/about-us" className="nav-link" onClick={() => setIsMenuOpen(false)}>ABOUT US</NavLink>
+          <NavLink to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>REGISTER</NavLink>
+
+          {user?.role === "ADMIN_ROLE" && (
+            <>
+              <NavLink to="/admin-product" className="nav-link" onClick={() => setIsMenuOpen(false)}>ADMIN PRODUCT</NavLink>
+              <NavLink to="/admin-user" className="nav-link" onClick={() => setIsMenuOpen(false)}>ADMIN USER</NavLink>
+            </>
+          )}
+        </nav>
+      </div>
     </header>
   );
 };

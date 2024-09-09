@@ -43,8 +43,22 @@
     padding: 8px 12px;
     margin: 0 2px;
   }
+
+  .select-custom {
+    margin-left: 4%;
+    font-size: 12px;
+    padding: 4px;
+  }
 }
 
 .admin-table-container > div {
   margin-top: 5%;
+}
+
+.select {
+  font-size: 12px;
+  padding: 4px;
+}
+#root > div:nth-child(7) > select{
+  margin-left: 4%;
 }
