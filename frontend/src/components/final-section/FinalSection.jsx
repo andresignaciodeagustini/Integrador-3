@@ -11,7 +11,7 @@ function FinalSection() {
           <img src={prueba3} alt="Imagen de Valentino Ricci" />
         </div>
         <div className="final-section-text">
-          <h2>VALENTINO RICCI</h2>
+          <h2>RICCI</h2>
           <p>
             Compra ahora los nuevos productos de Valentino Ricci. Descubre nuestra colección exclusiva de bolsos y prendas para mujer y hombre.
           </p>

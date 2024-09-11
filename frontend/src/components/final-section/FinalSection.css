@@ -84,18 +84,20 @@
 }
 
 /* Media query para dispositivos móviles */
+/* Media query para dispositivos móviles */
 @media (max-width: 767px) {
     .final-section {
-        height: auto;
+        height: auto; /* Permitir que la sección ajuste su altura según el contenido */
         flex-direction: column;
         margin-top: 3%;
+        padding: 10px; /* Reducir el padding para ahorrar espacio */
     }
 
     .final-section-content {
         flex-direction: column;
         width: 100%;
         align-items: center;
-        padding: 20px;
+        padding: 10px; /* Reducir el padding */
     }
 
     .final-section-image {
@@ -111,21 +113,33 @@
 
     .final-section-text {
         flex: none;
-        width: 100%;
+        width: 90%; /* Aumentar el ancho del texto para distribuirlo mejor */
         margin-left: 0;
         text-align: center;
+        padding: 10px; /* Reducir el padding para ahorrar espacio */
     }
 
     .final-section-text h2 {
-        font-size: 18px;
+        font-size: 18px; /* Mantener el título con un tamaño legible */
+        margin-bottom: 5px; /* Reducir el margen inferior */
+        margin-left:20%;
+        margin-top:23%;
     }
 
     .final-section-text p {
-        font-size: 14px;
+        font-size: 12px; /* Reducir el tamaño del texto */
+        width: 135px;
+        margin-left: -47%;
+
+        margin-bottom: 10px; /* Reducir el margen inferior */
     }
 
     .buy-now-link {
-        font-size: 12px;
+        font-size: 11px; /* Ajustar el tamaño del enlace */
+        margin-top: 5%;
+        white-space: nowrap; /* Reducir el margen superior */
+        margin-left: -20%;
+
     }
 }
 

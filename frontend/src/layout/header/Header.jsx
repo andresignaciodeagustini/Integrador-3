@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import './Header.css';
 import logoBlanco from '../../assets/images/header/logo_fondo_blanco1.png';
 
@@ -15,6 +15,7 @@ const Header = ({ isProductDetailPage }) => {
   const [isMobileView, setIsMobileView] = useState(false);
   const location = useLocation();
   const { user, logout } = useUser();
+  const navigate = useNavigate(); // Hook para navegar
 
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 0);
@@ -42,7 +43,7 @@ const Header = ({ isProductDetailPage }) => {
 
   const isSpecialPage = ['/about-us', '/login', '/contact', '/register', '/admin-product', '/admin-user', '/product-detail'].includes(location.pathname);
   const isHomePage = location.pathname === '/';
-  
+
   const handleCartClick = () => {
     toggleSidebarOrder();
     setIsMenuOpen(false); 
@@ -66,6 +67,14 @@ const Header = ({ isProductDetailPage }) => {
     }
   };
 
+  // Redirige a la página de login al hacer clic en el ícono
+  const handleLoginClick = () => {
+    if (!user) {
+      navigate('/login'); // Redirige a login si no hay usuario autenticado
+    }
+    setIsMenuOpen(false); // Cierra el menú si está abierto
+  };
+
   return (
     <header className={`header-nav ${isScrolled || isSpecialPage || isProductDetailPage ? 'scroll-bg-white' : 'transparent-bg'} ${sidebarToggle && isMobileView ? 'hide-header' : ''} ${isProductDetailPage ? 'product-detail-header' : ''}`}>
      
@@ -73,10 +82,7 @@ const Header = ({ isProductDetailPage }) => {
         <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
         {user ? (
           <NavLink to="/" className="nav-link" onClick={handleLogout}>LOGOUT</NavLink>
-        ) : (
-          <NavLink to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>LOGIN</NavLink>
-        )}
-
+        ) : null} {/* Eliminado el enlace LOGIN */}
         <NavLink to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</NavLink>
         <NavLink to="/about-us" className="nav-link" onClick={() => setIsMenuOpen(false)}>ABOUT US</NavLink>
         <NavLink to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>REGISTER</NavLink>
@@ -109,9 +115,11 @@ const Header = ({ isProductDetailPage }) => {
             </div>
           )}
         </div>
+        {/* Ícono para redirigir a login */}
         <span
           className="material-symbols-outlined user-icon"
           style={{ cursor: 'pointer' }}
+          onClick={handleLoginClick}
         >
           person
         </span>
@@ -131,10 +139,7 @@ const Header = ({ isProductDetailPage }) => {
           <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
           {user ? (
             <NavLink to="/" className="nav-link" onClick={handleLogout}>LOGOUT</NavLink>
-          ) : (
-            <NavLink to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>LOGIN</NavLink>
-          )}
-
+          ) : null} {/* Eliminado el enlace LOGIN */}
           <NavLink to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</NavLink>
           <NavLink to="/about-us" className="nav-link" onClick={() => setIsMenuOpen(false)}>ABOUT US</NavLink>
           <NavLink to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>REGISTER</NavLink>

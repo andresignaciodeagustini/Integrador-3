@@ -59,7 +59,7 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, a {
 /* Estilos específicos para dispositivos móviles */
 @media (max-width: 768px) {
   #root {
-    width: 100%; /* Ancho del 200% en pantallas pequeñas */
+    max-width:100%; /* Ancho del 200% en pantallas pequeñas */
     overflow-x: scroll; /* Asegúrate de que el contenido no se corte */
   }
 }

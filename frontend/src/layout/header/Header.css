@@ -113,14 +113,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 95%;
     height: auto; /* Ajustado para móviles */
     padding: 10px;
-    border-bottom: none; /* Quitar borde inferior en móviles */
+    border-bottom: none;
+    margin-left: -4%; /* Quitar borde inferior en móviles */
   }
 
   .logo img {
-    height: 15px; /* Ajustado para móviles */
+    height: 25px; /* Ajustado para móviles */
+    margin-left: 20%;
   }
 
   .nav-links {
@@ -130,6 +132,8 @@
   .user-info {
     display: flex;
     align-items: center;
+    margin-left: 45%;
+
   }
 
   .user-cart-container .bag-shopping,
@@ -199,24 +203,11 @@
     color: black;
   }
 
-  .season button {
-    padding: 15px 36px;
-    font-size: 7px;
-    letter-spacing: 2px;
-  }
-
-  .season {
-    left: 72%;
-    margin-top: 230%;
-  }
-
-  .season p {
-    font-size: 25px;
-  }
   #root > header > div.mobile-menu.open > nav{
     display: flex;
     flex-direction: column;
-    margin-left: 30%;
+    margin-left: 40%;
+    margin-top: 32%;
     
   }
   .mobile-menu .mobile-nav-links .nav-link {
@@ -243,20 +234,9 @@
     font-size: 14px; /* Tamaño de fuente en hover para tablets */
   }
   
-  .season p {
-    font-size: 100px;
-    margin-top: 40%;
-    letter-spacing: 35px;
-  }
 
-  .season button {
-    padding: 15px 59px;
-    font-size: 7px;
-    letter-spacing: 2px;
-    margin-top: 15%;
-  }
   
   .logo img {
-    margin-left: -80%;
+    margin-left: -55%;
   }
 }

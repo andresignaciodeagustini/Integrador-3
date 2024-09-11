@@ -129,7 +129,7 @@ h2 {
 @media (max-width: 767px) {
   .order-wrapper.active {
     width: 100%;
-    margin-top: 15%;
+    margin-top: -5%;
   }
 
   .order-wrapper {
@@ -141,7 +141,7 @@ h2 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-top: 2rem;
+    padding-top: 3rem;
   }
 
   .order-item {
@@ -184,7 +184,7 @@ h2 {
   }
 
   .close-icon {
-    top: 0.5rem;
+    top: 2.5rem;
     right: 0.5rem;
     font-size: 1.2rem;
   }
