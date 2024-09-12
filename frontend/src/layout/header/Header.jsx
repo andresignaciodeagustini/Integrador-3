@@ -132,9 +132,14 @@ const Header = ({ isProductDetailPage }) => {
       </div>
 
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-        <div className="close-button" onClick={() => setIsMenuOpen(false)}>
-          <FontAwesomeIcon icon={faTimes} />
-        </div>
+      <div className="header-content">
+    <div className="close-button" onClick={() => setIsMenuOpen(false)}>
+      <FontAwesomeIcon icon={faTimes} />
+    </div>
+    <div className="logo-container">
+      <img src={logoBlanco} alt='Logo' className="logo-blanco-mobile" />
+    </div>
+  </div>
         <nav className="mobile-nav-links">
           <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
           {user ? (

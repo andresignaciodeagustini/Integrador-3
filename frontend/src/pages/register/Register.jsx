@@ -1,13 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para redirección
 import './Register.css'; // Importa tu archivo CSS para Register si lo tienes separado
 import registerImage from '../../assets/images/register/register.jpg';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 
 // Lee la variable de entorno VITE_SERVER_URL
 const API_URL = import.meta.env.VITE_SERVER_URL;
 
 export default function Register() {
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const navigate = useNavigate(); // Hook para redirección
 
   const onSubmit = async (data) => {
     try {
@@ -47,8 +50,49 @@ export default function Register() {
       const result = await response.json();
       console.log("Respuesta del servidor:", result);
 
+      // Iniciar sesión automáticamente
+      const loginResponse = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password
+        })
+      });
+
+      if (!loginResponse.ok) {
+        throw new Error(`Error ${loginResponse.status}: ${loginResponse.statusText}`);
+      }
+
+      const loginResult = await loginResponse.json();
+      console.log("Resultado del inicio de sesión:", loginResult);
+
+      // Guardar el token o información de sesión en localStorage
+      localStorage.setItem('authToken', loginResult.token);
+
+      // Mostrar el SweetAlert en caso de éxito
+      Swal.fire({
+        title: 'Registro Exitoso!',
+        text: 'Tu cuenta ha sido creada exitosamente y has iniciado sesión.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        // Redirigir al usuario al home
+        navigate('/');
+      });
+
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
+
+      // Mostrar el SweetAlert en caso de error
+      Swal.fire({
+        title: 'Error!',
+        text: 'Hubo un problema al crear tu cuenta. Por favor, inténtalo de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
 

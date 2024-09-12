@@ -108,9 +108,14 @@
   margin-left: 3%;
   margin-top: 55%;
 }
+
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .season{
+    margin-top: 35%;
+  }
+  
   .season p {
       font-size: 90px;
       
@@ -119,6 +124,8 @@
     padding: 15px 59px;
     font-size: 7px;
     letter-spacing: 2px;
+    margin-top: 15%;
     
 }
+
 }

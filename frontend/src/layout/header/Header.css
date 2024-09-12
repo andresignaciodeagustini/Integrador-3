@@ -28,7 +28,7 @@
 .logo img {
   height: 50px;
   margin-top: 14px;
-  margin-left: 0; /* Ajustado */
+  margin-left: -55%; /* Ajustado */
   padding-left: 0; /* Ajustado */
   text-align: center;
 }
@@ -161,7 +161,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 75%;
+    width: 100%;
     height: 100%;
     background-color: #F9F6F2;
     color: black;
@@ -206,7 +206,7 @@
   #root > header > div.mobile-menu.open > nav{
     display: flex;
     flex-direction: column;
-    margin-left: 40%;
+    margin-left: 20%;
     margin-top: 32%;
     
   }
@@ -217,6 +217,17 @@
     margin-bottom: 20px;
     transition: color 0.3s ease;
     
+  }#root > header > div.user-info.white-icons{
+    margin-left: 65%;
+  }
+  .logo-blanco-mobile {
+    height: 30px;
+    margin-left: 185%; /* Empuja el logo hacia el lado derecho */
+  }
+  
+  /* Opcional: si el ícono de cerrar también necesita un ajuste específico */
+  .close-button .fa-times {
+    margin-right: auto; /* Empuja el ícono hacia el lado izquierdo */
   }
 }
 
@@ -237,6 +248,8 @@
 
   
   .logo img {
-    margin-left: -55%;
+    margin-left: -45%;
+    margin-top: 5%;
+    height: 46px;
   }
 }
