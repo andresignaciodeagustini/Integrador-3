@@ -28,8 +28,8 @@
 .logo img {
   height: 50px;
   margin-top: 14px;
-  margin-left: -55%; /* Ajustado */
-  padding-left: 0; /* Ajustado */
+  margin-left: -100%; 
+  padding-left: 0; 
   text-align: center;
 }
 
@@ -114,19 +114,20 @@
     justify-content: space-between;
     align-items: center;
     width: 95%;
-    height: auto; /* Ajustado para móviles */
+    height: auto; 
     padding: 10px;
     border-bottom: none;
-    margin-left: -4%; /* Quitar borde inferior en móviles */
+    margin-left: 0%; 
+    padding-top: 8%;
   }
 
   .logo img {
-    height: 25px; /* Ajustado para móviles */
+    height: 25px; 
     margin-left: 20%;
   }
 
   .nav-links {
-    display: none; /* Ocultar en móviles */
+    display: none;
   }
 
   .user-info {
@@ -138,7 +139,7 @@
 
   .user-cart-container .bag-shopping,
   .material-symbols-outlined.user-icon {
-    font-size: 20px; /* Ajustado para móviles */
+    font-size: 20px;
     cursor: pointer;
     margin-left: 15px;
   }
@@ -222,27 +223,29 @@
   }
   .logo-blanco-mobile {
     height: 30px;
-    margin-left: 185%; /* Empuja el logo hacia el lado derecho */
+    margin-left: 185%; 
   }
   
-  /* Opcional: si el ícono de cerrar también necesita un ajuste específico */
+ 
   .close-button .fa-times {
-    margin-right: auto; /* Empuja el ícono hacia el lado izquierdo */
+    margin-right: auto; 
+  .header-nav .scroll-bg-white{
+    padding-top: 27px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .nav-links {
-    font-size: 12px; /* Tamaño de fuente más pequeño en tablets */
+    font-size: 12px; 
     margin-left: 0;
   }
 
   .nav-links .nav-link {
-    margin-right: 10px; /* Reducir el margen entre enlaces en tablets */
+    margin-right: 10px; 
   }
 
   .nav-links .nav-link:hover {
-    font-size: 14px; /* Tamaño de fuente en hover para tablets */
+    font-size: 14px; 
   }
   
 
@@ -252,4 +255,5 @@
     margin-top: 5%;
     height: 46px;
   }
+}
 }

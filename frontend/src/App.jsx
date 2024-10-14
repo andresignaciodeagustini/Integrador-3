@@ -7,6 +7,7 @@ import Register from "./pages/register/Register";
 import AboutUs from "./pages/about-us/AboutUs";
 import AdminUser from './pages/admin-user/AdminUser';
 import Overview from "./pages/overview/Overview";
+import Store  from './pages/store/Store';
 import { Route, Routes } from "react-router-dom";
 import ProductDetail from "./pages/product-detail/ProductDetail";
 import AdminGuard from './services/guard/AdminGuard';
@@ -23,6 +24,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="register" element={<Register />} />
           <Route path="about-us" element={<AboutUs />} />
+          <Route path="store" element={<Store />} />
           <Route path="overview" element={<Overview />} />
         </Route>
 

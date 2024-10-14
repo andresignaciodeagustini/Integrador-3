@@ -17,8 +17,8 @@
 
 .product-image img {
     width: 100%;
-    height: 185%;
-    object-fit: contain;
+    
+    object-fit: cover;
 }
 
 .btn-icon-bag, .btn-icon-eye {

@@ -1,0 +1,44 @@
+/* Store.css */
+
+/* Contenedor principal para el componente Store */
+.store-container {
+    padding: 2rem;
+    max-width: 1200px;
+   margin-top: 5%;
+   margin-right: -150%;
+    background-color: #f9f9f9;
+  }
+  
+  /* Estilo para el título de la tienda */
+  .store-title {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* Mensaje de carga mientras los productos se están cargando */
+  .loading-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Contenedor para las tarjetas de productos */
+  .product-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+.store-content{
+  margin-left: 20%;
+}
+
+  
+  /* Efecto de hover para las tarjetas de productos */
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  

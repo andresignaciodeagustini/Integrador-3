@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import './Header.css';
 import logoBlanco from '../../assets/images/header/logo_fondo_blanco1.png';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useOrder } from '../../context/OrderContext';
@@ -41,7 +40,10 @@ const Header = ({ isProductDetailPage }) => {
     };
   }, []);
 
-  const isSpecialPage = ['/about-us', '/login', '/contact', '/register', '/admin-product', '/admin-user', '/product-detail'].includes(location.pathname);
+  const isSpecialPage = () => {
+    return ['/about-us', '/login', '/contact', '/register', '/admin-product', '/admin-user', '/product-detail', '/store'].includes(location.pathname);
+  };
+
   const isHomePage = location.pathname === '/';
 
   const handleCartClick = () => {
@@ -67,25 +69,25 @@ const Header = ({ isProductDetailPage }) => {
     }
   };
 
-  // Redirige a la página de login al hacer clic en el ícono
   const handleLoginClick = () => {
     if (!user) {
-      navigate('/login'); // Redirige a login si no hay usuario autenticado
+      navigate('/login'); 
     }
     setIsMenuOpen(false); // Cierra el menú si está abierto
   };
 
   return (
-    <header className={`header-nav ${isScrolled || isSpecialPage || isProductDetailPage ? 'scroll-bg-white' : 'transparent-bg'} ${sidebarToggle && isMobileView ? 'hide-header' : ''} ${isProductDetailPage ? 'product-detail-header' : ''}`}>
+    <header className={`header-nav ${isScrolled || isSpecialPage() || isProductDetailPage ? 'scroll-bg-white' : 'transparent-bg'} ${sidebarToggle && isMobileView ? 'hide-header' : ''} ${isProductDetailPage ? 'product-detail-header' : ''}`}>
      
       <nav className={`nav-links ${isMenuOpen ? 'open' : ''} ${isMobileView ? 'mobile-view' : ''}`}>
         <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
         {user ? (
           <NavLink to="/" className="nav-link" onClick={handleLogout}>LOGOUT</NavLink>
-        ) : null} {/* Eliminado el enlace LOGIN */}
+        ) : null}
         <NavLink to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</NavLink>
         <NavLink to="/about-us" className="nav-link" onClick={() => setIsMenuOpen(false)}>ABOUT US</NavLink>
         <NavLink to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>REGISTER</NavLink>
+        <NavLink to="/store" className="nav-link" onClick={() => setIsMenuOpen(false)}>STORE</NavLink>
 
         {user?.role === "ADMIN_ROLE" && (
           <>
@@ -101,7 +103,7 @@ const Header = ({ isProductDetailPage }) => {
         </NavLink>
       ) : null}
 
-      <div className={`user-info ${isScrolled || isSpecialPage || isProductDetailPage ? 'black-icons' : 'white-icons'}`}>
+      <div className={`user-info ${isScrolled || isSpecialPage() || isProductDetailPage ? 'black-icons' : 'white-icons'}`}>
         <div className='user-cart-container'>
           <FontAwesomeIcon
             icon={faBagShopping}
@@ -115,7 +117,6 @@ const Header = ({ isProductDetailPage }) => {
             </div>
           )}
         </div>
-        {/* Ícono para redirigir a login */}
         <span
           className="material-symbols-outlined user-icon"
           style={{ cursor: 'pointer' }}
@@ -124,7 +125,7 @@ const Header = ({ isProductDetailPage }) => {
           person
         </span>
         <div
-          className={`menu-icon ${isMenuOpen || isScrolled || isSpecialPage || isProductDetailPage ? 'black' : ''}`}
+          className={`menu-icon ${isMenuOpen || isScrolled || isSpecialPage() || isProductDetailPage ? 'black' : ''}`}
           onClick={toggleMenu}
         >
           <FontAwesomeIcon icon={faBars} />
@@ -132,22 +133,23 @@ const Header = ({ isProductDetailPage }) => {
       </div>
 
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-      <div className="header-content">
-    <div className="close-button" onClick={() => setIsMenuOpen(false)}>
-      <FontAwesomeIcon icon={faTimes} />
-    </div>
-    <div className="logo-container">
-      <img src={logoBlanco} alt='Logo' className="logo-blanco-mobile" />
-    </div>
-  </div>
+        <div className="header-content">
+          <div className="close-button" onClick={() => setIsMenuOpen(false)}>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
+          <div className="logo-container">
+            <img src={logoBlanco} alt='Logo' className="logo-blanco-mobile" />
+          </div>
+        </div>
         <nav className="mobile-nav-links">
           <NavLink to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>PRINCIPAL</NavLink>
           {user ? (
             <NavLink to="/" className="nav-link" onClick={handleLogout}>LOGOUT</NavLink>
-          ) : null} {/* Eliminado el enlace LOGIN */}
+          ) : null} 
           <NavLink to="/contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>CONTACT</NavLink>
           <NavLink to="/about-us" className="nav-link" onClick={() => setIsMenuOpen(false)}>ABOUT US</NavLink>
           <NavLink to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>REGISTER</NavLink>
+          <NavLink to="/store" className="nav-link" onClick={() => setIsMenuOpen(false)}>STORE</NavLink>
 
           {user?.role === "ADMIN_ROLE" && (
             <>
